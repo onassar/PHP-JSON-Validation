@@ -1,0 +1,185 @@
+<?php
+
+    /**
+     * Abstract StringValidator class. Provides various string-based validation
+     *     checks.
+     * 
+     * @abstract
+     */
+    abstract class StringValidator
+    {
+        /**
+         * _decode function.
+         * 
+         * @access protected
+         * @param mixed $mixed
+         * @return mixed
+         */
+        protected function _decode($mixed)
+        {
+            if (is_array($mixed)) {
+                foreach ($mixed as $key => $value) {
+                    $mixed[$key] = decode($value);
+                }
+                return $mixed;
+            }
+            return html_entity_decode($mixed, ENT_QUOTES, 'UTF-8');
+        }
+
+        /**
+         * email function. Checks whether a string is in the proper email format
+         * 
+         * @note should work with o.nassar+label@sub.domain.info
+         * @access public
+         * @static
+         * @param string $str presumable email address which should be validated
+         *     to ensure it is in fact the valid format
+         * @return bool whether or not the email is valid
+         */
+        public static function email($str)
+        {
+            return preg_match(
+                '/^[_a-z0-9-]+([\.|\+][_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/i',
+                $str
+            ) > 0;
+        }
+
+        /**
+         * emptyOrEmail function.
+         * 
+         * @access public
+         * @static
+         * @param string $str
+         * @return bool
+         */
+        public static function emptyOrEmail($str)
+        {
+            if (self::notEmpty($str) === false) {
+                return true;
+            }
+            return self::email($str);
+        }
+
+        /**
+         * emptyOrUrl function.
+         * 
+         * @access public
+         * @static
+         * @param string $str
+         * @return bool
+         */
+        public static function emptyOrUrl($str)
+        {
+            if (self::notEmpty($str) === false) {
+                return true;
+            }
+            return self::url($str);
+        }
+
+        /**
+         * equals function.
+         * 
+         * @access public
+         * @static
+         * @param string $str
+         * @param string $comparison
+         * @return bool
+         */
+        public static function equals($str, $comparison)
+        {
+            return $str === $comparison;
+        }
+
+        /**
+         * inList function. Checks whether a passed in value (string|int) exists
+         *     in a list.
+         * 
+         * @access public
+         * @static
+         * @param string|int $str value to search for existence in
+         * @param array $list array of values to use as a basis for an existence
+         *     check
+         * @return bool whether or not $str is in the $list array
+         */
+        public static function inList($str, array $list)
+        {
+            return in_array($str, $list);
+        }
+
+        /**
+         * maxLength function. Checks whether a maximum (inclusive) length of
+         *     characters has been met in the string passed in.
+         * 
+         * @note without the _decode call, characters such as '&' would may be
+         *     counted as 5 characters in length (eg. &amp;); since this would
+         *     confuse user's, string's are decoded here. Therefore, keep in
+         *     mind that a database column should be longer than what you are
+         *     allowing from a form-input stage (eg. incase they enter a string
+         *     with a large number of multi-byte characters)
+         * @access public
+         * @static
+         * @param string $str string to check for at most $max characters
+         * @param int $max maximum number of characters required for the string
+         * @return bool whether or not the string is a maximum length of $max
+         *     characters
+         */
+        public static function maxLength($str, $max)
+        {
+            return strlen(self::_decode($str)) <= $max;
+        }
+
+        /**
+         * minLength function. Checks whether a minimum (inclusive) length of
+         *     characters has been met in the string passed in.
+         * 
+         * @note without the _decode call, characters such as '&' would may be
+         *     counted as 5 characters in length (eg. &amp;); since this would
+         *     confuse user's, string's are decoded here. Therefore, keep in
+         *     mind that a database column should be longer than what you are
+         *     allowing from a form-input stage (eg. incase they enter a string
+         *     with a large number of multi-byte characters) 
+         * @access public
+         * @static
+         * @param string $str string to check for at least $min characters
+         * @param int $min minimum number of characters required for the string
+         * @return bool whether or not the string is a minimum length of $min
+         *     characters
+         */
+        public static function minLength($str, $min)
+        {
+            return strlen(self::_decode($str)) >= $min;
+        }
+
+        /**
+         * notEmpty function. Checks whether a passed in string is empty
+         * 
+         * @access public
+         * @static
+         * @param string $str string which should be checked for emptiness
+         * @return bool whether or not the string is empty
+         */
+        public static function notEmpty($str)
+        {
+            return $str !== '';
+        }
+
+        /**
+         * url function.
+         * 
+         * @see http://snippets.dzone.com/posts/show/3654
+         * @access public
+         * @static
+         * @param string $str
+         * @return bool
+         */
+        public static function url($str)
+        {
+            return preg_match(
+                '/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}' .
+                '(([0-9]{1,5})?\/.*)?$/ix',
+                $str
+            ) > 0;
+        }
+    }
+
+?>
