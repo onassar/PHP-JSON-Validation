@@ -1,8 +1,9 @@
 <?php
 
     /**
-     * SchemaValidator class.
+     * SchemaValidator
      * 
+     * @author Oliver Nassar <onassar@gmail.com<
      */
     class SchemaValidator
     {
@@ -144,5 +145,3 @@
             return count($this->_errors) === 0;
         }
     }
-
-?>

@@ -1,8 +1,9 @@
 <?php
 
     /**
-     * Schema class.
+     * Schema
      * 
+     * @author Oliver Nassar <onassar@gmail.com<
      */
     class Schema
     {
@@ -39,5 +40,3 @@
             return json_decode($raw, true);
         }
     }
-
-?>
