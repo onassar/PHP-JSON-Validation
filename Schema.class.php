@@ -3,7 +3,10 @@
     /**
      * Schema
      * 
-     * @author Oliver Nassar <onassar@gmail.com<
+     * General object that encapsulates a JSON-converted validation schema for
+     * processing.
+     * 
+     * @author Oliver Nassar <onassar@gmail.com>
      */
     class Schema
     {

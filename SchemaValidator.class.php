@@ -3,7 +3,9 @@
     /**
      * SchemaValidator
      * 
-     * @author Oliver Nassar <onassar@gmail.com<
+     * Manages the validation of a schema against it's defined rules.
+     * 
+     * @author Oliver Nassar <onassar@gmail.com>
      */
     class SchemaValidator
     {
@@ -40,6 +42,20 @@
          * @access protected
          */
         protected $_schema;
+
+        /**
+         * _addError function. Adds a rule object to the <_errors> array.
+         * 
+         * @note   decoupled to allow error logging and/or changing what gets
+         *         pushed to the <_errors> array
+         * @access protected
+         * @param  array $rule
+         * @return void
+         */
+        protected function _addError(array $rule)
+        {
+            array_push($this->_errors, $rule);
+        }
 
         /**
          * __construct
@@ -79,7 +95,7 @@
                  * validator data source (based on pattern of parameter)
                  */
                 $key = array();
-                if (preg_match('/^{([a-zA-Z-\._]+)}$/', $param, $key)) {
+                if (preg_match('/^{([a-zA-Z0-9-\._]+)}$/', $param, $key)) {
 
                     // if the parameter exists in the validator's data source
                     if (isset($this->_data[$key[1]])) {
@@ -105,16 +121,28 @@
         {
             // rule iteration
             foreach ($rules as $rule) {
+
+                /**
+                 * If the rule passed, check it's <rules> array (this occurs
+                 * recursively)
+                 */
                 if ($this->_checkRule($rule)) {
-                    $this->_checkRules($rule['rules']);
+                    if (isset($rules['rules'])) {
+                        $this->_checkRules($rule['rules']);
+                    }
                 } else {
 
                     /**
-                     * Mark as error the failed rule wasn't mean to act as a
-                     *     funnel.
+                     * If the rule wasn't setup to act as a funnel (a rule that
+                     * is marked as a funnel need-not validate successfully for
+                     * the schema itself to be considered valid), mark the rule
+                     * as having error'd out.
+                     * 
+                     * aka. rule didn't pass, and wasn't set as a funnel, then
+                     * the schema has failed to validate
                      */
                     if (!$rule['funnel']) {
-                        array_push($this->_errors, $rule['error']);
+                        $this->_addError($rule);
                     }
                 }
             }
@@ -142,7 +170,7 @@
          */
         public function valid()
         {
-            $rules = $this->_schema->getServerRules();
+            $rules = $this->_schema->getRules();
             $this->_checkRules($rules);
             return count($this->_errors) === 0;
         }

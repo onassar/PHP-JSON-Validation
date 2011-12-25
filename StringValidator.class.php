@@ -5,7 +5,7 @@
      * 
      * Provides various string-based validation checks.
      * 
-     * @author   Oliver Nassar <onassar@gmail.com<
+     * @author   Oliver Nassar <onassar@gmail.com>
      * @abstract
      */
     abstract class StringValidator
