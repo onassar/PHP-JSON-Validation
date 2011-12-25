@@ -8,9 +8,9 @@
     class SchemaValidator
     {
         /**
-         * _data.
+         * _data
          * 
-         * @var array
+         * @var    array
          * @access protected
          */
         protected $_data;
@@ -18,7 +18,7 @@
         /**
          * _errors.
          * 
-         * @var array
+         * @var    array
          * @access protected
          */
         protected $_errors = array();
@@ -26,7 +26,7 @@
         /**
          * _libraries
          * 
-         * @var array
+         * @var    array
          * @access protected
          */
         protected $_libraries = array(
@@ -36,17 +36,17 @@
         /**
          * _schema.
          * 
-         * @var Schema
+         * @var    Schema
          * @access protected
          */
         protected $_schema;
 
         /**
-         * __construct function.
+         * __construct
          * 
          * @access public
-         * @param Schema $schema
-         * @param array $data
+         * @param  Schema $schema
+         * @param  array $data
          * @return void
          */
         public function __construct(Schema $schema, array $data)
@@ -62,10 +62,10 @@
         }
 
         /**
-         * _checkRule function.
+         * _checkRule
          * 
          * @access protected
-         * @param array $rule
+         * @param  array $rule
          * @return boolean
          */
         protected function _checkRule(array $rule)
@@ -95,10 +95,10 @@
         }
 
         /**
-         * _checkRules function.
+         * _checkRules
          * 
          * @access protected
-         * @param array $rules
+         * @param  array $rules
          * @return boolean
          */
         protected function _checkRules(array $rules)
@@ -121,7 +121,7 @@
         }
 
         /**
-         * getErrors function.
+         * getErrors
          * 
          * @access public
          * @return array
@@ -132,8 +132,10 @@
         }
 
         /**
-         * valid function. Returns whether or not the schema has been validated
-         *     against the data passed in.
+         * valid
+         * 
+         * Returns whether or not the schema has been validated against the data
+         * passed in.
          * 
          * @access public
          * @return bool

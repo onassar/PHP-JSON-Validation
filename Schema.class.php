@@ -8,18 +8,20 @@
     class Schema
     {
         /**
-         * _path. Path to the schema json file
+         * _path
          * 
-         * @var string
+         * Path to the schema json file
+         * 
+         * @var    string
          * @access protected
          */
         protected $_path;
 
         /**
-         * __construct function.
+         * __construct
          * 
          * @access public
-         * @param string $path
+         * @param  string $path
          * @return void
          */
         public function __construct($path)
@@ -28,7 +30,7 @@
         }
 
         /**
-         * getRules function.
+         * getRules
          * 
          * @access public
          * @return array

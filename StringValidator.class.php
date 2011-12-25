@@ -11,10 +11,10 @@
     abstract class StringValidator
     {
         /**
-         * _decode function.
+         * _decode
          * 
          * @access protected
-         * @param mixed $mixed
+         * @param  mixed $mixed
          * @return mixed
          */
         protected function _decode($mixed)
@@ -29,13 +29,15 @@
         }
 
         /**
-         * email function. Checks whether a string is in the proper email format
+         * email
          * 
-         * @note should work with o.nassar+label@sub.domain.info
+         * Checks whether a string is in the proper email format
+         * 
+         * @notes  should work with o.nassar+label@sub.domain.info
          * @access public
          * @static
-         * @param string $str presumable email address which should be validated
-         *     to ensure it is in fact the valid format
+         * @param  string $str presumable email address which should be validated
+         *         to ensure it is in fact the valid format
          * @return bool whether or not the email is valid
          */
         public static function email($str)
@@ -47,11 +49,11 @@
         }
 
         /**
-         * emptyOrEmail function.
+         * emptyOrEmail
          * 
          * @access public
          * @static
-         * @param string $str
+         * @param  string $str
          * @return bool
          */
         public static function emptyOrEmail($str)
@@ -63,11 +65,11 @@
         }
 
         /**
-         * emptyOrUrl function.
+         * emptyOrUrl
          * 
          * @access public
          * @static
-         * @param string $str
+         * @param  string $str
          * @return bool
          */
         public static function emptyOrUrl($str)
@@ -79,12 +81,12 @@
         }
 
         /**
-         * equals function.
+         * equals
          * 
          * @access public
          * @static
-         * @param string $str
-         * @param string $comparison
+         * @param  string $str
+         * @param  string $comparison
          * @return bool
          */
         public static function equals($str, $comparison)
@@ -93,37 +95,41 @@
         }
 
         /**
-         * inList function. Checks whether a passed in value (string|int) exists
-         *     in a list.
+         * inList
          * 
-         * @access public
+         * Checks whether a passed in value (string|int) exists in a list.
+         * 
+         * @access  public
          * @static
-         * @param string|int $str value to search for existence in
-         * @param array $list array of values to use as a basis for an existence
-         *     check
+         * @param  string|int $str value to search for existence in
+         * @param  array $list array of values to use as a basis for an existence
+         *         check
          * @return bool whether or not $str is in the $list array
          */
         public static function inList($str, array $list)
         {
-            return in_array($str, $list);
+            return in_array($str, $list, true);
         }
 
         /**
-         * maxLength function. Checks whether a maximum (inclusive) length of
-         *     characters has been met in the string passed in.
+         * maxLength
          * 
-         * @note without the _decode call, characters such as '&' would may be
-         *     counted as 5 characters in length (eg. &amp;); since this would
-         *     confuse user's, string's are decoded here. Therefore, keep in
-         *     mind that a database column should be longer than what you are
-         *     allowing from a form-input stage (eg. incase they enter a string
-         *     with a large number of multi-byte characters)
+         * Checks whether a maximum (inclusive) length of characters has been
+         * met in the string passed in.
+         * 
+         * @notes  without the _decode call, characters such as '&' would may be
+         *         counted as 5 characters in length (eg. &amp;); since this
+         *         would confuse user's, string's are decoded here. Therefore,
+         *         keep in mind that a database column should be longer than
+         *         what you are allowing from a form-input stage (eg. incase
+         *         they enter a string with a large number of multi-byte
+         *         characters)
          * @access public
          * @static
-         * @param string $str string to check for at most $max characters
-         * @param int $max maximum number of characters required for the string
+         * @param  string $str string to check for at most $max characters
+         * @param  int $max maximum number of characters required for the string
          * @return bool whether or not the string is a maximum length of $max
-         *     characters
+         *         characters
          */
         public static function maxLength($str, $max)
         {
@@ -131,21 +137,24 @@
         }
 
         /**
-         * minLength function. Checks whether a minimum (inclusive) length of
-         *     characters has been met in the string passed in.
+         * minLength
          * 
-         * @note without the _decode call, characters such as '&' would may be
-         *     counted as 5 characters in length (eg. &amp;); since this would
-         *     confuse user's, string's are decoded here. Therefore, keep in
-         *     mind that a database column should be longer than what you are
-         *     allowing from a form-input stage (eg. incase they enter a string
-         *     with a large number of multi-byte characters) 
+         * Checks whether a minimum (inclusive) length of characters has been
+         * met in the string passed in.
+         * 
+         * @notes  without the _decode call, characters such as '&' would may be
+         *         counted as 5 characters in length (eg. &amp;); since this
+         *         would confuse user's, string's are decoded here. Therefore,
+         *         keep in mind that a database column should be longer than
+         *         what you are allowing from a form-input stage (eg. incase
+         *         they enter a string with a large number of multi-byte
+         *         characters)
          * @access public
          * @static
-         * @param string $str string to check for at least $min characters
-         * @param int $min minimum number of characters required for the string
+         * @param  string $str string to check for at least $min characters
+         * @param  int $min minimum number of characters required for the string
          * @return bool whether or not the string is a minimum length of $min
-         *     characters
+         *         characters
          */
         public static function minLength($str, $min)
         {
@@ -153,11 +162,13 @@
         }
 
         /**
-         * notEmpty function. Checks whether a passed in string is empty
+         * notEmpty
+         * 
+         * Checks whether a passed in string is empty
          * 
          * @access public
          * @static
-         * @param string $str string which should be checked for emptiness
+         * @param  string $str string which should be checked for emptiness
          * @return bool whether or not the string is empty
          */
         public static function notEmpty($str)
@@ -166,12 +177,12 @@
         }
 
         /**
-         * url function.
+         * url
          * 
-         * @see http://snippets.dzone.com/posts/show/3654
+         * @see    http://snippets.dzone.com/posts/show/3654
          * @access public
          * @static
-         * @param string $str
+         * @param  string $str
          * @return bool
          */
         public static function url($str)
