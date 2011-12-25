@@ -7,7 +7,7 @@
      * processing.
      * 
      * @author  Oliver Nassar <onassar@gmail.com>
-     * @example https://github.com/onassar/
+     * @example https://github.com/onassar/PHP-JSON-Validation/tree/master/example
      */
     class Schema
     {
