@@ -1,6 +1,7 @@
 [
     {
         "validator": ["StringValidator", "notEmpty"],
+        "failsafe": false,
         "params": ["{name}"],
         "error": {
             "input": "name",
@@ -41,5 +42,21 @@
             "input": "comment",
             "message": "Please enter a comment."
         }
+    },
+    {
+        "validator": ["StringValidator", "equals"],
+        "funnel": true,
+        "params": ["{updates}", "true"],
+        "rules": [
+            {
+                "validator": ["StringValidator", "email"],
+                "params": ["{email}"],
+                "error": {
+                    "input": "comment",
+                    "message": "Email must be provided if you wish to receive email updates."
+                }
+            }
+
+        ]
     }
 ]

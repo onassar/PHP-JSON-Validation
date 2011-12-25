@@ -116,19 +116,27 @@
          * 
          * @access protected
          * @param  array $rules
-         * @return boolean
+         * @return void
          */
         protected function _checkRules(array $rules)
         {
+            // failsafe triggered boolean
+            $failsafed = false;
+
             // rule iteration
             foreach ($rules as $rule) {
+
+                // if a failsafe was triggered (a failsafe rule having failed)
+                if ($failsafed === true) {
+                    break;
+                }
 
                 /**
                  * If the rule passed, check it's <rules> array (this occurs
                  * recursively)
                  */
                 if ($this->_checkRule($rule)) {
-                    if (isset($rules['rules'])) {
+                    if (isset($rule['rules'])) {
                         $this->_checkRules($rule['rules']);
                     }
                 } else {
@@ -144,8 +152,18 @@
                      * aka. rule didn't pass, and wasn't set as a funnel, then
                      * the schema has failed to validate
                      */
-                    if (!$rule['funnel']) {
+                    if (!isset($rule['funnel']) || $rule['funnel'] === false) {
                         $this->_addError($rule);
+                    }
+
+                    /**
+                     * If this failing-rule was setup as a failsafe (rules
+                     * having the property <failsafe> marked as <true> are
+                     * deemed too important for any further rules (in this
+                     * recursion) to be evaluated)
+                     */
+                    if (isset($rule['failsafe']) && $rule['failsafe'] === true) {
+                        $failsafed = true;
                     }
                 }
             }

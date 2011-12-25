@@ -14,10 +14,11 @@
          * _decode
          * 
          * @access protected
+         * @static
          * @param  mixed $mixed
          * @return mixed
          */
-        protected function _decode($mixed)
+        protected static function _decode($mixed)
         {
             if (is_array($mixed)) {
                 foreach ($mixed as $key => $value) {
