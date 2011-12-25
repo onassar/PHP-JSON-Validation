@@ -3,7 +3,7 @@
     /**
      * PHP-JSON-Validation example
      *
-     * In the spirit of a typical blog post comment (requiring a visitors name,
+     * In the spirit of a typical blog post comment (requesting a visitors name,
      * email address, website url, and comment), the following eample
      * demonstrates how to create a Schema instance based off a json-file
      * schema, create a SchemaValidator object based off that Schema object and

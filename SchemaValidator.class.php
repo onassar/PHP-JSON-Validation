@@ -5,7 +5,8 @@
      * 
      * Manages the validation of a schema against it's defined rules.
      * 
-     * @author Oliver Nassar <onassar@gmail.com>
+     * @author  Oliver Nassar <onassar@gmail.com>
+     * @example https://github.com/onassar/
      */
     class SchemaValidator
     {
@@ -135,8 +136,10 @@
                     /**
                      * If the rule wasn't setup to act as a funnel (a rule that
                      * is marked as a funnel need-not validate successfully for
-                     * the schema itself to be considered valid), mark the rule
-                     * as having error'd out.
+                     * the schema itself to be considered valid; rules can be
+                     * marked as a funnel to allow for subrules to be
+                     * validated in a predicatable, controllable way), mark the
+                     * rule as having error'd out.
                      * 
                      * aka. rule didn't pass, and wasn't set as a funnel, then
                      * the schema has failed to validate
