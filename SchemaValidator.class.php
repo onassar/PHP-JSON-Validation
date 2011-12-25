@@ -150,7 +150,7 @@
                      * rule as having error'd out.
                      * 
                      * aka. rule didn't pass, and wasn't set as a funnel, then
-                     * the schema has failed to validate
+                     * the rule has failed to validate
                      */
                     if (!isset($rule['funnel']) || $rule['funnel'] === false) {
                         $this->_addError($rule);
