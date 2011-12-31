@@ -38,7 +38,17 @@ In PHP land, it&#039;s values must correspond to a valid callback. The first
 string ought to be the name of the class of the rule validation, and the second
 the name of the method that returns true or false for this rule.
 
-### params (required)
+### params (optional)
+The *optional* params property, if included, ought to be structured as an array
+containing either a literal value (eg. a number, float, string, boolean, array
+or object), or a &quot;templated&quot; value which refers to a data field that
+was passed in during the **SchemaValidator** instantiation (eg. if trying to
+validate a password input that was posted, this string value may resemble
+&quot;{password-input}&quot;).
+
+There is no limit to the number of parameters that can be defined for a rule,
+however the validating class/method must allow the correct number of parameters
+and their respect type, otherwise a PHP error will be thrown.
 
 ### error (optional)
 This *optional* property ought to, but is not required, be an object containing
@@ -48,7 +58,7 @@ error message for the failure.
 While in reality it could be anything (eg. an error code that is then logged; a
 url that the user is then redirected to), the above use-case has worked pretty
 solid for me. See below for examples of how localization could be used with
-erorrs.
+errors.
 
 ### failsafe (optional)
 
