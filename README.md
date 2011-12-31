@@ -19,3 +19,29 @@ directory, which outlines a real-world use case.
 The [process.php](https://github.com/onassar/PHP-JSON-Validation/blob/master/example/process.php)
 file offers a comprehensive outline of how the logic works within a real-world
 example.
+
+Validation Pieces
+===
+
+If you&#039;ve looked at the example and want more background on the different
+validation components at work within an actual
+[JSON schema](https://github.com/onassar/PHP-JSON-Validation/blob/master/example/comment.json),
+then I&#039;ll attempt to provide that here:
+
+### Overview
+Each JSON schema is, well, a JSON document whose sole contents is encompassed in
+an array. Each array element is defined as a **rule**. Each **rule** is itself
+an object, containing the following properties/attributes:
+
+### [validator] (required)
+
+### [params] (required)
+
+### [error] (required)
+
+### [failsafe] (optional)
+
+### [rules] (optional)
+
+### [funnel] (optional)
+
