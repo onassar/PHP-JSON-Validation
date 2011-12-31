@@ -5,7 +5,9 @@ library focuses on a cross-paradigm (server/client) data validation solution.
 
 In short, I wanted to define how a request (generally, a form being posted)
 ought to be validated. This is the server side component which obeys the rules
-I&#039;ve come up with.
+I&#039;ve come up with. I borrowed many elements that I saw in the wild, and
+evolved them in a way that I believe brings about organization in a deceptively
+complicated topic.
 
 By working within two different contexts (a Schema and a Validator), and
 defining one set of rules (a json file which defines how data ought to be
