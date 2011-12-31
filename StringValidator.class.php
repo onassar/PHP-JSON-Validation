@@ -39,7 +39,7 @@
          * @static
          * @param  string $str presumable email address which should be validated
          *         to ensure it is in fact the valid format
-         * @return bool whether or not the email is valid
+         * @return boolean whether or not the email is valid
          */
         public static function email($str)
         {
@@ -55,7 +55,7 @@
          * @access public
          * @static
          * @param  string $str
-         * @return bool
+         * @return boolean
          */
         public static function emptyOrEmail($str)
         {
@@ -71,7 +71,7 @@
          * @access public
          * @static
          * @param  string $str
-         * @return bool
+         * @return boolean
          */
         public static function emptyOrUrl($str)
         {
@@ -88,7 +88,7 @@
          * @static
          * @param  string $str
          * @param  string $comparison
-         * @return bool
+         * @return boolean
          */
         public static function equals($str, $comparison)
         {
@@ -100,12 +100,12 @@
          * 
          * Checks whether a passed in value (string|int) exists in a list.
          * 
-         * @access  public
+         * @access public
          * @static
          * @param  string|int $str value to search for existence in
          * @param  array $list array of values to use as a basis for an existence
          *         check
-         * @return bool whether or not $str is in the $list array
+         * @return boolean whether or not $str is in the $list array
          */
         public static function inList($str, array $list)
         {
@@ -128,8 +128,9 @@
          * @access public
          * @static
          * @param  string $str string to check for at most $max characters
-         * @param  int $max maximum number of characters required for the string
-         * @return bool whether or not the string is a maximum length of $max
+         * @param  integer $max maximum number of characters required for the
+         *         string
+         * @return boolean whether or not the string is a maximum length of $max
          *         characters
          */
         public static function maxLength($str, $max)
@@ -153,8 +154,9 @@
          * @access public
          * @static
          * @param  string $str string to check for at least $min characters
-         * @param  int $min minimum number of characters required for the string
-         * @return bool whether or not the string is a minimum length of $min
+         * @param  integer $min minimum number of characters required for the
+         *         string
+         * @return boolean whether or not the string is a minimum length of $min
          *         characters
          */
         public static function minLength($str, $min)
@@ -170,7 +172,7 @@
          * @access public
          * @static
          * @param  string $str string which should be checked for emptiness
-         * @return bool whether or not the string is empty
+         * @return boolean whether or not the string is empty
          */
         public static function notEmpty($str)
         {
@@ -184,7 +186,7 @@
          * @access public
          * @static
          * @param  string $str
-         * @return bool
+         * @return boolean
          */
         public static function url($str)
         {

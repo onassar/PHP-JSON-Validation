@@ -19,7 +19,7 @@
         protected $_data;
 
         /**
-         * _errors.
+         * _errors
          * 
          * @var    array
          * @access protected
@@ -37,7 +37,7 @@
         );
 
         /**
-         * _schema.
+         * _schema
          * 
          * @var    Schema
          * @access protected
@@ -47,7 +47,7 @@
         /**
          * _addError function. Adds a rule object to the <_errors> array.
          * 
-         * @note   decoupled to allow error logging and/or changing what gets
+         * @notes  decoupled to allow error logging and/or changing what gets
          *         pushed to the <_errors> array
          * @access protected
          * @param  array $rule
@@ -187,7 +187,7 @@
          * passed in.
          * 
          * @access public
-         * @return bool
+         * @return boolean
          */
         public function valid()
         {
