@@ -113,7 +113,7 @@ the input evaluates to a proper string (for example, &quot;true&quot; or
 the email validation rule for the email input.
 
 Finally, this rule would have a **failsafe** attribute/property set to *true*.
-The result would be that if the checkbox evaluates to true, it funnels the
+The result would be that if the checkbox evaluates to true, *it funnels* the
 subrules array into consideration. The email validation rule then becomes
 relevant and required (depending on this subrules settings).
 
