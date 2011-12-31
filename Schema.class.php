@@ -6,6 +6,8 @@
      * General object that encapsulates a JSON-converted validation schema for
      * processing.
      * 
+     * @todo    load schema upon instantiation, and validate rules (required
+     *          properties/attributes)
      * @author  Oliver Nassar <onassar@gmail.com>
      * @example https://github.com/onassar/PHP-JSON-Validation/tree/master/example
      */
