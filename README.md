@@ -99,7 +99,7 @@ itself does not determine the success of failure of the **SchemaValidation**
 instance itself.
 
 For example, during a blog post commenting flow, a user may be prompted to
-optionally included their email address to receive further updates. In order to
+optionally include their email address to receive further updates. In order to
 receive these updates, they must also click a checkbox marking they would like
 to receive them.
 
