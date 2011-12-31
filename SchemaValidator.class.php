@@ -87,22 +87,27 @@
          */
         protected function _checkRule(array $rule)
         {
-            // parameter formatting
-            $params = &$rule['params'];
-            foreach ($params as $x => $param) {
+            // parameters passed
+            $params = array();
+            if (isset($rule['params'])) {
 
-                /**
-                 * If parameter value ought to be dynamically pulled from
-                 * validator data source (based on pattern of parameter)
-                 */
-                $key = array();
-                if (preg_match('/^{([a-zA-Z0-9-\._]+)}$/', $param, $key)) {
-
-                    // if the parameter exists in the validator's data source
-                    if (isset($this->_data[$key[1]])) {
-                        $params[$x] = $this->_data[$key[1]];
-                    } else {
-                        $params[$x] = null;
+                // parameter formatting
+                $params = &$rule['params'];
+                foreach ($params as $x => $param) {
+    
+                    /**
+                     * If parameter value ought to be dynamically pulled from
+                     * validator data source (based on pattern of parameter)
+                     */
+                    $key = array();
+                    if (preg_match('/^{([a-zA-Z0-9-\._]+)}$/', $param, $key)) {
+    
+                        // if the parameter exists in the validator's data source
+                        if (isset($this->_data[$key[1]])) {
+                            $params[$x] = $this->_data[$key[1]];
+                        } else {
+                            $params[$x] = null;
+                        }
                     }
                 }
             }
