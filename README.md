@@ -41,6 +41,14 @@ the name of the method that returns true or false for this rule.
 ### params (required)
 
 ### error (optional)
+This *optional* property ought to, but is not required, be an object containing
+the property that failed (eg. an email input, a password input) along with an
+error message for the failure.
+
+While in reality it could be anything (eg. an error code that is then logged; a
+url that the user is then redirected to), the above use-case has worked pretty
+solid for me. See below for examples of how localization could be used with
+erorrs.
 
 ### failsafe (optional)
 
