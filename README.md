@@ -33,7 +33,7 @@ an array. Each array element is defined as a **rule**. Each **rule** is itself
 an object, containing the following properties/attributes:
 
 ### validator (required)
-This required property must be formatted as an array, and contain two strings.
+This *required* property must be formatted as an array, and contain two strings.
 In PHP land, it&#039;s values must correspond to a valid callback. The first
 string ought to be the name of the class of the rule validation, and the second
 the name of the method that returns true or false for this rule.
@@ -47,5 +47,5 @@ the name of the method that returns true or false for this rule.
 ### rules (optional)
 
 ### funnel (optional)
-This optional attribute ought to contain a boolean value of either true or
+This *optional* attribute ought to contain a boolean value of either true or
 false. This attribute determines whether or now 
