@@ -61,8 +61,35 @@ solid for me. See below for examples of how localization could be used with
 errors.
 
 ### failsafe (optional)
+This *optional* attribute/property, if included, ought to contain a boolean
+value, which intrinsically infers the rule&#039;s importance.
+
+Failsafe rules are meant to act as a kill-switch. By default,
+**SchemaValidator** instances will evaluate all rules that have been defined.
+However if a **failsafe** property is defined for a rule, and that rule fails,
+all further validation will end.
+
+This can be useful for validating a user&#039;s authorization for an
+application or whether a request came in from a proper source.
 
 ### rules (optional)
+This *optional* attribute/property, if included, ought to be an array whose
+signature matches, recursively, the attributes/properties defined in this
+document.
+
+A rule&#039;s **rules** array is evaluated only if it&#039;s parent rule is
+successfully evaluated. This can be useful in cases whereby a field must exist
+for it to have a subsequent rule applied to it.
+
+For example, if a user is choosing a username during an account registration
+process, a requirement may be that the username is 4 characters long. The schema
+could reflect this structure by defining a **minLength** rule, and within that
+rule&#039;s **rules** array, pointing to the validation class and method to
+ensure the username isn&#039; taken.
+
+In this example, an unnecessary database hit can be prevented if a username is
+not the proper length. Many other examples can be drawn from this concept,
+though.
 
 ### funnel (optional)
 This *optional* attribute ought to contain a boolean value of either true or
