@@ -92,8 +92,34 @@ not the proper length. Many other examples can be drawn from this concept,
 though.
 
 ### funnel (optional)
-This *optional* attribute ought to contain a boolean value of either true or
-false. This attribute determines whether or now 
+This *optional* attribute/property, if included, ought to be set as a boolean.
+It&#039;s binary state determines whether or not the rule it&#039;s applied to
+is meant solely to act as a funnel for further rules. The evaluation of the rule
+itself does not determine the success of failure of the **SchemaValidation**
+instance itself.
+
+For example, during a blog post commenting flow, a user may be prompted to
+optionally included their email address to receive further updates. In order to
+receive these updates, they must also click a checkbox marking they would like
+to receive them.
+
+This produces two situations. One in which an email address is not required, and
+one in which it is, if and only if the user checks the checkbox indicating they
+would like to receive updates.
+
+In this case, a rule would be created for the checkbox. It would check to see if
+the input evaluates to a proper string (for example, &quot;true&quot; or
+&quot;on&quot;). This rule would contain a **rules** array itself, containing
+the email validation rule for the email input.
+
+Finally, this rule would have a **failsafe** attribute/property set to *true*.
+The result would be that if the checkbox evaluates to true, it funnels the
+subrules array into consideration. The email validation rule then becomes
+relevant and required (depending on this subrules settings).
+
+Otherwise, if the checkbox is not checked, the **SchemaValidator** does not go
+ahead with the email validation subrule, and is also not considered a failure
+due to the checkbox not being checked.
 
 Flexibility
 ===
