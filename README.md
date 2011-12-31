@@ -33,11 +33,11 @@ Each JSON schema is, well, a JSON document whose sole contents is encompassed in
 an array. Each array element is defined as a **rule**. Each **rule** is itself
 an object, containing the following properties/attributes:
 
-### [validator] (required)
+### \[validator] (required)
 
-### [params] (required)
+### \[params] (required)
 
-### [error] (required)
+### \[error] (required)
 
 ### [failsafe] (optional)
 
