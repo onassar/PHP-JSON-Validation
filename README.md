@@ -115,7 +115,7 @@ the email validation rule for the email input.
 Finally, this rule would have a **failsafe** attribute/property set to *true*.
 The result would be that if the checkbox evaluates to true, *it funnels* the
 subrules array into consideration. The email validation rule then becomes
-relevant and required (depending on this subrules settings).
+relevant and required (depending on this subrule&#039;s settings).
 
 Otherwise, if the checkbox is not checked, the **SchemaValidator** does not go
 ahead with the email validation subrule, and is also not considered a failure
