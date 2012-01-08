@@ -137,6 +137,8 @@ entire rule in the **errors** array, which can be accessed through the
 A practical example of defining custom attributes would be by defining an error
 object as follows:
 
+``` json
+
     {
         "validator": ["StringValidator", "emptyOrEmail"],
         "params": ["{email}"],
@@ -149,6 +151,8 @@ object as follows:
             }
         }
     },
+
+```
 
 This would allow for localization to be contained within the schema, while
 keeping it clean and decoupled from the actual validation logic.
