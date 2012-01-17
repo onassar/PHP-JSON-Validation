@@ -20,6 +20,10 @@ The [process.php](https://github.com/onassar/PHP-JSON-Validation/blob/master/exa
 file offers a comprehensive outline of how the logic works within a real-world
 example.
 
+**Note** To limit the validator to one unsuccessful rule per validation flow,
+simply mark each rule&#039;s `failsafe` attribute as `true`. See documentation
+below for a detailed overview of the `failsafe` propery.
+
 Validation Pieces
 ===
 
