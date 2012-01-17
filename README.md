@@ -136,7 +136,7 @@ Additionally, properties and attributes can be added to any schema. Upon a rule
 failure, these properties will be passed along in the **errors** array for the
 **SchemaValidator** instance. When a rule errors out, it by default stores the
 entire rule in the **errors** array, which can be accessed through the
-**SchemaValidator**&#039;s **getErrors** method.
+instance&#039;s `getErrors` method.
 
 A practical example of defining custom attributes would be by defining an error
 object as follows:
