@@ -22,7 +22,7 @@ example.
 
 **Note** To limit the validator to one unsuccessful rule per validation flow,
 simply mark each rule&#039;s `failsafe` attribute as `true`. See documentation
-below for a detailed overview of the `failsafe` propery.
+below for a detailed overview of the `failsafe` property.
 
 Validation Pieces
 ===
