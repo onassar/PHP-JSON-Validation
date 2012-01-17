@@ -26,7 +26,6 @@ below for a detailed overview of the `failsafe` property.
 
 Validation Pieces
 ===
-
 If you&#039;ve looked at the example and want more background on the different
 validation components at work within an actual
 [JSON schema](https://github.com/onassar/PHP-JSON-Validation/blob/master/example/comment.json),
@@ -160,3 +159,15 @@ object as follows:
 
 This would allow for localization to be contained within the schema, while
 keeping it clean and decoupled from the actual validation logic.
+
+Security
+===
+Depending on your validation requirements, values that have a rule applied
+against them may cause security bugs. This is not managed by the library.
+
+For example, if a regular expression is run against a string, with the
+expectation that the string has had it&#039;s contents encoded/escaped, this
+could cause a serious server-level fault. This should be handled independent
+from the validation process. See the
+[PHP-Security](https://github.com/onassar/PHP-Security) functions available.
+These work exceptionally well for me during the validation process.
