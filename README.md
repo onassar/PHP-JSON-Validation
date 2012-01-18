@@ -164,7 +164,7 @@ SmartSchema
 ===
 The `SmartSchema` class is not required for the validation outlined above.
 However it provides very convenient filtering for use with the
-(JS-JSON-Validation)[https://github.com/onassar/PHP-JSON-Validation] library,
+[JS-JSON-Validation](https://github.com/onassar/PHP-JSON-Validation) library,
 which handles client side validation that is based off the exact same schema
 file.
 
