@@ -46,7 +46,7 @@
         'updates' => 'true'
     );
 
-    // instantiation
+    // instantiation (could be <Schema> or <SmartSchema> instance)
     require_once '../Schema.class.php';
     require_once '../SchemaValidator.class.php';
     $schema = (new Schema('comment.json'));
