@@ -165,8 +165,7 @@ SmartSchema
 The `SmartSchema` class is not required for the validation outlined above.
 However it provides very convenient filtering for use with the
 [JS-JSON-Validation](https://github.com/onassar/JS-JSON-Validation) library,
-which handles client side validation that is based off the exact same schema
-file.
+which handles client side validation that is based off the same schema file.
 
 There is no difference in instantiation or usage, other than adding a `range`
 attribute to the schema definition. This attribute ought to contain an array
