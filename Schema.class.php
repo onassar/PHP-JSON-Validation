@@ -24,6 +24,18 @@
         protected $_path;
 
         /**
+         * _method
+         * 
+         * The method that ought to be called for rules retrieval (changing of
+         * this property is currently only used/useful by the <SmartSchema>
+         * class).
+         * 
+         * @var    string
+         * @access protected
+         */
+        protected $_method = 'getRules';
+
+        /**
          * __construct
          * 
          * @access public
@@ -33,6 +45,17 @@
         public function __construct($path)
         {
             $this->_path = $path;
+        }
+
+        /**
+         * getMethod
+         * 
+         * @access public
+         * @return string
+         */
+        public function getMethod()
+        {
+            return $this->_method;
         }
 
         /**
@@ -46,5 +69,17 @@
             // grab and return schema contents
             $raw = file_get_contents($this->_path);
             return json_decode($raw, true);
+        }
+
+        /**
+         * setMethod
+         * 
+         * @access public
+         * @param  String $method
+         * @return void
+         */
+        public function setMethod($method)
+        {
+            $this->_method = $method;
         }
     }

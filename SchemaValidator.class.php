@@ -196,7 +196,7 @@
          */
         public function valid()
         {
-            $rules = $this->_schema->getRules();
+            $rules = call_user_func(array($this->_schema, $this->getMethod());
             $this->_checkRules($rules);
             return count($this->_errors) === 0;
         }

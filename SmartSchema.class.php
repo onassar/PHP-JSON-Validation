@@ -25,6 +25,16 @@
     final class SmartSchema extends Schema
     {
         /**
+         * _method
+         * 
+         * The method that ought to be called for rules retrieval.
+         * 
+         * @var    string
+         * @access protected
+         */
+        protected $_methopd = 'getRules';
+
+        /**
          * __limit
          * 
          * Recursively excludes rules which do *not* contain the <inclusion>
@@ -65,6 +75,21 @@
 
             // return rules that have been recursively-cleared
             return array_values($rules);
+        }
+
+        /**
+         * __construct
+         * 
+         * Defaults rules that ought to be validated to be server side.
+         * 
+         * @access public
+         * @param  string $path
+         * @return void
+         */
+        public function __construct($path)
+        {
+            parent::__construct($path);
+            $this->setMethod('getServerRules');
         }
 
         /**

@@ -72,8 +72,9 @@ Failsafe rules are meant to act as a kill-switch. By default,
 However if a **failsafe** property is defined for a rule, and that rule fails,
 all further validation will end.
 
-This can be useful for validating a user&#039;s authorization for an
-application or whether a request came in from a proper source.
+Validating a user&#039;s authorization for an application, or whether a request
+came in from a proper source, are good real-world examples of the `failsafe`
+attribute&#039;s usage.
 
 ### rules (optional)
 This *optional* attribute/property, if included, ought to be an array whose
