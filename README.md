@@ -164,7 +164,7 @@ SmartSchema
 ===
 The `SmartSchema` class is not required for the validation outlined above.
 However it provides very convenient filtering for use with the
-[JS-JSON-Validation](https://github.com/onassar/PHP-JSON-Validation) library,
+[JS-JSON-Validation](https://github.com/onassar/JS-JSON-Validation) library,
 which handles client side validation that is based off the exact same schema
 file.
 
@@ -196,7 +196,7 @@ attribute contains only one string: `server`. A `SmartSchema` instance is able
 to parse the rules according to this range, and present them for validation
 appropriately (to either a
 [server side](https://github.com/onassar/PHP-JSON-Validation) validation flow o
-[client side](https://github.com/onassar/Js-JSON-Validation) validation flow).
+[client side](https://github.com/onassar/JS-JSON-Validation) validation flow).
 
 Security
 ===
