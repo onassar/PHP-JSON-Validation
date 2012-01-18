@@ -194,7 +194,7 @@ through ajax, it requires access to a database. As a result, the `range` array
 attribute contains only one string: `server`. A `SmartSchema` instance is able
 to parse the rules according to this range, and present them for validation
 appropriately (to either a
-[server side](https://github.com/onassar/PHP-JSON-Validation) validation flow o
+[server side](https://github.com/onassar/PHP-JSON-Validation) validation flow or
 [client side](https://github.com/onassar/JS-JSON-Validation) validation flow).
 
 Security
