@@ -47,7 +47,7 @@ containing either a literal value (eg. a number, float, string, boolean, array
 or object), or a &quot;templated&quot; value which refers to a data field that
 was passed in during the **SchemaValidator** instantiation (eg. if trying to
 validate a password input that was posted, this string value may resemble
-&quot;{password-input}&quot;).
+`{password-input-name}`).
 
 There is no limit to the number of parameters that can be defined for a rule,
 however the validating class/method must allow the correct number of parameters
