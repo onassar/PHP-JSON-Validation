@@ -160,6 +160,44 @@ object as follows:
 This would allow for localization to be contained within the schema, while
 keeping it clean and decoupled from the actual validation logic.
 
+SmartSchema
+===
+The `SmartSchema` class is not required for the validation outlined above.
+However it provides very convenient filtering for use with the
+(JS-JSON-Validation)[https://github.com/onassar/PHP-JSON-Validation] library,
+which handles client side validation that is based off the exact same schema
+file.
+
+There is no difference in instantiation or usage, other than adding a `range`
+attribute to the schema definition. This attribute ought to contain an array
+which defines whether the rule should be run by the client, server, or both
+validation engines.
+
+### Sample SmartSchema Rule
+
+``` json
+
+    {
+        "validator": ["StringValidator", "uniqueEmail"],
+        "range": ["server"],
+        "params": ["{email}"],
+        "error": {
+            "input": "email",
+            "message": "A user with this email is already registered."
+        }
+    },
+
+```
+
+As can be inferred from above, a `uniqueEmail` property would (but not required
+to) be processed and/or validated on the server side. While it could be done
+through ajax, it requires access to a database. As a result, the `range` array
+attribute contains only one string: `server`. A `SmartSchema` instance is able
+to parse the rules according to this range, and present them for validation
+appropriately (to either a
+[server side](https://github.com/onassar/PHP-JSON-Validation) validation flow o
+[client side](https://github.com/onassar/Js-JSON-Validation) validation flow).
+
 Security
 ===
 Depending on your validation requirements, values that have a rule applied
