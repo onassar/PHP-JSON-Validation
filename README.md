@@ -69,7 +69,7 @@ value, which intrinsically infers the rule&#039;s importance.
 
 Failsafe rules are meant to act as a kill-switch. By default,
 `SchemaValidator` instances will evaluate all rules that have been defined.
-However if a **failsafe** property is defined for a rule, and that rule fails,
+However if a `failsafe` property is defined for a rule, and that rule fails,
 all further validation will end.
 
 Validating a user&#039;s authorization for an application, or whether a request
@@ -113,10 +113,10 @@ would like to receive updates.
 
 In this case, a rule would be created for the checkbox. It would check to see if
 the input evaluates to a proper string (for example, &quot;true&quot; or
-&quot;on&quot;). This rule would contain a **rules** array itself, containing
+&quot;on&quot;). This rule would contain a `rules` array itself, containing
 the email validation rule for the email input.
 
-Finally, this rule would have a **failsafe** attribute/property set to *true*.
+Finally, this rule would have a `failsafe` attribute/property set to `true`.
 The result would be that if the checkbox evaluates to true, *it funnels* the
 subrules array into consideration. The email validation rule then becomes
 relevant and required (depending on this subrule&#039;s settings).
@@ -133,9 +133,9 @@ the funnel and failsafe properties are meant to give the ability to derive
 complex validation hierarchies.
 
 Additionally, properties and attributes can be added to any schema. Upon a rule
-failure, these properties will be passed along in the **errors** array for the
+failure, these properties will be passed along in the `errors` array for the
 `SchemaValidator` instance. When a rule errors out, it by default stores the
-entire rule in the **errors** array, which can be accessed through the
+entire rule in the `errors` array, which can be accessed through the
 instance&#039;s `getErrors` method.
 
 A practical example of defining custom attributes would be by defining an error
