@@ -81,14 +81,14 @@ This *optional* attribute/property, if included, ought to be an array whose
 signature matches, recursively, the attributes/properties defined in this
 document.
 
-A rule&#039;s **rules** array is evaluated only if it&#039;s parent rule is
+A rule&#039;s `rules` array is evaluated only if it&#039;s parent rule is
 successfully evaluated. This can be useful in cases whereby a field must exist
 for it to have a subsequent rule applied to it.
 
 For example, if a user is choosing a username during an account registration
 process, a requirement may be that the username is 4 characters long. The schema
-could reflect this structure by defining a **minLength** rule, and within that
-rule&#039;s **rules** array, pointing to the validation class and method to
+could reflect this structure by defining a `minLength` rule, and within that
+rule&#039;s `rules` array, pointing to the validation class and method to
 ensure the username isn&#039; taken.
 
 In this example, an unnecessary database hit can be prevented if a username is
