@@ -32,7 +32,7 @@ validation components at work within an actual
 then I&#039;ll attempt to provide that here.
 
 Each JSON schema is, well, a JSON document whose sole contents is encompassed in
-an array. Each array element is defined as a **rule**. Each **rule** is itself
+an array. Each array element is defined as a `rule`. Each `rule` is itself
 an object, containing the following properties/attributes:
 
 ### validator (required)
@@ -45,7 +45,7 @@ the name of the method that returns true or false for this rule.
 The *optional* params property, if included, ought to be structured as an array
 containing either a literal value (eg. a number, float, string, boolean, array
 or object), or a &quot;templated&quot; value which refers to a data field that
-was passed in during the **SchemaValidator** instantiation (eg. if trying to
+was passed in during the `SchemaValidator` instantiation (eg. if trying to
 validate a password input that was posted, this string value may resemble
 `{password-input-name}`).
 
@@ -68,7 +68,7 @@ This *optional* attribute/property, if included, ought to contain a boolean
 value, which intrinsically infers the rule&#039;s importance.
 
 Failsafe rules are meant to act as a kill-switch. By default,
-**SchemaValidator** instances will evaluate all rules that have been defined.
+`SchemaValidator` instances will evaluate all rules that have been defined.
 However if a **failsafe** property is defined for a rule, and that rule fails,
 all further validation will end.
 
@@ -99,7 +99,7 @@ though.
 This *optional* attribute/property, if included, ought to be set as a boolean.
 It&#039;s binary state determines whether or not the rule it&#039;s applied to
 is meant solely to act as a funnel for further rules. The evaluation of the rule
-itself does not determine the success of failure of the **SchemaValidation**
+itself does not determine the success of failure of the `SchemaValidation`
 instance itself.
 
 For example, during a blog post commenting flow, a user may be prompted to
@@ -121,7 +121,7 @@ The result would be that if the checkbox evaluates to true, *it funnels* the
 subrules array into consideration. The email validation rule then becomes
 relevant and required (depending on this subrule&#039;s settings).
 
-Otherwise, if the checkbox is not checked, the **SchemaValidator** does not go
+Otherwise, if the checkbox is not checked, **SchemaValidator** does not go
 ahead with the email validation subrule, and is also not considered a failure
 due to the checkbox not being checked.
 
@@ -134,7 +134,7 @@ complex validation hierarchies.
 
 Additionally, properties and attributes can be added to any schema. Upon a rule
 failure, these properties will be passed along in the **errors** array for the
-**SchemaValidator** instance. When a rule errors out, it by default stores the
+`SchemaValidator` instance. When a rule errors out, it by default stores the
 entire rule in the **errors** array, which can be accessed through the
 instance&#039;s `getErrors` method.
 
