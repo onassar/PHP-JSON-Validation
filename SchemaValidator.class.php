@@ -164,8 +164,9 @@
                     /**
                      * If this failing-rule was setup as a failsafe (rules
                      * having the property <failsafe> marked as <true> are
-                     * deemed too important for any further rules (in this
-                     * recursion) to be evaluated)
+                     * deemed too important for any further rules [in this
+                     * recursion] to be evaluated), mark a boolean to prevent
+                     * further rule validation within this recursive iteration.
                      */
                     if (isset($rule['failsafe']) && $rule['failsafe'] === true) {
                         $failsafed = true;
