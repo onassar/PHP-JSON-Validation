@@ -21,7 +21,7 @@
         "params": ["{website}"],
         "error": {
             "input": "website",
-            "message": "Please enter your website's url."
+            "message": "Please enter a valid website url."
         }
     },
     {
