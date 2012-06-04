@@ -19,12 +19,12 @@
         protected $_data;
 
         /**
-         * _errors
+         * _failed
          * 
          * @var    array
          * @access protected
          */
-        protected $_errors = array();
+        protected $_failed = array();
 
         /**
          * _libraries
@@ -45,17 +45,17 @@
         protected $_schema;
 
         /**
-         * _addError function. Adds a rule object to the <_errors> array.
+         * _addFailedRule function. Adds a rule object to the <_failed> array.
          * 
-         * @notes  decoupled to allow error logging and/or changing what gets
-         *         pushed to the <_errors> array
+         * @notes  decoupled to allow logging and/or changing what gets
+         *         pushed to the <_failed> array
          * @access protected
          * @param  array $rule
          * @return void
          */
-        protected function _addError(array $rule)
+        protected function _addFailedRule(array $rule)
         {
-            array_push($this->_errors, $rule);
+            array_push($this->_failed, $rule);
         }
 
         /**
@@ -152,13 +152,13 @@
                      * the schema itself to be considered valid; rules can be
                      * marked as a funnel to allow for subrules to be
                      * validated in a predicatable, controllable way), mark the
-                     * rule as having error'd out.
+                     * rule as having failed.
                      * 
                      * aka. rule didn't pass, and wasn't set as a funnel, then
                      * the rule has failed to validate
                      */
                     if (!isset($rule['funnel']) || $rule['funnel'] === false) {
-                        $this->_addError($rule);
+                        $this->_addFailedRule($rule);
                     }
 
                     /**
@@ -176,14 +176,14 @@
         }
 
         /**
-         * getErrors
+         * getFailedRules
          * 
          * @access public
          * @return array
          */
-        public function getErrors()
+        public function getFailedRules()
         {
-            return $this->_errors;
+            return $this->_failed;
         }
 
         /**
@@ -201,6 +201,6 @@
                 array($this->_schema, $this->_schema->getMethod())
             );
             $this->_checkRules($rules);
-            return count($this->_errors) === 0;
+            return count($this->_failed) === 0;
         }
     }

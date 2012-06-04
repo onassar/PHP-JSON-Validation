@@ -1,7 +1,7 @@
 PHP-JSON-Validation
 ===
 One of the more complicated of my classes/projects, the PHP-JSON-Validation
-library focuses on a cross-paradigm (server/client) data validation solution.s
+library focuses on a cross-paradigm (server/client) data validation solution.
 
 In short, I wanted to define how a request (generally, a form being posted)
 ought to be validated. This is the server side component which obeys the rules
@@ -133,10 +133,10 @@ the funnel and failsafe properties are meant to give the ability to derive
 complex validation hierarchies.
 
 Additionally, properties and attributes can be added to any schema. Upon a rule
-failure, these properties will be passed along in the `errors` array for the
+failure, these properties will be passed along in the failed rules array for the
 `SchemaValidator` instance. When a rule errors out, it by default stores the
-entire rule in the `errors` array, which can be accessed through the
-instance&#039;s `getErrors` method.
+entire rule in the `_failed` array, which can be accessed through the
+instance&#039;s `getFailedRules` method.
 
 A practical example of defining custom attributes would be by defining an error
 object as follows:

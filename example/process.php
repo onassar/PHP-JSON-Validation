@@ -58,7 +58,7 @@
     } else {
         echo 'Invalid<br />Offending rule(s):' .
              '<pre>';
-        $offending = $validator->getErrors();
+        $offending = $validator->getFailedRules();
         print_r($offending);
         echo '</pre>';
     }
