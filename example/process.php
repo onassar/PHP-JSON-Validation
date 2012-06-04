@@ -23,15 +23,15 @@
      *      *not* affect the subsequent validation of the schema, since it is
      *      marked as a funnel
      * 
-     * The rule evaluating whether a name was specified contains the failsafe
-     * property, which prevents any further rules from being evaluated. This can
-     * be useful for security (eg. to ensure certain high-level rules are
-     * succesfully evaluated before processing sub-rules which may attempt to
-     * select, modify or remove from a database).
+     * The rule evaluating whether a name was specified contains the <blocking>
+     * property, which prevents any further rules from being evaluated upon
+     * failure. This can be useful for security (eg. to ensure certain
+     * high-level rules are succesfully evaluated before processing sub-rules
+     * which may attempt to select, modify or remove from a database).
      *
      * Of note: rules are processed in sequence, regardless of whether their
      * processing is depenedent on a previous rule having been successfully
-     * passed, unless the <failsafe> or <funnel> properties are used
+     * passed, unless the <blocking> or <funnel> properties are used
      * intelligently.
      *
      * @author Oliver Nassar <onassar@gmail.com>

@@ -1,7 +1,7 @@
 [
     {
         "validator": ["StringValidator", "notEmpty"],
-        "failsafe": true,
+        "blocking": true,
         "params": ["{name}"],
         "error": {
             "input": "name",

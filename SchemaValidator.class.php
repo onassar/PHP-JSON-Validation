@@ -125,14 +125,14 @@
          */
         protected function _checkRules(array $rules)
         {
-            // failsafe triggered boolean
-            $failsafed = false;
+            // blocking triggered boolean
+            $blocked = false;
 
             // rule iteration
             foreach ($rules as $rule) {
 
-                // if a failsafe was triggered (a failsafe rule having failed)
-                if ($failsafed === true) {
+                // if a blocking rule has failed
+                if ($blocked === true) {
                     break;
                 }
 
@@ -162,14 +162,14 @@
                     }
 
                     /**
-                     * If this failing-rule was setup as a failsafe (rules
-                     * having the property <failsafe> marked as <true> are
+                     * If this failing-rule was setup as <blocking> (rules
+                     * having the property <blocking> marked as <true> are
                      * deemed too important for any further rules [in this
-                     * recursion] to be evaluated), mark a boolean to prevent
+                     * recursion] to be tested), mark a boolean to prevent
                      * further rule validation within this recursive iteration.
                      */
-                    if (isset($rule['failsafe']) && $rule['failsafe'] === true) {
-                        $failsafed = true;
+                    if (isset($rule['blocking']) && $rule['blocking'] === true) {
+                        $blocked = true;
                     }
                 }
             }
