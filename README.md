@@ -21,8 +21,8 @@ file offers a comprehensive outline of how the logic works within a real-world
 example.
 
 **Note** To limit the validator to one *unsuccessful* rule per validation flow,
-simply mark each rule&#039;s `failsafe` attribute as `true`. See documentation
-below for a detailed overview of the `failsafe` property.
+simply mark each rules `blocking` attribute as `true`. See documentation
+below for a detailed overview of the `blocking` property.
 
 Validation Pieces
 ===
@@ -63,17 +63,17 @@ url that the user is then redirected to), the above use-case has worked pretty
 solid for me. See below for examples of how localization could be used with
 errors.
 
-### failsafe (optional)
+### blocking (optional)
 This *optional* attribute/property, if included, ought to contain a boolean
 value, which intrinsically infers the rule&#039;s importance.
 
-Failsafe rules are meant to act as a kill-switch. By default,
+Blocking rules are meant to act as a kill-switch. By default,
 `SchemaValidator` instances will evaluate all rules that have been defined.
-However if a `failsafe` property is defined for a rule, and that rule fails,
+However if a `blocking` property is defined for a rule, and that rule fails,
 all further validation will end.
 
 Validating a user&#039;s authorization for an application, or whether a request
-came in from a proper source, are good real-world examples of the `failsafe`
+came in from a proper source, are good real-world examples of the `blocking`
 attribute&#039;s usage.
 
 ### rules (optional)
@@ -116,20 +116,20 @@ the input evaluates to a proper string (for example, &quot;true&quot; or
 &quot;on&quot;). This rule would contain a `rules` array itself, containing
 the email validation rule for the email input.
 
-Finally, this rule would have a `failsafe` attribute/property set to `true`.
+Finally, this sub-rule would have a `blocking` attribute/property set to `true`.
 The result would be that if the checkbox evaluates to true, *it funnels* the
-subrules array into consideration. The email validation rule then becomes
-relevant and required (depending on this subrule&#039;s settings).
+sub-rules array into consideration. The email validation rule then becomes
+relevant and required (due to the `blocking` being set to the boolean `true`).
 
 Otherwise, if the checkbox is not checked, **SchemaValidator** does not go
-ahead with the email validation subrule, and is also not considered a failure
+ahead with the email validation sub-rule, and is also not considered a failure
 due to the checkbox not being checked.
 
 Flexibility
 ===
 The intent behind the structure of this library is that of extensibility.
-Besides being able to full define your own validation classes and methods,
-the funnel and failsafe properties are meant to give the ability to derive
+Besides being able to fully define your own validation classes and methods,
+the <funnel> and <blocking> properties are meant to give the ability to derive
 complex validation hierarchies.
 
 Additionally, properties and attributes can be added to any schema. Upon a rule
