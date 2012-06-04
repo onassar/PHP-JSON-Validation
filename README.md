@@ -1,7 +1,7 @@
 PHP-JSON-Validation
 ===
 One of the more complicated of my classes/projects, the PHP-JSON-Validation
-library focuses on a cross-paradigm (server/client) data validation solution.
+library focuses on a cross-paradigm (server/client) data validation solution.s
 
 In short, I wanted to define how a request (generally, a form being posted)
 ought to be validated. This is the server side component which obeys the rules
