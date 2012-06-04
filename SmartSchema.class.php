@@ -38,7 +38,7 @@
          * __limit
          * 
          * Recursively excludes rules which do *not* contain the <inclusion>
-         * value in the <range> array/attribute of a form schema.
+         * value in the <range> array/attribute of a schema rule.
          * 
          * @access private
          * @param  array $rules
