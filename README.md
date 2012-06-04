@@ -209,3 +209,11 @@ could cause a serious server-level fault. This should be handled independent
 from the validation process. See the
 [PHP-Security](https://github.com/onassar/PHP-Security) functions available.
 These work exceptionally well for me during the validation process.
+
+Front-End
+===
+And now, I've managed to get my front-end validation framework up and running.
+Check out the
+[JS-JSON-Validation](https://github.com/onassar/JS-JSON-Validation) if you're
+interested in validating data on the front as well as backend using the same
+schema file.
