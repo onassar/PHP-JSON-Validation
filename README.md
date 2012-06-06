@@ -3,6 +3,16 @@ PHP-JSON-Validation
 One of the more complicated of my classes/projects, the PHP-JSON-Validation
 library focuses on a cross-paradigm (server/client) data validation solution.
 
+Quick Note
+===
+This library is meant to be used directly with the front-end validation
+project [JS-JSON-Validation](https://github.com/onassar/JS-JSON-Validation).
+
+Both libraries are developed to work off the same `schema` object type in order
+to have validation of a form (or data source) validated in the same way.
+
+Summary
+===
 In short, I wanted to define how a request (generally, a form being posted)
 ought to be validated. This is the server side component which obeys the rules
 I&#039;ve come up with. I borrowed many elements that I saw in the wild, and
@@ -213,11 +223,3 @@ could cause a serious server-level fault. This should be handled independent
 from the validation process. See the
 [PHP-Security](https://github.com/onassar/PHP-Security) functions available.
 These work exceptionally well for me during the validation process.
-
-Front-End
-===
-And now, I've managed to get my front-end validation framework up and running.
-Check out the
-[JS-JSON-Validation](https://github.com/onassar/JS-JSON-Validation) if you're
-interested in validating data on the front as well as backend using the same
-schema file.
