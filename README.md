@@ -53,16 +53,6 @@ There is no limit to the number of parameters that can be defined for a rule,
 however the validating class/method must allow the correct number of parameters
 and their respect type, otherwise a PHP error will be thrown.
 
-### error (optional)
-This *optional* property ought to, but is not required, be an object containing
-the property that failed (eg. an email input, a password input) along with an
-error message for the failure.
-
-While in reality it could be anything (eg. an error code that is then logged; a
-url that the user is then redirected to), the above use-case has worked pretty
-solid for me. See below for examples of how localization could be used with
-errors.
-
 ### blocking (optional)
 This *optional* attribute/property, if included, ought to contain a boolean
 value, which intrinsically infers the rule&#039;s importance.
@@ -124,6 +114,20 @@ relevant and required (due to the `blocking` being set to the boolean `true`).
 Otherwise, if the checkbox is not checked, **SchemaValidator** does not go
 ahead with the email validation sub-rule, and is also not considered a failure
 due to the checkbox not being checked.
+
+### error (suggested)
+I listed this property as *suggested*, rather than *optional*, as it is in no
+way used by the validating engine. It is rather useful in the error handling
+phases of a validation flow.
+
+If included, this property ought to (but is not required) be an object
+containing the property that failed (eg. the name, as a string, of the input
+that was being tested against) along with an error message for the failure.
+
+While in reality it could be anything (eg. an error code that is then logged; a
+url that the user is then redirected to), the above use-case has worked pretty
+solid for me. See below for examples of how localization could be used with
+errors.
 
 Flexibility
 ===
