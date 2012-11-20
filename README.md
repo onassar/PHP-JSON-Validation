@@ -223,3 +223,4 @@ could cause a serious server-level fault. This should be handled independent
 from the validation process. See the
 [PHP-Security](https://github.com/onassar/PHP-Security) functions available.
 These work exceptionally well for me during the validation process.
+
