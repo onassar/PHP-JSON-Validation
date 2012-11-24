@@ -9,6 +9,15 @@
         }
     },
     {
+        "validator": ["StringValidator", "inList"],
+        "blocking": true,
+        "params": ["{name}", ["Oliver", "Avo"]],
+        "error": {
+            "input": "name",
+            "message": "Only the names Oliver and Avo are allowed :P"
+        }
+    },
+    {
         "validator": ["StringValidator", "emptyOrEmail"],
         "params": ["{email}"],
         "error": {

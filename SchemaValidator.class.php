@@ -79,6 +79,61 @@
         }
 
         /**
+         * _templateParam
+         * 
+         * Replaces the value passed in with the corresponding
+         * data-source-value, if found. If an array is passed in, recursively
+         * does so.
+         * 
+         * This could be useful with the String `inList` validation check. It
+         * also, however, outsources the template replacement from the
+         * `checkRule` method, cleaning it and decoupling the logic slightly.
+         * 
+         * Made the check more lenient, in that it doesn't require the string
+         * to be an exact match against a data-source argument.
+         * 
+         * Current supports cases such as:
+         * - Param value of "{name}s"
+         * - Templated value becomes "olivers"
+         * 
+         * Does *not* currently support cases such as:
+         * - Param value of "{fname} {lname}"
+         * 
+         * This is for two reasons:
+         * 1. The regular expression match is limited to one match
+         * 2. The replacement code only replaces the specific key, not the
+         *    array of keys with their respective values
+         * 
+         * @access protected
+         * @param  String|Array $param
+         * @return String|Array
+         */
+        protected function _templateParam($param)
+        {
+            if (is_array($param)) {
+                foreach ($param as &$entry) {
+                    $entry = $this->_templateParam($entry);
+                }
+            } else {
+                $key = array();
+                if (preg_match('/{([a-zA-Z0-9-\._]+)}/', $param, $key)) {
+
+                    // if the parameter exists in the validator's data source
+                    if (isset($this->_data[$key[1]])) {
+                        $param = str_replace($key[0], $this->_data[$key[1]], $param);
+                    } else {
+                        throw new Exception(
+                            'Invalid data-source specified. Entry ' .
+                            'name *' . ($param) . '* not found in ' .
+                            'data source.'
+                        );
+                    }
+                }
+            }
+            return $param;
+        }
+
+        /**
          * _checkRule
          * 
          * @access protected
@@ -93,24 +148,8 @@
 
                 // parameter formatting
                 $params = &$rule['params'];
-                foreach ($params as $x => $param) {
-    
-					if(!is_array($param)){
-						/**
-						 * If parameter value ought to be dynamically pulled from
-						 * validator data source (based on pattern of parameter)
-						 */
-						$key = array();
-						if (preg_match('/^{([a-zA-Z0-9-\._]+)}$/', $param, $key)) {
-		
-							// if the parameter exists in the validator's data source
-							if (isset($this->_data[$key[1]])) {
-								$params[$x] = $this->_data[$key[1]];
-							} else {
-								$params[$x] = null;
-							}
-						}
-                    }
+                foreach ($params as &$param) {
+                    $param = $this->_templateParam($param);
                 }
             }
 
