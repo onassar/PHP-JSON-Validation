@@ -50,6 +50,19 @@
         }
 
         /**
+         * emailOrUrl
+         * 
+         * @access public
+         * @static
+         * @param  string $str
+         * @return boolean
+         */
+        public static function emailOrUrl($str)
+        {
+            return self::email($str) || self::url($str);
+        }
+
+        /**
          * emptyOrEmail
          * 
          * @access public
