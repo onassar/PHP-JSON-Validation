@@ -32,7 +32,7 @@
          * @var    string
          * @access protected
          */
-        protected $_methopd = 'getRules';
+        protected $_method = 'getRules';
 
         /**
          * __limit
