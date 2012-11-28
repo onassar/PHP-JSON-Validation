@@ -114,7 +114,7 @@
                 foreach ($param as &$entry) {
                     $entry = $this->_templateParam($entry);
                 }
-            } else if(is_string($param))) {
+            } elseif (is_string($param)) {
                 $key = array();
                 if (preg_match('/{([a-zA-Z0-9-\._]+)}/', $param, $key)) {
 
