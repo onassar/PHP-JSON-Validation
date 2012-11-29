@@ -63,10 +63,10 @@
          * 
          * @access public
          * @param  Schema $schema
-         * @param  array $data
+         * @param  Array $data (default: array())
          * @return void
          */
-        public function __construct(Schema $schema, array $data)
+        public function __construct(Schema $schema, array $data = array())
         {
             // local storage
             $this->_schema = $schema;
