@@ -32,7 +32,7 @@
          * @var    string
          * @access protected
          */
-        protected $_method = 'getRules';
+        protected $_method = 'getServerRules';
 
         /**
          * __limit
@@ -89,7 +89,6 @@
         public function __construct($path)
         {
             parent::__construct($path);
-            $this->setMethod('getServerRules');
         }
 
         /**
