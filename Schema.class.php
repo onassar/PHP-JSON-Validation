@@ -68,7 +68,13 @@
         {
             // grab and return schema contents
             $raw = file_get_contents($this->_path);
-            return json_decode($raw, true);
+            $decoded = json_decode($raw, true);
+
+            // json is formatted invalidly; otherwise return the decoded schema
+            if ($decoded === null) {
+                throw new Exception('Invalidly formatted json');
+            }
+            return $decoded;
         }
 
         /**
