@@ -110,17 +110,54 @@
          */
         protected function _templateParam($param)
         {
+            // if the parameter defined in the schema is an array
             if (is_array($param)) {
+
+                // recursively template the property
                 foreach ($param as &$entry) {
                     $entry = $this->_templateParam($entry);
                 }
-            } elseif (is_string($param)) {
+            }
+            // otherwise if it's a string
+            elseif (is_string($param)) {
                 $key = array();
                 if (preg_match('/{([a-zA-Z0-9-\._]+)}/', $param, $key)) {
 
                     // if the parameter exists in the validator's data source
                     if (isset($this->_data[$key[1]])) {
-                        $param = str_replace($key[0], $this->_data[$key[1]], $param);
+
+                        /**
+                         * If the param value that should be sent in for
+                         * validation is a string (eg. a _POST'd username or 
+                         * email address), run a string replacement to get the
+                         * proper value from the _data property.
+                         */
+                        if (is_string($this->_data[$key[1]])) {
+                            $param = str_replace(
+                                $key[0],
+                                $this->_data[$key[1]],
+                                $param
+                            );
+                        }
+                        /**
+                         * Otherwise if it's not a string, set the param value
+                         * to be the exact mixed value. This allows for the
+                         * following example:
+                         * 
+                         * In a schema, you set a param of {userModel}. Then,
+                         * when you set up the SchemaValidator instance, in the
+                         * instantiation you pass along a data property such
+                         * as:
+                         * 
+                         * 'userModel' => $userModel
+                         * 
+                         * This allows for passing non-primitive types (eg.
+                         * strings, integers, booleans, arrays and floats) to
+                         * validation methods.
+                         */
+                        else {
+                            $param = $this->_data[$key[1]];
+                        }
                     } else {
                         throw new Exception(
                             'Invalid data-source specified. Entry ' .
@@ -130,6 +167,10 @@
                     }
                 }
             }
+            /**
+             * If the param was a number of boolean, no templating is done, and
+             * the param is returned directly
+             */
             return $param;
         }
 
