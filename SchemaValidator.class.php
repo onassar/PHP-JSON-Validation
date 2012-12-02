@@ -33,6 +33,7 @@
          * @access protected
          */
         protected $_libraries = array(
+            'DataValidator.class.php',
             'StringValidator.class.php'
         );
 
@@ -71,6 +72,9 @@
             // local storage
             $this->_schema = $schema;
             $this->_data = $data;
+
+            // pass along special properties
+            $this->_data['__data__'] = $this->_data;
 
             // library booting
             foreach ($this->_libraries as $library) {
@@ -127,10 +131,13 @@
                     if (isset($this->_data[$key[1]])) {
 
                         /**
-                         * If the param value that should be sent in for
+                         * If the param *value* that should be sent in for
                          * validation is a string (eg. a _POST'd username or 
                          * email address), run a string replacement to get the
-                         * proper value from the _data property.
+                         * proper value from the _data array.
+                         * 
+                         * Note that PHP will cast POST'd data as strings, even
+                         * if they are entered as numbers/floats, etc.
                          */
                         if (is_string($this->_data[$key[1]])) {
                             $param = str_replace(
@@ -151,9 +158,16 @@
                          * 
                          * 'userModel' => $userModel
                          * 
-                         * This allows for passing non-primitive types (eg.
-                         * strings, integers, booleans, arrays and floats) to
+                         * This allows for passing non-primitive (eg. strings,
+                         * integers, booleans, arrays and floats) types to
                          * validation methods.
+                         * 
+                         * Additionally, the `__data__` property is added to
+                         * the `_data` property, to allow a validation method
+                         * to pass around all data posted.
+                         * 
+                         * See the `DataValidator` class, `dataIncluded`
+                         * method.
                          */
                         else {
                             $param = $this->_data[$key[1]];
