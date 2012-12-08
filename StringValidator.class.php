@@ -195,7 +195,7 @@
         /**
          * url
          * 
-         * @see    http://snippets.dzone.com/posts/show/3654
+         * @see    <http://snippets.dzone.com/posts/show/3654>
          * @access public
          * @static
          * @param  string $str

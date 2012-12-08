@@ -274,6 +274,14 @@
         /**
          * getFailedRules
          * 
+         * Returns an array of rules that failed during the validation process.
+         * Important to note here is that the response here does *not* preserve
+         * the hierarchy defined in the schema.
+         * 
+         * What that means, is that if a failing rule is a subrule of another
+         * rule, the "parent" rule will not be returned. The response from this
+         * function is *one* dimensional, respective to rules.
+         * 
          * @access public
          * @return array
          */

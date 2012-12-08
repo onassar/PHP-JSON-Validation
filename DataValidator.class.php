@@ -17,9 +17,8 @@
          * @param  Array $data
          * @return Boolean
          */
-        public static function dataIncluded($param, $data)
+        public static function dataIncluded($param, array $data)
         {
-            $keys = array_keys($data);
-            return isset($keys[$param]);
+            return isset($data[$param]);
         }
     }
