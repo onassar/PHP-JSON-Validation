@@ -21,4 +21,16 @@
         {
             return isset($data[$param]);
         }
+
+        /**
+         * dataPosted
+         * 
+         * @access public
+         * @static
+         * @return Boolean
+         */
+        public static function dataPosted()
+        {
+            return !empty($_POST);
+        }
     }
