@@ -108,7 +108,7 @@
          * 
          * @access public
          * @static
-         * @param  $url
+         * @param  String $url
          * @return Boolean
          */
         public static function urlContentTypeIsHtml($url)
@@ -125,5 +125,30 @@
             $info = $curler->getInfo();
             return isset($info['content_type'])
                 && strstr($info['content_type'], 'text/html') !== false;
+        }
+
+        /**
+         * urlStatusCode
+         * 
+         * @access public
+         * @static
+         * @param  String $url
+         * @param  Array $allowedStatusCodes (default: array(200))
+         * @return Boolean
+         */
+        public static function urlStatusCode($url, $allowedStatusCodes = array(200))
+        {
+            // "head" for content type
+            $curler = self::_getCurler($url, 'head');
+            if ($curler === false) {
+                $curler = (new Curler());
+                $curler->setLimit(1024);
+                $curler->setTimeout(5);
+                self::_cacheCurler($curler, $url, 'head');
+                $curler->head($url);
+            }
+            $info = $curler->getInfo();
+            return isset($info['http_code'])
+                && in_array($info['http_code'], $allowedStatusCodes);
         }
     }
