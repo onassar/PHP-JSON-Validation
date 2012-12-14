@@ -55,6 +55,29 @@
         }
 
         /**
+         * urlCharsetDefined
+         * 
+         * @access public
+         * @static
+         * @param  String $url
+         * @return Boolean
+         */
+        public static function urlCharsetDefined($url)
+        {
+            // "get" for content type
+            $curler = self::_getCurler($url, 'get');
+            if ($curler === false) {
+                $curler = (new Curler());
+                $curler->setLimit(1024);
+                $curler->setTimeout(5);
+                self::_cacheCurler($curler, $url, 'get');
+                $curler->get($url);
+            }
+            $charset = $curler->getCharset();
+            return $charset !== false;
+        }
+
+        /**
          * urlContentIsNotEmpty
          * 
          * @access public
