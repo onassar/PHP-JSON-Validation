@@ -25,41 +25,26 @@
     abstract class CurlValidator
     {
         /**
-         * _cacheCurler
+         * numberOfRedirectsIsLessThan
          * 
-         * Stores Curler references in request memory incase there is a want to
-         * reuse them.
-         * 
-         * @access protected
-         * @static
-         * @param  Curler $url
-         * @param  String $url
-         * @param  String $type
-         * @return void
-         */
-        protected static function _cacheCurler($curler, $url, $type)
-        {
-            $GLOBALS['curlers'][$url][$type] = $curler;
-        }
-
-        /**
-         * _getCurler
-         * 
-         * Wrapper for accessing curlers, incase they were cached in the
-         * validation process (or elsewhere).
-         * 
-         * @access protected
+         * @access public
          * @static
          * @param  String $url
-         * @param  String $type
-         * @return Curler|false
+         * @param  Integer $redirectLimit
+         * @return Boolean
          */
-        protected static function _getCurler($url, $type)
+        public static function numberOfRedirectsIsLessThan($url, $redirectLimit)
         {
-            if (isset($GLOBALS['curlers'][$url][$type])) {
-                return $GLOBALS['curlers'][$url][$type];
+            // "head" for content type
+            $curler = RequestCache::read('curlers', $url, 'head');
+            if ($curler === null) {
+                $curler = (new Curler());
+                RequestCache::write('curlers', $url, 'head', $curler);
+                $curler->head($url);
             }
-            return false;
+            $info = $curler->getInfo();
+            return isset($info['redirect_count'])
+                && (int) $info['redirect_count'] < $redirectLimit;
         }
 
         /**
@@ -76,8 +61,6 @@
             $curler = RequestCache::read('curlers', $url, 'get');
             if ($curler === null) {
                 $curler = (new Curler());
-                $curler->setLimit(1024);
-                $curler->setTimeout(5);
                 RequestCache::write('curlers', $url, 'get', $curler);
                 $curler->get($url);
             }
@@ -99,8 +82,6 @@
             $curler = RequestCache::read('curlers', $url, 'get');
             if ($curler === null) {
                 $curler = (new Curler());
-                $curler->setLimit(1024);
-                $curler->setTimeout(5);
                 RequestCache::write('curlers', $url, 'get', $curler);
                 $curler->get($url);
             }
@@ -123,8 +104,6 @@
             $curler = RequestCache::read('curlers', $url, 'get');
             if ($curler === null) {
                 $curler = (new Curler());
-                $curler->setLimit(1024);
-                $curler->setTimeout(5);
                 RequestCache::write('curlers', $url, 'get', $curler);
                 $curler->get($url);
             }
@@ -148,8 +127,6 @@
             $curler = RequestCache::read('curlers', $url, 'head');
             if ($curler === null) {
                 $curler = (new Curler());
-                $curler->setLimit(1024);
-                $curler->setTimeout(5);
                 RequestCache::write('curlers', $url, 'head', $curler);
                 $curler->head($url);
             }
@@ -173,8 +150,6 @@
             $curler = RequestCache::read('curlers', $url, 'head');
             if ($curler === null) {
                 $curler = (new Curler());
-                $curler->setLimit(1024);
-                $curler->setTimeout(5);
                 RequestCache::write('curlers', $url, 'head', $curler);
                 $curler->head($url);
             }
