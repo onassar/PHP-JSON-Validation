@@ -48,6 +48,39 @@
         }
 
         /**
+         * _loadDynamicRules
+         * 
+         * @access public
+         * @param  Array $rules
+         * @return Array
+         */
+        protected function _loadDynamicRules($rules)
+        {
+            /**
+             * Check for a rules property as a string, treat it as though it's
+             * a path to another schema, and retrieve it's rules.
+             * 
+             * This allows for the DRY practice to be applied to the validation
+             * schemas.
+             */
+            foreach ($rules as &$rule) {
+                if (isset($rule['rules'])) {
+                    if (is_string($rule['rules'])) {
+                        $directoryPath = dirname($this->_path);
+                        $raw = file_get_contents(
+                            ($directoryPath) . '/' . ($rule['rules'])
+                        );
+                        $decoded = json_decode($raw, true);
+                        $rule['rules'] = $this->_loadDynamicRules($decoded);
+                    } else {
+                        $rule['rules'] = $this->_loadDynamicRules($rule['rules']);
+                    }
+                }
+            }
+            return $rules;
+        }
+
+        /**
          * getMethod
          * 
          * @access public
@@ -74,6 +107,9 @@
             if ($decoded === null) {
                 throw new Exception('Invalidly formatted json');
             }
+
+            // modify potential sub-rules; return rules (aka. schema)
+            $decoded = $this->_loadDynamicRules($decoded);
             return $decoded;
         }
 

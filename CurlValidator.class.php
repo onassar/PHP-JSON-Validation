@@ -8,6 +8,14 @@
         );
     }
 
+    // dependency check
+    if (class_exists('RequestCache') === false) {
+        throw new Exception(
+            '*RequestCache* class required. Please see ' .
+            'https://github.com/onassar/PHP-RequestCache'
+        );
+    }
+
     /**
      * CurlValidator
      * 
