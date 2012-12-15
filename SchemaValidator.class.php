@@ -86,6 +86,32 @@
         }
 
         /**
+         * _callInterstitial
+         * 
+         * Makes a call to a "rules" interstiatial. This call doesn't expect
+         * any response (eg. true/false), and is meant to run code between
+         * checking validation rules.
+         * 
+         * @access protected
+         * @param  Array $rule
+         * @return void
+         */
+        protected function _callInterstitial(array $rule)
+        {
+            // parameters passed
+            $params = array();
+            if (isset($rule['params'])) {
+
+                // parameter formatting
+                $params = &$rule['params'];
+                foreach ($params as &$param) {
+                    $param = $this->_templateParam($param);
+                }
+            }
+            call_user_func_array($rule['interstitial'], $params);
+        }
+
+        /**
          * _checkRule
          * 
          * @access protected
@@ -130,39 +156,61 @@
                 }
 
                 /**
-                 * If the rule passed, check it's <rules> array (this occurs
-                 * recursively)
+                 * If it's an "interstitial", and not a "validator", run the
+                 * callback directly.
+                 * 
+                 * Interstitials are not meant to validate any data or return
+                 * booleans. Rather, they are meant to setup other pieces of
+                 * the validation flow.
+                 * 
+                 * For example, you may validate that a user id is specified.
+                 * You may then define an interstitial after that rule (or as
+                 * a subrule), which retrieves the user's username, and sends
+                 * them an email, adds it to the available data that the
+                 * validator has access to, or anything else that seems
+                 * relevant
                  */
-                if ($this->_checkRule($rule)) {
+                if (isset($rule['interstitial'])) {
+                    $this->_callInterstitial($rule);
                     if (isset($rule['rules'])) {
                         $this->_checkRules($rule['rules']);
                     }
                 } else {
-
                     /**
-                     * If the rule wasn't setup to act as a funnel (a rule that
-                     * is marked as a funnel need-not validate successfully for
-                     * the schema itself to be considered valid; rules can be
-                     * marked as a funnel to allow for subrules to be
-                     * validated in a predicatable, controllable way), mark the
-                     * rule as having failed.
-                     * 
-                     * aka. rule didn't pass, and wasn't set as a funnel, then
-                     * the rule has failed to validate
+                     * If the rule passed, check it's <rules> array (this occurs
+                     * recursively)
                      */
-                    if (!isset($rule['funnel']) || $rule['funnel'] === false) {
-                        $this->_addFailedRule($rule);
-                    }
+                    if ($this->_checkRule($rule)) {
+                        if (isset($rule['rules'])) {
+                            $this->_checkRules($rule['rules']);
+                        }
+                    } else {
 
-                    /**
-                     * If this failing-rule was setup as <blocking> (rules
-                     * having the property <blocking> marked as <true> are
-                     * deemed too important for any further rules [in this
-                     * recursion] to be tested), mark a boolean to prevent
-                     * further rule validation within this recursive iteration.
-                     */
-                    if (isset($rule['blocking']) && $rule['blocking'] === true) {
-                        $blocked = true;
+                        /**
+                         * If the rule wasn't setup to act as a funnel (a rule that
+                         * is marked as a funnel need-not validate successfully for
+                         * the schema itself to be considered valid; rules can be
+                         * marked as a funnel to allow for subrules to be
+                         * validated in a predicatable, controllable way), mark the
+                         * rule as having failed.
+                         * 
+                         * aka. rule didn't pass, and wasn't set as a funnel, then
+                         * the rule has failed to validate
+                         */
+                        if (!isset($rule['funnel']) || $rule['funnel'] === false) {
+                            $this->_addFailedRule($rule);
+                        }
+
+                        /**
+                         * If this failing-rule was setup as <blocking> (rules
+                         * having the property <blocking> marked as <true> are
+                         * deemed too important for any further rules [in this
+                         * recursion] to be tested), mark a boolean to prevent
+                         * further rule validation within this recursive iteration.
+                         */
+                        if (isset($rule['blocking']) && $rule['blocking'] === true) {
+                            $blocked = true;
+                        }
                     }
                 }
             }
