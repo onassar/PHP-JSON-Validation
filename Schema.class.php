@@ -94,6 +94,14 @@
         /**
          * getRules
          * 
+         * @note   Since replacement for dynamical rules (eg. rules that don't
+         *         have an array specified, rather a relative path to another
+         *         schema) are done within this method, and class that extends
+         *         `Schema` and overrides the `_method` property ought to
+         *         ensure it uses the `getRules` method before filtering any
+         *         rules.
+         *         If not, you'll have to ensure the recursive loading of
+         *         dynamic rules are done manually.
          * @access public
          * @return array
          */

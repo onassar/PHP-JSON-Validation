@@ -73,12 +73,12 @@
         public static function urlCharsetDefined($url)
         {
             // "get" for content type
-            $curler = self::_getCurler($url, 'get');
-            if ($curler === false) {
+            $curler = RequestCache::read('curlers', $url, 'get');
+            if ($curler === null) {
                 $curler = (new Curler());
                 $curler->setLimit(1024);
                 $curler->setTimeout(5);
-                self::_cacheCurler($curler, $url, 'get');
+                RequestCache::write('curlers', $url, 'get', $curler);
                 $curler->get($url);
             }
             $charset = $curler->getCharset();
@@ -96,12 +96,12 @@
         public static function urlContentIsNotEmpty($url)
         {
             // "get" for content
-            $curler = self::_getCurler($url, 'get');
-            if ($curler === false) {
+            $curler = RequestCache::read('curlers', $url, 'get');
+            if ($curler === null) {
                 $curler = (new Curler());
                 $curler->setLimit(1024);
                 $curler->setTimeout(5);
-                self::_cacheCurler($curler, $url, 'get');
+                RequestCache::write('curlers', $url, 'get', $curler);
                 $curler->get($url);
             }
             $response = $curler->getResponse();
@@ -120,12 +120,12 @@
         public static function urlContentSizeIsLessThan($url, $maxKilobytes)
         {
             // "get" for content; check info for download size
-            $curler = self::_getCurler($url, 'get');
-            if ($curler === false) {
+            $curler = RequestCache::read('curlers', $url, 'get');
+            if ($curler === null) {
                 $curler = (new Curler());
                 $curler->setLimit(1024);
                 $curler->setTimeout(5);
-                self::_cacheCurler($curler, $url, 'get');
+                RequestCache::write('curlers', $url, 'get', $curler);
                 $curler->get($url);
             }
             $info = $curler->getInfo();
@@ -145,12 +145,12 @@
         public static function urlContentTypeIsHtml($url)
         {
             // "head" for content type
-            $curler = self::_getCurler($url, 'head');
-            if ($curler === false) {
+            $curler = RequestCache::read('curlers', $url, 'head');
+            if ($curler === null) {
                 $curler = (new Curler());
                 $curler->setLimit(1024);
                 $curler->setTimeout(5);
-                self::_cacheCurler($curler, $url, 'head');
+                RequestCache::write('curlers', $url, 'head', $curler);
                 $curler->head($url);
             }
             $info = $curler->getInfo();
@@ -170,12 +170,12 @@
         public static function urlStatusCode($url, $allowedStatusCodes = array(200))
         {
             // "head" for content type
-            $curler = self::_getCurler($url, 'head');
-            if ($curler === false) {
+            $curler = RequestCache::read('curlers', $url, 'head');
+            if ($curler === null) {
                 $curler = (new Curler());
                 $curler->setLimit(1024);
                 $curler->setTimeout(5);
-                self::_cacheCurler($curler, $url, 'head');
+                RequestCache::write('curlers', $url, 'head', $curler);
                 $curler->head($url);
             }
             $info = $curler->getInfo();
