@@ -223,3 +223,15 @@ could cause a serious server-level fault. This should be handled independent
 from the validation process. See the
 [PHP-Security](https://github.com/onassar/PHP-Security) functions available.
 These work exceptionally well for me during the validation process.
+
+Specifying Child Rules as Path to Schema
+===
+In a standard flow, a rule may have a sub `rules` array, which contains child
+rules that should be run if the parent rule validates to true.
+
+However, a relative path (eg. `secure.json`) can be specified in place of this
+array. When this is the case, the rules specified in that file will dynamically
+be pulled into the current schema for validation.
+
+This process is recursive as well. Thus, you could chain together many
+different validation schemas through one original document.
