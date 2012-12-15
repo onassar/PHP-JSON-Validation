@@ -235,3 +235,27 @@ be pulled into the current schema for validation.
 
 This process is recursive as well. Thus, you could chain together many
 different validation schemas through one original document.
+
+Magic Data
+===
+The following data is available for usage within schema validation rules:
+- `__data__` An array of all the data passed into the `SchemaValidator`
+constructor. This is passed by reference, so careful if you make any changes to
+it. Since it's passed by reference, it will contain any data added dynamically
+through the `SchemaValidator` method `addData`
+- `__schema__` A reference to the schema validator itself
+- `__validator__` A reference to the schema validator itself
+
+An example of the usefulness of the `__data__` property is to ensure certain
+data has been passed into the validator. For example, if you are passing in
+`$_POST` data directly to a validator, you may not know if a certain input was
+posted. You can now write rules to check that, passing in the param `__data__`
+to check against.
+
+The `__schema__` data is a reference to the `Schema` instance that is being
+validated. This could be useful to lookup other rules during the validation
+logic of a different rule.
+
+The `__validator__` data is a reference to the `SchemaValidator` instance that
+is performing the checks. This can be useful for dynamically adding data to the
+*set* of data, which can then be used in the validation process by other rules.
