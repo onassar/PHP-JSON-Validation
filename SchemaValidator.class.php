@@ -5,6 +5,9 @@
      * 
      * Manages the validation of a schema against it's defined rules.
      * 
+     * @note    Currently, when a rule is set to blocking, it will only end the
+     *          current branch. Rules in a parent branch may still be run. It
+     *          could be helpful to create a global blocking boolean.
      * @author  Oliver Nassar <onassar@gmail.com>
      * @example https://github.com/onassar/PHP-JSON-Validation/tree/master/example
      */
@@ -177,8 +180,8 @@
                     }
                 } else {
                     /**
-                     * If the rule passed, check it's <rules> array (this occurs
-                     * recursively)
+                     * If the rule passed, check it's <rules> array (this
+                     * occurs recursively)
                      */
                     if ($this->_checkRule($rule)) {
                         if (isset($rule['rules'])) {
@@ -187,15 +190,15 @@
                     } else {
 
                         /**
-                         * If the rule wasn't setup to act as a funnel (a rule that
-                         * is marked as a funnel need-not validate successfully for
-                         * the schema itself to be considered valid; rules can be
-                         * marked as a funnel to allow for subrules to be
-                         * validated in a predicatable, controllable way), mark the
-                         * rule as having failed.
+                         * If the rule wasn't setup to act as a funnel (a rule
+                         * that is marked as a funnel need-not validate
+                         * successfully for the schema itself to be considered
+                         * valid; rules can be marked as a funnel to allow for
+                         * subrules to be validated in a predicatable,
+                         * controllable way), mark the rule as having failed.
                          * 
-                         * aka. rule didn't pass, and wasn't set as a funnel, then
-                         * the rule has failed to validate
+                         * aka. rule didn't pass, and wasn't set as a funnel,
+                         * then the rule has failed to validate
                          */
                         if (!isset($rule['funnel']) || $rule['funnel'] === false) {
                             $this->_addFailedRule($rule);
@@ -206,7 +209,8 @@
                          * having the property <blocking> marked as <true> are
                          * deemed too important for any further rules [in this
                          * recursion] to be tested), mark a boolean to prevent
-                         * further rule validation within this recursive iteration.
+                         * further rule validation within this recursive
+                         * iteration.
                          */
                         if (isset($rule['blocking']) && $rule['blocking'] === true) {
                             $blocked = true;

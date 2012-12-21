@@ -144,8 +144,9 @@
          * @param  Array $allowedStatusCodes (default: array(200))
          * @return Boolean
          */
-        public static function urlStatusCode($url, $allowedStatusCodes = array(200))
-        {
+        public static function urlStatusCode(
+            $url, array $allowedStatusCodes = array(200)
+        ) {
             // "head" for content type
             $curler = RequestCache::read('curlers', $url, 'head');
             if ($curler === null) {
