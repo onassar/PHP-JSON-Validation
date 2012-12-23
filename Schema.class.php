@@ -81,6 +81,35 @@
         }
 
         /**
+         * _validateSchemaForPropertyLimitations
+         * 
+         * Validates rules recursively against both a `blocking` and `funnel`
+         * property being set to `true`.
+         * 
+         * @access public
+         * @param  array $rules
+         * @return void
+         */
+        protected function _validateSchemaForPropertyLimitations($rules)
+        {
+            foreach ($rules as $rule) {
+                if (
+                    isset($rule['blocking'])
+                    && $rule['blocking'] === true
+                    && isset($rule['funnel'])
+                    && $rule['funnel'] = true
+                ) {
+                    throw new Exception(
+                        'Blocking and funnel cannot both be set.'
+                    );
+                }
+                if (isset($rule['rules'])) {
+                    $this->_validateSchemaForPropertyLimitations($rule['rules']);
+                }
+            }
+        }
+
+        /**
          * getMethod
          * 
          * @access public
@@ -116,8 +145,11 @@
                 throw new Exception('Invalidly formatted json');
             }
 
-            // modify potential sub-rules; return rules (aka. schema)
+            // modify potential sub-rules; validate rules
             $decoded = $this->_loadDynamicRules($decoded);
+            $this->_validateSchemaForPropertyLimitations($decoded);
+
+            // return rules (aka. schema)
             return $decoded;
         }
 

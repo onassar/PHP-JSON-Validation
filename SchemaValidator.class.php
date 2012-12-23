@@ -22,12 +22,12 @@
         protected $_data;
 
         /**
-         * _failed
+         * _failedRules
          * 
          * @var    array
          * @access protected
          */
-        protected $_failed = array();
+        protected $_failedRules = array();
 
         /**
          * _libraries
@@ -75,17 +75,19 @@
         }
 
         /**
-         * _addFailedRule function. Adds a rule object to the <_failed> array.
+         * _addFailedRule
+         * 
+         * Adds a rule object to the <_failedRules> array.
          * 
          * @notes  decoupled to allow logging and/or changing what gets
-         *         pushed to the <_failed> array
+         *         pushed to the <_failedRules> array
          * @access protected
-         * @param  array $rule
+         * @param  array &$rule
          * @return void
          */
-        protected function _addFailedRule(array $rule)
+        protected function _addFailedRule(array &$rule)
         {
-            array_push($this->_failed, $rule);
+            array_push($this->_failedRules, $rule);
         }
 
         /**
@@ -106,12 +108,30 @@
             if (isset($rule['params'])) {
 
                 // parameter formatting
-                $params = &$rule['params'];
-                foreach ($params as &$param) {
+                foreach ($rule['params'] as &$param) {
                     $param = $this->_templateParam($param);
                 }
+                $params = $rule['params'];
             }
             call_user_func_array($rule['interstitial'], $params);
+        }
+
+        /**
+         * _isBlockingRule
+         * 
+         * @access protected
+         * @param  array &$rule
+         * @return boolean
+         */
+        protected function _isBlockingRule(array &$rule)
+        {
+            if (isset($rule['blocking'])) {
+                return (boolean) $rule['blocking'];
+            }
+            if (isset($rule['_parent'])) {
+                return $this->_isBlockingRule($rule['_parent']);
+            }
+            return false;
         }
 
         /**
@@ -128,10 +148,10 @@
             if (isset($rule['params'])) {
 
                 // parameter formatting
-                $params = &$rule['params'];
-                foreach ($params as &$param) {
+                foreach ($rule['params'] as &$param) {
                     $param = $this->_templateParam($param);
                 }
+                $params = $rule['params'];
             }
 
             // evaluate/return rule check
@@ -143,19 +163,17 @@
          * 
          * @access protected
          * @param  array $rules
+         * @param  array|null $parent
          * @return void
          */
-        protected function _checkRules(array $rules)
+        protected function _checkRules(array &$rules, &$parent = null)
         {
-            // blocking triggered boolean
-            $blocked = false;
-
             // rule iteration
-            foreach ($rules as $rule) {
+            foreach ($rules as $count => &$rule) {
 
-                // if a blocking rule has failed
-                if ($blocked === true) {
-                    break;
+                // store the parent for rule blocking checks
+                if (!is_null($parent)) {
+                    $rule['_parent'] = $parent;
                 }
 
                 /**
@@ -176,16 +194,17 @@
                 if (isset($rule['interstitial'])) {
                     $this->_callInterstitial($rule);
                     if (isset($rule['rules'])) {
-                        $this->_checkRules($rule['rules']);
+                        $this->_checkRules($rule['rules'], $rule);
                     }
                 } else {
+
                     /**
                      * If the rule passed, check it's <rules> array (this
                      * occurs recursively)
                      */
                     if ($this->_checkRule($rule)) {
                         if (isset($rule['rules'])) {
-                            $this->_checkRules($rule['rules']);
+                            $this->_checkRules($rule['rules'], $rule);
                         }
                     } else {
 
@@ -202,18 +221,17 @@
                          */
                         if (!isset($rule['funnel']) || $rule['funnel'] === false) {
                             $this->_addFailedRule($rule);
-                        }
 
-                        /**
-                         * If this failing-rule was setup as <blocking> (rules
-                         * having the property <blocking> marked as <true> are
-                         * deemed too important for any further rules [in this
-                         * recursion] to be tested), mark a boolean to prevent
-                         * further rule validation within this recursive
-                         * iteration.
-                         */
-                        if (isset($rule['blocking']) && $rule['blocking'] === true) {
-                            $blocked = true;
+                            /**
+                             * If this failing-rule was setup as <blocking>
+                             * (rules having the property <blocking> marked as
+                             * <true> are deemed too important for any further
+                             * rules to be tested), error out (ought to be
+                             * caught by caller)
+                             */
+                            if ($this->_isBlockingRule($rule) === true) {
+                                throw new Exception('Rule failed', 1);
+                            }
                         }
                     }
                 }
@@ -236,7 +254,7 @@
          * 
          * Current supports cases such as:
          * - Param value of "{name}s"
-         * - Templated value becomes "olivers"
+         * - Templated value becomes "Oliver Nassars"
          * 
          * Does *not* currently support cases such as:
          * - Param value of "{fname} {lname}"
@@ -340,6 +358,17 @@
         }
 
         /**
+         * getData
+         * 
+         * @access public
+         * @return Array
+         */
+        public function getData()
+        {
+            return $this->_data;
+        }
+
+        /**
          * getFailedRules
          * 
          * Returns an array of rules that failed during the validation process.
@@ -355,7 +384,7 @@
          */
         public function getFailedRules()
         {
-            return $this->_failed;
+            return $this->_failedRules;
         }
 
         /**
@@ -372,7 +401,13 @@
             $rules = call_user_func(
                 array($this->_schema, $this->_schema->getMethod())
             );
-            $this->_checkRules($rules);
-            return count($this->_failed) === 0;
+            try {
+                $this->_checkRules($rules);
+            } catch(Exception $exception) {
+                if ($exception->getCode() !== 1) {
+                    throw new Exception($exception->getMessage());
+                }
+            }
+            return count($this->_failedRules) === 0;
         }
     }
