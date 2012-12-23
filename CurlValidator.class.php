@@ -25,6 +25,37 @@
     abstract class CurlValidator
     {
         /**
+         * _getCurler
+         * 
+         * @access public
+         * @static
+         * @param  string $url
+         * @param  string $method
+         * @return Curler
+         */
+        protected static function _getCurler($url, $method)
+        {
+            $curler = RequestCache::read('curlers', $url, $method);
+            if ($curler === null) {
+                $curler = (new Curler());
+                RequestCache::write('curlers', $url, $method, $curler);
+                call_user_func(array($curler, $method), $url);
+
+                if ($method === 'head') {
+                    $info = $curler->getInfo();
+                    $statusCode = (int) $info['http_code'];
+
+                    if ($statusCode === 405) {
+                        RequestCache::write('curlers', $url, $method, $curler);
+                        call_user_func(array($curler, 'get'), $url);
+                    }
+                }
+
+            }
+            return $curler;
+        }
+
+        /**
          * numberOfRedirectsIsLessThan
          * 
          * @access public
@@ -35,13 +66,7 @@
          */
         public static function numberOfRedirectsIsLessThan($url, $redirectLimit)
         {
-            // "head" for content type
-            $curler = RequestCache::read('curlers', $url, 'head');
-            if ($curler === null) {
-                $curler = (new Curler());
-                RequestCache::write('curlers', $url, 'head', $curler);
-                $curler->head($url);
-            }
+            $curler = self::_getCurler($url, 'head');
             $info = $curler->getInfo();
             return isset($info['redirect_count'])
                 && (int) $info['redirect_count'] < $redirectLimit;
@@ -57,13 +82,7 @@
          */
         public static function urlCharsetDefined($url)
         {
-            // "get" for content type
-            $curler = RequestCache::read('curlers', $url, 'get');
-            if ($curler === null) {
-                $curler = (new Curler());
-                RequestCache::write('curlers', $url, 'get', $curler);
-                $curler->get($url);
-            }
+            $curler = self::_getCurler($url, 'get');
             $charset = $curler->getCharset();
             return $charset !== false;
         }
@@ -78,13 +97,7 @@
          */
         public static function urlContentIsNotEmpty($url)
         {
-            // "get" for content
-            $curler = RequestCache::read('curlers', $url, 'get');
-            if ($curler === null) {
-                $curler = (new Curler());
-                RequestCache::write('curlers', $url, 'get', $curler);
-                $curler->get($url);
-            }
+            $curler = self::_getCurler($url, 'get');
             $response = $curler->getResponse();
             return !empty($response);
         }
@@ -100,13 +113,7 @@
          */
         public static function urlContentSizeIsLessThan($url, $maxKilobytes)
         {
-            // "get" for content; check info for download size
-            $curler = RequestCache::read('curlers', $url, 'get');
-            if ($curler === null) {
-                $curler = (new Curler());
-                RequestCache::write('curlers', $url, 'get', $curler);
-                $curler->get($url);
-            }
+            $curler = self::_getCurler($url, 'get');
             $info = $curler->getInfo();
             $contentSizeInBytes = (int) $info['size_download'];
             return $contentSizeInBytes > 0
@@ -123,16 +130,10 @@
          */
         public static function urlContentTypeIsHtml($url)
         {
-            // "head" for content type
-            $curler = RequestCache::read('curlers', $url, 'head');
-            if ($curler === null) {
-                $curler = (new Curler());
-                RequestCache::write('curlers', $url, 'head', $curler);
-                $curler->head($url);
-            }
+            $curler = self::_getCurler($url, 'head');
             $info = $curler->getInfo();
             return isset($info['content_type'])
-                && strstr($info['content_type'], 'text/html') !== false;
+                && strstr(strtolower($info['content_type']), 'text/html') !== false;
         }
 
         /**
@@ -147,13 +148,7 @@
         public static function urlStatusCode(
             $url, array $allowedStatusCodes = array(200)
         ) {
-            // "head" for content type
-            $curler = RequestCache::read('curlers', $url, 'head');
-            if ($curler === null) {
-                $curler = (new Curler());
-                RequestCache::write('curlers', $url, 'head', $curler);
-                $curler->head($url);
-            }
+            $curler = self::_getCurler($url, 'head');
             $info = $curler->getInfo();
             return isset($info['http_code'])
                 && in_array($info['http_code'], $allowedStatusCodes);
