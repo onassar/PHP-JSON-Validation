@@ -5,9 +5,6 @@
      * 
      * Manages the validation of a schema against it's defined rules.
      * 
-     * @note    Currently, when a rule is set to blocking, it will only end the
-     *          current branch. Rules in a parent branch may still be run. It
-     *          could be helpful to create a global blocking boolean.
      * @author  Oliver Nassar <onassar@gmail.com>
      * @example https://github.com/onassar/PHP-JSON-Validation/tree/master/example
      */
@@ -50,18 +47,35 @@
         protected $_schema;
 
         /**
+         * _senstitiveToParentBlocking
+         * 
+         * @note   Also defaults to `false` during instantiation
+         * @var    boolean (default: false)
+         * @access protected
+         */
+        protected $_senstitiveToParentBlocking = false;
+
+        /**
          * __construct
          * 
          * @access public
          * @param  Schema $schema
-         * @param  Array $data (default: array())
+         * @param  array $data (default: array())
+         * @param  boolean $senstitiveToParentBlocking (default: false)
+         *         Determines whether rules should prevent further validation
+         *         if/when a rule has failed to validate *and* it's parent has
+         *         it's `blocking` attribute set to `true`
          * @return void
          */
-        public function __construct(Schema $schema, array $data = array())
-        {
+        public function __construct(
+            Schema $schema,
+            array $data = array(),
+            $senstitiveToParentBlocking = false
+        ) {
             // local storage
             $this->_schema = $schema;
             $this->_data = $data;
+            $this->_senstitiveToParentBlocking = $senstitiveToParentBlocking;
 
             // pass along special properties
             $this->_data['__data__'] = &$this->_data;
@@ -119,6 +133,16 @@
         /**
          * _isBlockingRule
          * 
+         * Is currently set up such that if a rule has the `blocking` attribute
+         * set to `true`, validation will end (through this method returning
+         * false).
+         * 
+         * It also includes a check against the parent rule (if found), whereby
+         * if the parent has been set to blocking, validation will also end.
+         * This, however, only occurs when the `_senstitiveToParentBlocking`
+         * instance-property is set to true. This can be done during the
+         * `SchemaValidation` instantiation.
+         * 
          * @access protected
          * @param  array &$rule
          * @return boolean
@@ -128,8 +152,10 @@
             if (isset($rule['blocking'])) {
                 return (boolean) $rule['blocking'];
             }
-            if (isset($rule['_parent'])) {
-                return $this->_isBlockingRule($rule['_parent']);
+            if ($this->_senstitiveToParentBlocking === true) {
+                if (isset($rule['_parent'])) {
+                    return $this->_isBlockingRule($rule['_parent']);
+                }
             }
             return false;
         }
@@ -206,7 +232,9 @@
                         if (isset($rule['rules'])) {
                             $this->_checkRules($rule['rules'], $rule);
                         }
-                    } else {
+                    }
+                    // or else, the rule has failed to pass
+                    else {
 
                         /**
                          * If the rule wasn't setup to act as a funnel (a rule
@@ -390,8 +418,11 @@
         /**
          * valid
          * 
-         * Returns whether or not the schema has been validated against the data
-         * passed in.
+         * Returns whether or not the schema has been validated against the
+         * data passed in.
+         * 
+         * Uses exception throwing to break out of the validation loop when a
+         * required rule has failed.
          * 
          * @access public
          * @return boolean

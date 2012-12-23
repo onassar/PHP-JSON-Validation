@@ -67,14 +67,17 @@ and their respect type, otherwise a PHP error will be thrown.
 This *optional* attribute/property, if included, ought to contain a boolean
 value, which intrinsically infers the rule&#039;s importance.
 
-Blocking rules are meant to act as a kill-switch. By default,
+Blocking rules are meant to act as a catch-all. By default,
 `SchemaValidator` instances will evaluate all rules that have been defined.
 However if a `blocking` property is defined for a rule, and that rule fails,
 all further validation will end.
 
-Validating a user&#039;s authorization for an application, or whether a request
-came in from a proper source, are good real-world examples of the `blocking`
-attribute&#039;s usage.
+If a failing rule has a parent rule, and that parent has the `blocking`
+attribute set to `true`, the validation process will *also* end.
+
+For example, validating a user&#039;s authorization for an application, or
+whether a request came in from a proper source, are good real-world cases of
+the `blocking` attribute&#039;s usage.
 
 ### rules (optional)
 This *optional* attribute/property, if included, ought to be an array whose
