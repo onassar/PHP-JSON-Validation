@@ -27,6 +27,10 @@
         /**
          * _getCurler
          * 
+         * @note   Amazon doesn't seem to support head requests (anymore). To
+         *         get around this, I attempt a head, when required, and if a
+         *         405 status code is found ("method not supported"), I digrade
+         *         to a get
          * @access public
          * @static
          * @param  string $url
@@ -85,6 +89,30 @@
             $curler = self::_getCurler($url, 'get');
             $charset = $curler->getCharset();
             return $charset !== false;
+        }
+
+        /**
+         * urlCharsetSupported
+         * 
+         * @access public
+         * @static
+         * @param  String $url
+         * @return Boolean
+         */
+        public static function urlCharsetSupported($url)
+        {
+            $curler = self::_getCurler($url, 'get');
+            $charset = $curler->getCharset();
+            return StringValidator::inList(
+                $charset,
+                array(
+                    'utf-8',
+                    'ascii',
+                    'iso-8859-1',
+                    'euc-kr',
+                    'euc-jp'
+                )
+            );
         }
 
         /**
