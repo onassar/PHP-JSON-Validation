@@ -49,7 +49,10 @@
                     $info = $curler->getInfo();
                     $statusCode = (int) $info['http_code'];
 
-                    if ($statusCode === 405) {
+                    if (
+                        $statusCode === 405// amazon
+                        || $statusCode === 503//ctnnews
+                    ) {
                         RequestCache::write('curlers', $url, $method, $curler);
                         call_user_func(array($curler, 'get'), $url);
                     }
