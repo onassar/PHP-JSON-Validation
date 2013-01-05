@@ -247,7 +247,7 @@ constructor. This is passed by reference, so careful if you make any changes to
 it. Since it's passed by reference, it will contain any data added dynamically
 through the `SchemaValidator` method `addData`
 - `__schema__` A reference to the schema validator itself
-- `__validator__` A reference to the schema validator itself
+- `__schemaValidator__` A reference to the schema validator itself
 
 An example of the usefulness of the `__data__` property is to ensure certain
 data has been passed into the validator. For example, if you are passing in
@@ -259,6 +259,25 @@ The `__schema__` data is a reference to the `Schema` instance that is being
 validated. This could be useful to lookup other rules during the validation
 logic of a different rule.
 
-The `__validator__` data is a reference to the `SchemaValidator` instance that
+The `__schemaValidator__` data is a reference to the `SchemaValidator` instance that
 is performing the checks. This can be useful for dynamically adding data to the
 *set* of data, which can then be used in the validation process by other rules.
+
+
+Interstitials
+===
+Methods can be called which run code between validation checks, which I'm calling interstitials.
+
+These calls do not require a `true` or `false` return value, and are meant to be run between rules, in order to run some "middleware" logic between calls.
+
+An example entry in a schema could look like so:
+
+
+    {    
+        "interstitial": ["Interstitials", "logSomethingToFile"],
+        "params": ["{userId}", "{__schemaValidator__}"]
+    }
+
+The `logSomethingToFile` method will be called, receiving the defined arguments. This can be useful in cases where you want to log certain events, or, for example, email an administrator of a certain event.
+
+The same magic parameters can be passed in. Additionally, a `rules` array can be specified for child-rules to be run after the interstitial has been called.
