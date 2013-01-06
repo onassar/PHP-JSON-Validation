@@ -113,7 +113,8 @@
                     'ascii',
                     'iso-8859-1',
                     'euc-kr',
-                    'euc-jp'
+                    'euc-jp',
+                    'windows-1252'
                 )
             );
         }
