@@ -408,11 +408,20 @@
          * function is *one* dimensional, respective to rules.
          * 
          * @access public
+         * @param  boolean $includeParents (default: true)
          * @return array
          */
-        public function getFailedRules()
+        public function getFailedRules($includeParents = true)
         {
-            return $this->_failedRules;
+            $failedRules = $this->_failedRules;
+            if ($includeParents === false) {
+                foreach ($failedRules as &$rule) {
+                    if (isset($rule['_parent'])) {
+                        unset($rule['_parent']);
+                    }
+                }
+            }
+            return $failedRules;
         }
 
         /**
