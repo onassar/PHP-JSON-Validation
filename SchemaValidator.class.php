@@ -78,7 +78,9 @@
             $this->_senstitiveToParentBlocking = $senstitiveToParentBlocking;
 
             // pass along special properties
+            $this->_data['__get__'] = $_GET;
             $this->_data['__data__'] = &$this->_data;
+            $this->_data['__post__'] = $_POST;
             $this->_data['__schema__'] = $schema;
             $this->_data['__schemaValidator__'] = $this;
 
