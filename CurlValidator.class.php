@@ -25,41 +25,35 @@
     abstract class CurlValidator
     {
         /**
-         * _getCurler
+         * _getHeadInfo
          * 
          * @note   Amazon doesn't seem to support head requests (anymore). To
          *         get around this, I attempt a head, when required, and if a
          *         405 status code is found ("method not supported"), I digrade
          *         to a get
+         * @note   Amazon gave 405 upon HEAD
+         * @note   CTVNews gave 503 upon HEAD
          * @access public
          * @static
          * @param  string $url
-         * @param  string $method
-         * @return Curler
+         * @return array
          */
-        protected static function _getCurler($url, $method)
+        protected static function _getHeadInfo($url)
         {
-            $curler = RequestCache::read('curlers', $url, $method);
-            if ($curler === null) {
-                $curler = (new Curler());
-                RequestCache::write('curlers', $url, $method, $curler);
-                call_user_func(array($curler, $method), $url);
-
-                if ($method === 'head') {
-                    $info = $curler->getInfo();
-                    $statusCode = (int) $info['http_code'];
-                    if (
-                        $statusCode !== 200
-                        // $statusCode === 405// amazon
-                        // || $statusCode === 503// ctnnews
-                    ) {
-                        RequestCache::write('curlers', $url, $method, $curler);
-                        call_user_func(array($curler, 'get'), $url);
-                    }
-                }
-
+            $curler = RequestCache::read('curler');
+            $headInfo = $curler->getHeadInfo();
+            if (is_null($headInfo)) {
+                $headInfo = $curler->head($url);
             }
-            return $curler;
+            $statusCode = (int) $headInfo['http_code'];
+            if ($statusCode !== 200) {
+                $urlBody = $curler->getResponse();
+                if (is_null($urlBody)) {
+                    $urlBody = $curler->get($url);
+                }
+                return $curler->getInfo();
+            }
+            return $headInfo;
         }
 
         /**
@@ -67,16 +61,15 @@
          * 
          * @access public
          * @static
-         * @param  String $url
-         * @param  Integer $redirectLimit
-         * @return Boolean
+         * @param  string $url
+         * @param  integer $redirectLimit
+         * @return boolean
          */
         public static function numberOfRedirectsIsLessThan($url, $redirectLimit)
         {
-            $curler = self::_getCurler($url, 'head');
-            $info = $curler->getInfo();
-            return isset($info['redirect_count'])
-                && (int) $info['redirect_count'] < $redirectLimit;
+            $headInfo = self::_getHeadInfo($url);
+            return isset($headInfo['redirect_count'])
+                && (int) $headInfo['redirect_count'] < $redirectLimit;
         }
 
         /**
@@ -84,12 +77,16 @@
          * 
          * @access public
          * @static
-         * @param  String $url
-         * @return Boolean
+         * @param  string $url
+         * @return boolean
          */
         public static function urlCharsetDefined($url)
         {
-            $curler = self::_getCurler($url, 'get');
+            $curler = RequestCache::read('curler');
+            $urlBody = $curler->getResponse();
+            if (is_null($urlBody)) {
+                $urlBody = $curler->get($url);
+            }
             $charset = $curler->getCharset();
             return $charset !== false;
         }
@@ -99,14 +96,18 @@
          * 
          * @access public
          * @static
-         * @param  String $url
-         * @return Boolean
+         * @param  string $url
+         * @return boolean
          */
         public static function urlCharsetSupported($url)
         {
-            $curler = self::_getCurler($url, 'get');
+            $curler = RequestCache::read('curler');
+            $urlBody = $curler->getResponse();
+            if (is_null($urlBody)) {
+                $urlBody = $curler->get($url);
+            }
             $charset = $curler->getCharset();
-            return StringValidator::inList(
+            $urlEncodedInSupportCharset = StringValidator::inList(
                 $charset,
                 array(
                     'utf-8',
@@ -117,6 +118,17 @@
                     'windows-1252'
                 )
             );
+            if ($urlEncodedInSupportCharset === false && !defined('CRON')) {
+                sendLoggingEmail(
+                    '[imnosy.com] CurlValidator::urlCharsetSupport',
+                    nl2br(
+                        'url: ' . ($url) . "\n" .
+                        'charset: ' . ($charset)
+                    ),
+                    'CurlValidator::urlCharsetSupport'
+                );
+            }
+            return $urlEncodedInSupportCharset;
         }
 
         /**
@@ -124,14 +136,17 @@
          * 
          * @access public
          * @static
-         * @param  String $url
-         * @return Boolean
+         * @param  string $url
+         * @return boolean
          */
         public static function urlContentIsNotEmpty($url)
         {
-            $curler = self::_getCurler($url, 'get');
-            $response = $curler->getResponse();
-            return !empty($response);
+            $curler = RequestCache::read('curler');
+            $urlBody = $curler->getResponse();
+            if (is_null($urlBody)) {
+                $urlBody = $curler->get($url);
+            }
+            return !empty($urlBody);
         }
 
         /**
@@ -139,13 +154,17 @@
          * 
          * @access public
          * @static
-         * @param  String $url
-         * @param  Integer $maxKilobytes
-         * @return Boolean
+         * @param  string $url
+         * @param  integer $maxKilobytes
+         * @return boolean
          */
         public static function urlContentSizeIsLessThan($url, $maxKilobytes)
         {
-            $curler = self::_getCurler($url, 'get');
+            $curler = RequestCache::read('curler');
+            $urlBody = $curler->getResponse();
+            if (is_null($urlBody)) {
+                $urlBody = $curler->get($url);
+            }
             $info = $curler->getInfo();
             $contentSizeInBytes = (int) $info['size_download'];
             return $contentSizeInBytes > 0
@@ -157,15 +176,14 @@
          * 
          * @access public
          * @static
-         * @param  String $url
-         * @return Boolean
+         * @param  string $url
+         * @return boolean
          */
         public static function urlContentTypeIsHtml($url)
         {
-            $curler = self::_getCurler($url, 'head');
-            $info = $curler->getInfo();
-            return isset($info['content_type'])
-                && strstr(strtolower($info['content_type']), 'text/html') !== false;
+            $headInfo = self::_getHeadInfo($url);
+            return isset($headInfo['content_type'])
+                && strstr(strtolower($headInfo['content_type']), 'text/html') !== false;
         }
 
         /**
@@ -173,16 +191,15 @@
          * 
          * @access public
          * @static
-         * @param  String $url
-         * @param  Array $allowedStatusCodes (default: array(200))
-         * @return Boolean
+         * @param  string $url
+         * @param  array $allowedStatusCodes (default: array(200))
+         * @return boolean
          */
         public static function urlStatusCode(
             $url, array $allowedStatusCodes = array(200)
         ) {
-            $curler = self::_getCurler($url, 'head');
-            $info = $curler->getInfo();
-            return isset($info['http_code'])
-                && in_array($info['http_code'], $allowedStatusCodes);
+            $headInfo = self::_getHeadInfo($url);
+            return isset($headInfo['http_code'])
+                && in_array($headInfo['http_code'], $allowedStatusCodes);
         }
     }
