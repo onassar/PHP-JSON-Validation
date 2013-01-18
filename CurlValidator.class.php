@@ -73,6 +73,24 @@
         }
 
         /**
+         * urlContainsHeadTag
+         * 
+         * @access public
+         * @static
+         * @param  string $url
+         * @return boolean
+         */
+        public static function urlContainsHeadTag($url)
+        {
+            $curler = RequestCache::read('curler');
+            $urlBody = $curler->getResponse();
+            if (is_null($urlBody)) {
+                $urlBody = $curler->get($url);
+            }
+            return strstr($urlBody, '<head') !== false;
+        }
+
+        /**
          * urlCharsetDefined
          * 
          * @access public
