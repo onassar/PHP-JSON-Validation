@@ -46,7 +46,23 @@
                 $headInfo = $curler->head($url);
             }
             $statusCode = (int) $headInfo['http_code'];
-            if ($statusCode !== 200) {
+
+            /**
+             * Originally, it was only checking for a non-200 status code.
+             * However if the url returns a 404 status code, the `get` call
+             * below will return false.
+             * 
+             * This is because by default, `Curler` instances see a 404 as a
+             * failed request, unless otherwise specified during instantiation.
+             * 
+             * Accompanying this false value will be a null response from the
+             * `getInfo` call below. This being null will result in failing
+             * rules below.
+             */
+            if (
+                $statusCode !== 200
+                && $statusCode !== 404
+            ) {
                 $urlBody = $curler->getResponse();
                 if (is_null($urlBody)) {
                     $urlBody = $curler->get($url);

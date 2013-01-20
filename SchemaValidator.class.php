@@ -221,7 +221,16 @@
                  */
                 if (isset($rule['interstitial'])) {
                     $this->_callInterstitial($rule);
-                    if (isset($rule['rules'])) {
+                    if (isset($rule['rules']) && !empty($rule['rules'])) {
+                        if (
+                            !isset($rule['rules'][0]['interstitial'])
+                            && !isset($rule['rules'][0]['validator'])
+                        ) {
+                            throw new Exception(
+                                '`rules` property must be array of ' .
+                                'rules. One specifically defined.'
+                            );
+                        }
                         $this->_checkRules($rule['rules'], $rule);
                     }
                 } else {
@@ -231,7 +240,16 @@
                      * occurs recursively)
                      */
                     if ($this->_checkRule($rule)) {
-                        if (isset($rule['rules'])) {
+                        if (isset($rule['rules']) && !empty($rule['rules'])) {
+                            if (
+                                !isset($rule['rules'][0]['interstitial'])
+                                && !isset($rule['rules'][0]['validator'])
+                            ) {
+                                throw new Exception(
+                                    '`rules` property must be array of ' .
+                                    'rules. One specifically defined.'
+                                );
+                            }
                             $this->_checkRules($rule['rules'], $rule);
                         }
                     }
