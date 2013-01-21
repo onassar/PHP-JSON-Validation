@@ -154,7 +154,7 @@
             );
             if ($urlEncodedInSupportCharset === false && !defined('CRON')) {
                 sendLoggingEmail(
-                    '[imnosy.com] CurlValidator::urlCharsetSupport',
+                    '[' . getHost() . '] CurlValidator::urlCharsetSupport',
                     nl2br(
                         'url: ' . ($url) . "\n" .
                         'charset: ' . ($charset)

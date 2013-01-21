@@ -281,6 +281,23 @@
                                 throw new Exception('Rule failed', 1);
                             }
                         }
+
+                        // rules or interstitials to call when parent failed
+                        if (
+                            isset($rule['alternatives'])
+                            && !empty($rule['alternatives'])
+                        ) {
+                            if (
+                                !isset($rule['alternatives'][0]['interstitial'])
+                                && !isset($rule['alternatives'][0]['validator'])
+                            ) {
+                                throw new Exception(
+                                    '`alternatives` property must be array ' .
+                                    'of rules. One specifically defined.'
+                                );
+                            }
+                            $this->_checkRules($rule['alternatives'], $rule);
+                        }
                     }
                 }
             }
