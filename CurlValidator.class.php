@@ -141,7 +141,7 @@
                 $urlBody = $curler->get($url);
             }
             $charset = $curler->getCharset();
-            $urlEncodedInSupportCharset = StringValidator::inList(
+            return StringValidator::inList(
                 $charset,
                 array(
                     'utf-8',
@@ -152,7 +152,6 @@
                     'windows-1252'
                 )
             );
-            return $urlEncodedInSupportCharset;
         }
 
         /**
