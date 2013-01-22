@@ -152,16 +152,6 @@
                     'windows-1252'
                 )
             );
-            if ($urlEncodedInSupportCharset === false && !defined('CRON')) {
-                sendLoggingEmail(
-                    '[' . getHost() . '] CurlValidator::urlCharsetSupport',
-                    nl2br(
-                        'url: ' . ($url) . "\n" .
-                        'charset: ' . ($charset)
-                    ),
-                    'CurlValidator::urlCharsetSupport'
-                );
-            }
             return $urlEncodedInSupportCharset;
         }
 

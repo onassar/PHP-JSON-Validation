@@ -270,6 +270,9 @@
                         if (!isset($rule['funnel']) || $rule['funnel'] === false) {
                             $this->_addFailedRule($rule);
 
+                            // alternative calls (aka. failure callbacks)
+                            $this->_initiateAlternatives($rule);
+
                             /**
                              * If this failing-rule was setup as <blocking>
                              * (rules having the property <blocking> marked as
@@ -280,26 +283,40 @@
                             if ($this->_isBlockingRule($rule) === true) {
                                 throw new Exception('Rule failed', 1);
                             }
-                        }
+                        } else {
 
-                        // rules or interstitials to call when parent failed
-                        if (
-                            isset($rule['alternatives'])
-                            && !empty($rule['alternatives'])
-                        ) {
-                            if (
-                                !isset($rule['alternatives'][0]['interstitial'])
-                                && !isset($rule['alternatives'][0]['validator'])
-                            ) {
-                                throw new Exception(
-                                    '`alternatives` property must be array ' .
-                                    'of rules. One specifically defined.'
-                                );
-                            }
-                            $this->_checkRules($rule['alternatives'], $rule);
+                            // alternative calls (aka. failure callbacks)
+                            $this->_initiateAlternatives($rule);
                         }
                     }
                 }
+            }
+        }
+
+        /**
+         * _initiateAlternatives
+         * 
+         * @access protected
+         * @param  array $rule
+         * @return void
+         */
+        protected function _initiateAlternatives(array $rule)
+        {
+            // rules or interstitials to call when parent failed
+            if (
+                isset($rule['alternatives'])
+                && !empty($rule['alternatives'])
+            ) {
+                if (
+                    !isset($rule['alternatives'][0]['interstitial'])
+                    && !isset($rule['alternatives'][0]['validator'])
+                ) {
+                    throw new Exception(
+                        '`alternatives` property must be array ' .
+                        'of rules. One specifically defined.'
+                    );
+                }
+                $this->_checkRules($rule['alternatives'], $rule);
             }
         }
 
