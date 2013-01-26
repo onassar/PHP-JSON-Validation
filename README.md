@@ -248,6 +248,10 @@ it. Since it's passed by reference, it will contain any data added dynamically
 through the `SchemaValidator` method `addData`
 - `__schema__` A reference to the schema validator itself
 - `__schemaValidator__` A reference to the schema validator itself
+- `__get__`
+- `__post__`
+- `__this__`
+- `__parent__`
 
 An example of the usefulness of the `__data__` property is to ensure certain
 data has been passed into the validator. For example, if you are passing in
