@@ -123,6 +123,12 @@
             $params = array();
             if (isset($rule['params'])) {
 
+                // pass along the rule and parent as magic properties
+                $this->_data['__this__'] = $rule;
+                if (isset($rule['_parent'])) {
+                    $this->_data['__parent__'] = $rule['_parent'];
+                }
+
                 // parameter formatting
                 foreach ($rule['params'] as &$param) {
                     $param = $this->_templateParam($param);
@@ -174,6 +180,12 @@
             // parameters passed
             $params = array();
             if (isset($rule['params'])) {
+
+                // pass along the rule and parent as magic properties
+                $this->_data['__this__'] = $rule;
+                if (isset($rule['_parent'])) {
+                    $this->_data['__parent__'] = $rule['_parent'];
+                }
 
                 // parameter formatting
                 foreach ($rule['params'] as &$param) {
