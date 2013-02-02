@@ -98,7 +98,7 @@
         public static function urlContainsHeadTag($url)
         {
             $urlContent = self::_getUrlContent($url);
-            return strstr($urlContent, '<head') !== false;
+            return strstr(strtolower($urlContent), '<head') !== false;
         }
 
         /**
