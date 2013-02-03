@@ -136,6 +136,7 @@
                     'utf-8',
                     'ascii',
                     'iso-8859-1',
+                    'iso-8859-15',
                     'euc-kr',
                     'euc-jp',
                     'windows-1252'
