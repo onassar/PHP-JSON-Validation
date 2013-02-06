@@ -184,7 +184,9 @@
         /**
          * urlContentSizeIsLessThan
          * 
-         * Try/catch here 
+         * Try/catch here in case the Curler writeCallback method bails on the
+         * internal Curler filesize requirement. The application-level file
+         * size limit check is done below using `strlen`.
          * 
          * @access public
          * @static
