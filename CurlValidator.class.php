@@ -221,6 +221,25 @@
         }
 
         /**
+         * urlResponds
+         * 
+         * This is a test to ensure that the page responds within an allotted
+         * time.
+         * 
+         * @access public
+         * @static
+         * @param  string $url
+         * @param  float $maxNumberOfSeconds
+         * @return boolean
+         */
+        public static function urlResponds($url, $maxNumberOfSeconds)
+        {
+            $urlInfo = self::_getUrlInfo($url);
+            return isset($urlInfo['total_time'])
+                && (float) $urlInfo['total_time'] < (float) $maxNumberOfSeconds;
+        }
+
+        /**
          * urlStatusCodeIsValid
          * 
          * @access public
