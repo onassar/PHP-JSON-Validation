@@ -221,7 +221,7 @@
         }
 
         /**
-         * urlResponds
+         * urlRepondsWithinMaxSeconds
          * 
          * This is a test to ensure that the page responds within an allotted
          * time.
@@ -229,10 +229,10 @@
          * @access public
          * @static
          * @param  string $url
-         * @param  float $maxNumberOfSeconds
+         * @param  integer $maxNumberOfSeconds
          * @return boolean
          */
-        public static function urlResponds($url, $maxNumberOfSeconds)
+        public static function urlRepondsWithinMaxSeconds($url, $maxNumberOfSeconds)
         {
             $urlInfo = self::_getUrlInfo($url);
             return isset($urlInfo['total_time'])
