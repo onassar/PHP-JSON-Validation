@@ -25,6 +25,24 @@
     abstract class CurlValidator
     {
         /**
+         * decode
+         * 
+         * @access public
+         * @param  mixed $mixed
+         * @return mixed
+         */
+        protected static function _decode($mixed)
+        {
+            if (is_array($mixed)) {
+                foreach ($mixed as $key => $value) {
+                    $mixed[$key] = self::decode($value);
+                }
+                return $mixed;
+            }
+            return html_entity_decode($mixed, ENT_QUOTES, 'UTF-8');
+        }
+
+        /**
          * _makeRequestToUrl
          * 
          * @access public
@@ -37,7 +55,7 @@
             $curler = RequestCache::read('curler');
             $urlContent = $curler->getResponse();
             if (is_null($urlContent)) {
-                $curler->get($url);
+                $curler->get(self::_decode($url));
             }
         }
 
@@ -130,7 +148,7 @@
             self::_makeRequestToUrl($url);
             $curler = RequestCache::read('curler');
             $charset = $curler->getCharset();
-            return StringValidator::inList(
+            $charsetIsSupported = StringValidator::inList(
                 $charset,
                 array(
                     'utf-8',
@@ -142,6 +160,11 @@
                     'windows-1252'
                 )
             );
+            if ($charsetIsSupported === true) {
+                return true;
+            }
+            $urlContent = self::_getUrlContent($url);
+            return mb_check_encoding($urlContent, 'UTF-8');
         }
 
         /**
