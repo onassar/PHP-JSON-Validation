@@ -217,7 +217,11 @@
         {
             $urlInfo = self::_getUrlInfo($url);
             return isset($urlInfo['content_type'])
-                && strstr(strtolower($urlInfo['content_type']), 'text/html') !== false;
+                &&
+                (
+                    strstr(strtolower($urlInfo['content_type']), 'text/html') !== false
+                    // || strstr(strtolower($urlInfo['content_type']), 'text/xml') !== false
+                );
         }
 
         /**
