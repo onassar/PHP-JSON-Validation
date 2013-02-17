@@ -211,6 +211,11 @@
             // rule iteration
             foreach ($rules as $count => &$rule) {
 
+                // ignore the rule if it's been disabled
+                if (isset($rule['disabled']) && $rule['disabled'] === true) {
+                    continue;
+                }
+
                 // store the parent for rule blocking checks
                 if (!is_null($parent)) {
                     $rule['_parent'] = $parent;
