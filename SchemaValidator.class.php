@@ -35,6 +35,7 @@
         protected $_libraries = array(
             'DataValidator.class.php',
             'CurlValidator.class.php',
+            'IntegerValidator.class.php',
             'StringValidator.class.php'
         );
 
