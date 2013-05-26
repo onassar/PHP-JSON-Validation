@@ -1,10 +1,10 @@
 PHP-JSON-Validation
-===
+====
 One of the more complicated of my classes/projects, the PHP-JSON-Validation
 library focuses on a cross-paradigm (server/client) data validation solution.
 
 Quick Note
-===
+====
 This library is meant to be used directly with the front-end validation
 project [JS-JSON-Validation](https://github.com/onassar/JS-JSON-Validation).
 
@@ -12,7 +12,7 @@ Both libraries are developed to work off the same `schema` object type in order
 to have validation of a form (or data source) validated in the same way.
 
 Summary
-===
+====
 In short, I wanted to define how a request (generally, a form being posted)
 ought to be validated. This is the server side component which obeys the rules
 I&#039;ve come up with. I borrowed many elements that I saw in the wild, and
@@ -35,7 +35,7 @@ simply mark each rules `blocking` attribute as `true`. See documentation
 below for a detailed overview of the `blocking` property.
 
 Validation Pieces
-===
+====
 If you&#039;ve looked at the example and want more background on the different
 validation components at work within an actual
 [JSON schema](https://github.com/onassar/PHP-JSON-Validation/blob/master/example/comment.json),
@@ -143,7 +143,7 @@ solid for me. See below for examples of how localization could be used with
 errors.
 
 Flexibility
-===
+====
 The intent behind the structure of this library is that of extensibility.
 Besides being able to fully define your own validation classes and methods,
 the <funnel> and <blocking> properties are meant to give the ability to derive
@@ -178,7 +178,7 @@ This would allow for localization to be contained within the schema, while
 keeping it clean and decoupled from the actual validation logic.
 
 SmartSchema
-===
+====
 The `SmartSchema` class is not required for the validation outlined above.
 However it provides very convenient filtering for use with the
 [JS-JSON-Validation](https://github.com/onassar/JS-JSON-Validation) library,
@@ -215,7 +215,7 @@ appropriately (to either a
 [client side](https://github.com/onassar/JS-JSON-Validation) validation flow).
 
 Security
-===
+====
 Depending on your validation requirements, values that have a rule applied
 against them may cause security bugs. This is not managed by the library.
 
@@ -227,7 +227,7 @@ from the validation process. See the
 These work exceptionally well for me during the validation process.
 
 Specifying Child Rules as Path to Schema
-===
+====
 In a standard flow, a rule may have a sub `rules` array, which contains child
 rules that should be run if the parent rule validates to true.
 
@@ -239,7 +239,7 @@ This process is recursive as well. Thus, you could chain together many
 different validation schemas through one original document.
 
 Magic Data
-===
+====
 The following data is available for usage within schema validation rules:
 - `__data__` An array of all the data passed into the `SchemaValidator`
 constructor. This is passed by reference, so careful if you make any changes to
@@ -268,7 +268,7 @@ is performing the checks. This can be useful for dynamically adding data to the
 
 
 Interstitials
-===
+====
 Methods can be called which run code between validation checks, which I'm calling interstitials.
 
 These calls do not require a `true` or `false` return value, and are meant to be run between rules, in order to run some "middleware" logic between calls.
@@ -289,11 +289,11 @@ The `logSomethingToFile` method will be called, receiving the defined arguments.
 The same magic parameters can be passed in. Additionally, a `rules` array can be specified for child-rules to be run after the interstitial has been called.
 
 Loadable Rule Sets (Update: May 25th, 2013)
-===
+====
 If you have a group of rules that ought to be processed in multiple schemas, you can specify the *relative*
 path to the rule file. The framework will load them in and process them accordingly.
 
-Example:
+**Example**
 
 ``` json
 
