@@ -13,9 +13,9 @@
          * 
          * @access public
          * @static
-         * @param  String $param
-         * @param  Array $data
-         * @return Boolean
+         * @param  string $param
+         * @param  array $data
+         * @return boolean
          */
         public static function dataIncluded($param, array $data)
         {
@@ -27,10 +27,22 @@
          * 
          * @access public
          * @static
-         * @return Boolean
+         * @return boolean
          */
         public static function dataPosted()
         {
             return !empty($_POST);
+        }
+
+        /**
+         * returnTrue
+         * 
+         * @access public
+         * @static
+         * @return boolean
+         */
+        public static function returnTrue()
+        {
+            return true;
         }
     }
