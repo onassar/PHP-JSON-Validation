@@ -160,19 +160,18 @@ object as follows:
 
 ``` json
 
-    {
-        "validator": ["StringValidator", "emptyOrEmail"],
-        "params": ["{email}"],
-        "error": {
-            "input": "email",
-            "message": {
-                "english": "Please enter a valid email address.",
-                "french": "..",
-                "german": ".."
-            }
+{
+    "validator": ["StringValidator", "emptyOrEmail"],
+    "params": ["{email}"],
+    "error": {
+        "input": "email",
+        "message": {
+            "english": "Please enter a valid email address.",
+            "french": "..",
+            "german": ".."
         }
-    },
-
+    }
+}
 ```
 
 This would allow for localization to be contained within the schema, while
@@ -283,7 +282,6 @@ An example entry in a schema could look like so:
     "interstitial": ["Interstitials", "logSomethingToFile"],
     "params": ["{userId}", "{__schemaValidator__}"]
 }
-
 ```
 
 The `logSomethingToFile` method will be called, receiving the defined arguments. This can be useful in cases where you want to log certain events, or, for example, email an administrator of a certain event.
@@ -307,5 +305,4 @@ Example:
     },
     "rules": "loginDetailsValidation.json"
 }
-
 ```
