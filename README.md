@@ -277,10 +277,14 @@ These calls do not require a `true` or `false` return value, and are meant to be
 An example entry in a schema could look like so:
 
 
-    {    
-        "interstitial": ["Interstitials", "logSomethingToFile"],
-        "params": ["{userId}", "{__schemaValidator__}"]
-    }
+``` json
+
+{
+    "interstitial": ["Interstitials", "logSomethingToFile"],
+    "params": ["{userId}", "{__schemaValidator__}"]
+}
+
+```
 
 The `logSomethingToFile` method will be called, receiving the defined arguments. This can be useful in cases where you want to log certain events, or, for example, email an administrator of a certain event.
 
@@ -302,6 +306,6 @@ Example:
         "message": "Please enter your username/password"
     },
     "rules": "loginDetailsValidation.json"
-},
+}
 
 ```
