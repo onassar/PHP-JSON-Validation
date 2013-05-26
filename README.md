@@ -285,3 +285,23 @@ An example entry in a schema could look like so:
 The `logSomethingToFile` method will be called, receiving the defined arguments. This can be useful in cases where you want to log certain events, or, for example, email an administrator of a certain event.
 
 The same magic parameters can be passed in. Additionally, a `rules` array can be specified for child-rules to be run after the interstitial has been called.
+
+Loadable Rule Sets (Update: May 25th, 2013)
+===
+If you have a group of rules that ought to be processed in multiple schemas, you can specify the *relative*
+path to the rule file. The framework will load them in and process them accordingly.
+
+Example:
+
+``` json
+
+{
+    "validator": ["DataValidator", "dataPosted"],
+    "blocking": true,
+    "error": {
+        "message": "Please enter your username/password"
+    },
+    "rules": "loginDetailsValidation.json"
+},
+
+```
