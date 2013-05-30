@@ -40,6 +40,17 @@
         );
 
         /**
+         * _exceptions
+         * 
+         * @var    array
+         * @access protected
+         */
+        protected $_exceptions = array(
+            'SchemaFormattingException.class.php',
+            'RuleValidationException.class.php'
+        );
+
+        /**
          * _schema
          * 
          * @var    Schema
@@ -88,6 +99,11 @@
             // library booting
             foreach ($this->_libraries as $library) {
                 require_once $library;
+            }
+
+            // exception booting
+            foreach ($this->_exceptions as $exception) {
+                require_once $exception;
             }
         }
 
@@ -244,7 +260,7 @@
                             !isset($rule['rules'][0]['interstitial'])
                             && !isset($rule['rules'][0]['validator'])
                         ) {
-                            throw new Exception(
+                            throw new SchemaFormattingException(
                                 '`rules` property must be array of ' .
                                 'rules. One specifically defined.'
                             );
@@ -263,7 +279,7 @@
                                 !isset($rule['rules'][0]['interstitial'])
                                 && !isset($rule['rules'][0]['validator'])
                             ) {
-                                throw new Exception(
+                                throw new SchemaFormattingException(
                                     '`rules` property must be array of ' .
                                     'rules. One specifically defined.'
                                 );
@@ -285,7 +301,10 @@
                          * aka. rule didn't pass, and wasn't set as a funnel,
                          * then the rule has failed to validate
                          */
-                        if (!isset($rule['funnel']) || $rule['funnel'] === false) {
+                        if (
+                            !isset($rule['funnel'])
+                            || $rule['funnel'] === false
+                        ) {
                             $this->_addFailedRule($rule);
 
                             // alternative calls (aka. failure callbacks)
@@ -299,7 +318,9 @@
                              * caught by caller)
                              */
                             if ($this->_isBlockingRule($rule) === true) {
-                                throw new Exception('Rule failed', 1);
+                                throw new RuleValidationException(
+                                    'Rule failed'
+                                );
                             }
                         } else {
 
@@ -329,7 +350,7 @@
                     !isset($rule['alternatives'][0]['interstitial'])
                     && !isset($rule['alternatives'][0]['validator'])
                 ) {
-                    throw new Exception(
+                    throw new SchemaFormattingException(
                         '`alternatives` property must be array ' .
                         'of rules. One specifically defined.'
                     );
@@ -429,7 +450,7 @@
                             $param = $this->_data[$key[1]];
                         }
                     } else {
-                        throw new Exception(
+                        throw new SchemaFormattingException(
                             'Invalid data-source specified. Entry ' .
                             'name *' . ($param) . '* not found in ' .
                             'data source.'
@@ -516,8 +537,8 @@
             try {
                 $this->_checkRules($rules);
             } catch(Exception $exception) {
-                if ($exception->getCode() !== 1) {
-                    throw new Exception($exception->getMessage());
+                if (get_class($exception) !== 'RuleValidationException') {
+                    throw $exception;
                 }
             }
             return count($this->_failedRules) === 0;
