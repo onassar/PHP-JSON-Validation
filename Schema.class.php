@@ -73,7 +73,9 @@
                         $decoded = json_decode($raw, true);
                         $rule['rules'] = $this->_loadDynamicRules($decoded);
                     } else {
-                        $rule['rules'] = $this->_loadDynamicRules($rule['rules']);
+                        $rule['rules'] = $this->_loadDynamicRules(
+                            $rule['rules']
+                        );
                     }
                 }
             }
@@ -104,7 +106,9 @@
                     );
                 }
                 if (isset($rule['rules'])) {
-                    $this->_validateSchemaForPropertyLimitations($rule['rules']);
+                    $this->_validateSchemaForPropertyLimitations(
+                        $rule['rules']
+                    );
                 }
             }
         }
