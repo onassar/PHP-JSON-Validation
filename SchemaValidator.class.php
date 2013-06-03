@@ -131,7 +131,7 @@
          * checking validation rules.
          * 
          * @access protected
-         * @param  Array $rule
+         * @param  array $rule
          * @return void
          */
         protected function _callInterstitial(array $rule)
