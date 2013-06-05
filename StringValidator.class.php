@@ -126,6 +126,21 @@
         }
 
         /**
+         * isAlphaNumeric
+         * 
+         * @access public
+         * @static
+         * @param  string $str
+         * @param  boolean $allowPeriods (default: false)
+         * @return boolean
+         */
+        public static function isAlphaNumeric($str, $allowPeriods = false)
+        {
+            $pattern = '/^[a-zA-Z0-9' . ($allowPeriods ? '\.' : '') . ']+$/';
+            return preg_match($pattern, $str);
+        }
+
+        /**
          * maxLength
          * 
          * Checks whether a maximum (inclusive) length of characters has been
