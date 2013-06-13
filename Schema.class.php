@@ -125,6 +125,17 @@
         }
 
         /**
+         * getPath
+         * 
+         * @access public
+         * @return string
+         */
+        public function getPath()
+        {
+            return $this->_path;
+        }
+
+        /**
          * getRules
          * 
          * @note   Since replacement for dynamical rules (eg. rules that don't

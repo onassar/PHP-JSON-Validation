@@ -518,6 +518,17 @@
         }
 
         /**
+         * getSchema
+         * 
+         * @access public
+         * @return Schema
+         */
+        public function getSchema()
+        {
+            return $this->_schema;
+        }
+
+        /**
          * valid
          * 
          * Returns whether or not the schema has been validated against the
