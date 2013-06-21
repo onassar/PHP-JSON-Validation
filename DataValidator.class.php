@@ -33,16 +33,4 @@
         {
             return !empty($_POST);
         }
-
-        /**
-         * returnTrue
-         * 
-         * @access public
-         * @static
-         * @return boolean
-         */
-        public static function returnTrue()
-        {
-            return true;
-        }
     }
