@@ -108,7 +108,7 @@
                 ob_end_clean();
                 return $_response;
             }
-            return file_get_contents($this->_path);
+            return file_get_contents($path);
         }
 
         /**
