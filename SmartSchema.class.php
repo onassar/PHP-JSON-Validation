@@ -84,11 +84,12 @@
          * 
          * @access public
          * @param  string $path
+         * @param  boolean $allowPhpInSchemas (default: false)
          * @return void
          */
-        public function __construct($path)
+        public function __construct($path, $allowPhpInSchemas = false)
         {
-            parent::__construct($path);
+            parent::__construct($path, $allowPhpInSchemas);
         }
 
         /**

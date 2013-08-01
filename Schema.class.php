@@ -14,6 +14,14 @@
     class Schema
     {
         /**
+         * _allowPhpInSchemas
+         * 
+         * @var    boolean (default: false)
+         * @access protected
+         */
+        protected $_allowPhpInSchemas = false;
+
+        /**
          * _path
          * 
          * Path to the schema json file
@@ -40,11 +48,13 @@
          * 
          * @access public
          * @param  string $path
+         * @param  boolean $allowPhpInSchemas (default: false)
          * @return void
          */
-        public function __construct($path)
+        public function __construct($path, $allowPhpInSchemas = false)
         {
             $this->_path = $path;
+            $this->_allowPhpInSchemas = $allowPhpInSchemas;
         }
 
         /**
@@ -67,7 +77,7 @@
                 if (isset($rule['rules'])) {
                     if (is_string($rule['rules'])) {
                         $directoryPath = dirname($this->_path);
-                        $raw = file_get_contents(
+                        $raw = $this->_loadSchema(
                             ($directoryPath) . '/' . ($rule['rules'])
                         );
                         $decoded = json_decode($raw, true);
@@ -80,6 +90,25 @@
                 }
             }
             return $rules;
+        }
+
+        /**
+         * _loadSchema
+         * 
+         * @access public
+         * @param  string $path
+         * @return string
+         */
+        protected function _loadSchema($path)
+        {
+            if ($this->_allowPhpInSchemas === true) {
+                ob_start();
+                include $path;
+                $_response = ob_get_contents();
+                ob_end_clean();
+                return $_response;
+            }
+            return file_get_contents($this->_path);
         }
 
         /**
@@ -152,7 +181,7 @@
         public function getRules()
         {
             // grab and return schema contents
-            $raw = file_get_contents($this->_path);
+            $raw = $this->_loadSchema($this->_path);
             $decoded = json_decode($raw, true);
 
             // json is formatted invalidly; otherwise return the decoded schema
