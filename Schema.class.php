@@ -89,6 +89,7 @@
                     }
                 }
             }
+            unset($rule);// See: http://php.net/manual/en/language.references.unset.php
             return $rules;
         }
 
