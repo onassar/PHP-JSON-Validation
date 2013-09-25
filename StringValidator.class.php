@@ -141,6 +141,25 @@
         }
 
         /**
+         * isJson
+         * 
+         * @access public
+         * @static
+         * @param  string $str
+         * @return boolean
+         */
+        public static function isJson($str)
+        {
+            return (
+                is_string($str)
+                && (
+                    is_object(json_decode($str))
+                    || is_array(json_decode($str))
+                )
+            ) ? true : false;
+        }
+
+        /**
          * maxLength
          * 
          * Checks whether a maximum (inclusive) length of characters has been
