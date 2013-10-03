@@ -23,6 +23,19 @@
         }
 
         /**
+         * dataInputted
+         * 
+         * @access public
+         * @static
+         * @return boolean
+         */
+        public static function dataInputted()
+        {
+            $body = file_get_contents('php://input');
+            return $body !== '';
+        }
+
+        /**
          * dataPosted
          * 
          * @access public
