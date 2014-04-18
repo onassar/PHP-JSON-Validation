@@ -30,6 +30,22 @@
         }
 
         /**
+         * contains
+         * 
+         * Checks whether a substring is contained in the passed in string
+         * 
+         * @access public
+         * @static
+         * @param  string $str
+         * @param  string $substr
+         * @return boolean
+         */
+        public static function contains($str, $substr)
+        {
+            return strpos($str, $substr) !== false;
+        }
+
+        /**
          * email
          * 
          * Checks whether a string is in the proper email format
