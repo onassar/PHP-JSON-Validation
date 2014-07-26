@@ -46,8 +46,9 @@
          * @access protected
          */
         protected $_exceptions = array(
+            'RuleValidationException.class.php',
             'SchemaFormattingException.class.php',
-            'RuleValidationException.class.php'
+            'SchemaValidationException.class.php'
         );
 
         /**
