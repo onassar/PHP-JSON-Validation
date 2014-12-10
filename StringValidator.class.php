@@ -228,6 +228,19 @@
         }
 
         /**
+         * notEmail
+         * 
+         * @access public
+         * @static
+         * @param  string $str
+         * @return boolean
+         */
+        public static function notEmail($str)
+        {
+            return self::email($str) === false;
+        }
+
+        /**
          * notEmpty
          * 
          * Checks whether a passed in string is empty
