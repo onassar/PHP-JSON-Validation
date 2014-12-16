@@ -59,6 +59,7 @@
          */
         public static function email($str)
         {
+            return filter_var($str, FILTER_VALIDATE_EMAIL) !== false;
             return preg_match(
                 '/^[_a-z0-9-]+([\.|\+][_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/i',
                 $str
