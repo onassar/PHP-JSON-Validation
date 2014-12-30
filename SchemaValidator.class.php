@@ -27,6 +27,14 @@
         protected $_failedRules = array();
 
         /**
+         * _storedData
+         * 
+         * @var    array
+         * @access protected
+         */
+        protected $_storedData = array();
+
+        /**
          * _libraries
          * 
          * @var    array
@@ -528,6 +536,30 @@
         public function getSchema()
         {
             return $this->_schema;
+        }
+
+        /**
+         * getStoredData
+         * 
+         * @access public
+         * @return array
+         */
+        public function getStoredData()
+        {
+            return $this->_storedData;
+        }
+
+        /**
+         * store
+         * 
+         * @access public
+         * @param  string $key
+         * @param  mixed $value
+         * @return void
+         */
+        public function store($key, $value)
+        {
+            $this->_storedData[$key] = $value;
         }
 
         /**
