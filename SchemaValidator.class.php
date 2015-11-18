@@ -452,8 +452,7 @@
                          * the `_data` property, to allow a validation method
                          * to pass around all data posted.
                          * 
-                         * See the `DataValidator` class, `dataIncluded`
-                         * method.
+                         * See the `DataValidator` class, `dataIncluded` method.
                          */
                         else {
                             $param = $this->_data[$key[1]];
