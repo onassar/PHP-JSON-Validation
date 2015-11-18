@@ -9,6 +9,18 @@
     abstract class DataValidator
     {
         /**
+         * dataDeleted
+         * 
+         * @access public
+         * @static
+         * @return boolean
+         */
+        public static function dataDeleted()
+        {
+            return !empty($GLOBALS['_DELETE']);
+        }
+
+        /**
          * dataIncluded
          * 
          * @access public
@@ -33,6 +45,18 @@
         {
             $body = file_get_contents('php://input');
             return $body !== '';
+        }
+
+        /**
+         * dataPatched
+         * 
+         * @access public
+         * @static
+         * @return boolean
+         */
+        public static function dataPatched()
+        {
+            return !empty($GLOBALS['_PATCH']);
         }
 
         /**
