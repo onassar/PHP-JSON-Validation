@@ -342,6 +342,35 @@
         }
 
         /**
+         * _getTraversedValue
+         * 
+         * Traverses down the _data array, searching for a value matched by the
+         * keys of the value exploded via the period delimter (that was a
+         * mouthful).
+         * For example, if the value passed in is __patch__.data.settings, this
+         * method will check if __patch__ is valid reference, and if so, check
+         * that for data, and then check data for settings. False is returned if
+         * anywhere along the way, the value couldn't be retrieved by traversing
+         * down using the period delimiter.
+         * 
+         * @access protected
+         * @param  array $value
+         * @return false|mixed
+         */
+        protected function _getTraversedValue($value)
+        {
+            $reference = $this->_data;
+            $keys = explode('.', $value);
+            foreach ($keys as $key) {
+                if (!isset($reference[$key])) {
+                    return false;
+                }
+                $reference = $reference[$key];
+            }
+            return $reference;
+        }
+
+        /**
          * _initiateAlternatives
          * 
          * @access protected
@@ -411,6 +440,8 @@
             // otherwise if it's a string
             elseif (is_string($param)) {
                 $key = array();
+
+                // Standard variable match
                 if (preg_match('/{([a-zA-Z0-9-\._]+)}/', $param, $key)) {
 
                     // if the parameter exists in the validator's data source
@@ -457,12 +488,25 @@
                         else {
                             $param = $this->_data[$key[1]];
                         }
-                    } else {
-                        throw new SchemaFormattingException(
-                            'Invalid data-source specified. Entry ' .
-                            'name *' . ($param) . '* not found in ' .
-                            'data source.'
-                        );
+                    }
+                    // Key value could not be found
+                    else {
+                        // Check if a value can be found by traversal
+                        $traversed = $this->_getTraversedValue($key[1]);
+                        if ($traversed !== false) {
+                            $param = $traversed;
+                        }
+                        /**
+                         * Key value couldn't be found, either directly or by
+                         * traversing down period-delimited keys.
+                         */
+                        else {
+                            throw new SchemaFormattingException(
+                                'Invalid data-source specified. Entry ' .
+                                'name *' . ($param) . '* not found in ' .
+                                'data source.'
+                            );
+                        }
                     }
                 }
             }
