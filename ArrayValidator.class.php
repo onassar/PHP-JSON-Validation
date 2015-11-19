@@ -32,8 +32,8 @@
         /**
          * limitedKeys
          * 
-         * Returns one of the keys passed in doesn't exist in the array passed
-         * in.
+         * Returns whether one of the keys passed in doesn't exist in the array
+         * passed in.
          * 
          * @see    http://stackoverflow.com/a/18250308
          * @access public
