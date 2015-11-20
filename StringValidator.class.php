@@ -177,6 +177,20 @@
         }
 
         /**
+         * isMobileNumber
+         * 
+         * @note   Expects format +15551234
+         * @access public
+         * @static
+         * @param  string $str
+         * @return boolean
+         */
+        public static function isMobileNumber($str)
+        {
+            return preg_match('/^\+[0-9]+$/', $str);
+        }
+
+        /**
          * maxLength
          * 
          * Checks whether a maximum (inclusive) length of characters has been
