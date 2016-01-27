@@ -34,7 +34,7 @@
          */
         protected static function _makeRequestToUrl($url)
         {
-            $curler = RequestCache::read('curler');
+            $curler = RequestCache::simpleRead('curler');
             $urlContent = $curler->getResponse();
             if (is_null($urlContent)) {
                 $curler->get($url);
@@ -52,7 +52,7 @@
         protected static function _getUrlInfo($url)
         {
             self::_makeRequestToUrl($url);
-            $curler = RequestCache::read('curler');
+            $curler = RequestCache::simpleRead('curler');
             return $curler->getInfo();
         }
 
@@ -67,7 +67,7 @@
         protected static function _getUrlContent($url)
         {
             self::_makeRequestToUrl($url);
-            $curler = RequestCache::read('curler');
+            $curler = RequestCache::simpleRead('curler');
             return $curler->getResponse();
         }
 
@@ -112,7 +112,7 @@
         public static function urlCharsetIsDefined($url)
         {
             self::_makeRequestToUrl($url);
-            $curler = RequestCache::read('curler');
+            $curler = RequestCache::simpleRead('curler');
             $charset = $curler->getCharset();
             return $charset !== false;
         }
@@ -128,7 +128,7 @@
         public static function urlCharsetIsSupported($url)
         {
             self::_makeRequestToUrl($url);
-            $curler = RequestCache::read('curler');
+            $curler = RequestCache::simpleRead('curler');
             $charset = $curler->getCharset();
             $charsetIsSupported = StringValidator::inList(
                 $charset,
