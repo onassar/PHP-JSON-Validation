@@ -46,6 +46,20 @@
         }
 
         /**
+         * doesNotContain
+         * 
+         * @access public
+         * @static
+         * @param  string $str
+         * @param  string $substr
+         * @return boolean
+         */
+        public static function doesNotContain($str, $substr)
+        {
+            return strpos($str, $substr) === false;
+        }
+
+        /**
          * email
          * 
          * Checks whether a string is in the proper email format
