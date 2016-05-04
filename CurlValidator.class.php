@@ -173,15 +173,14 @@
          * @access public
          * @static
          * @param  string $url
-         * @param  integer $maxKilobytes
+         * @param  integer $maxBytes
          * @return boolean
          */
-        public static function urlContentSizeIsLessThan($url, $maxKilobytes)
+        public static function urlContentSizeIsLessThan($url, $maxBytes)
         {
             try {
                 $urlContent = self::_getUrlContent($url);
-                $limit = $maxKilobytes * 1024;
-                return strlen($urlContent) < $limit;
+                return strlen($urlContent) < $maxBytes;
             } catch (Exception $exception) {
                 return false;
             }
