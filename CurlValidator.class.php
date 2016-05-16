@@ -8,14 +8,6 @@
         );
     }
 
-    // dependency check
-    if (class_exists('RequestCache') === false) {
-        throw new Exception(
-            '*RequestCache* class required. Please see ' .
-            'https://github.com/onassar/PHP-RequestCache'
-        );
-    }
-
     /**
      * CurlValidator
      * 
@@ -25,110 +17,29 @@
     abstract class CurlValidator
     {
         /**
-         * _makeRequestToUrl
+         * charsetIsDefined
          * 
          * @access public
          * @static
-         * @param  string $url
-         * @return void
-         */
-        protected static function _makeRequestToUrl($url)
-        {
-            $curler = RequestCache::simpleRead('curler');
-            $urlContent = $curler->getResponse();
-            if (is_null($urlContent)) {
-                $curler->get($url);
-            }
-        }
-
-        /**
-         * _getUrlInfo
-         * 
-         * @access public
-         * @static
-         * @param  string $url
-         * @return array
-         */
-        protected static function _getUrlInfo($url)
-        {
-            self::_makeRequestToUrl($url);
-            $curler = RequestCache::simpleRead('curler');
-            return $curler->getInfo();
-        }
-
-        /**
-         * _getUrlContent
-         * 
-         * @access public
-         * @static
-         * @param  string $url
-         * @return string
-         */
-        protected static function _getUrlContent($url)
-        {
-            self::_makeRequestToUrl($url);
-            $curler = RequestCache::simpleRead('curler');
-            return $curler->getResponse();
-        }
-
-        /**
-         * numberOfRedirectsIsLessThan
-         * 
-         * @access public
-         * @static
-         * @param  string $url
-         * @param  integer $redirectLimit
+         * @param  Curler $curler
          * @return boolean
          */
-        public static function numberOfRedirectsIsLessThan($url, $redirectLimit)
+        public static function charsetIsDefined(Curler $curler)
         {
-            $urlInfo = self::_getUrlInfo($url);
-            return isset($urlInfo['redirect_count'])
-                && (int) $urlInfo['redirect_count'] < (int) $redirectLimit;
-        }
-
-        /**
-         * urlContainsHeadTag
-         * 
-         * @access public
-         * @static
-         * @param  string $url
-         * @return boolean
-         */
-        public static function urlContainsHeadTag($url)
-        {
-            $urlContent = self::_getUrlContent($url);
-            return strstr(strtolower($urlContent), '<head') !== false;
-        }
-
-        /**
-         * urlCharsetIsDefined
-         * 
-         * @access public
-         * @static
-         * @param  string $url
-         * @return boolean
-         */
-        public static function urlCharsetIsDefined($url)
-        {
-            self::_makeRequestToUrl($url);
-            $curler = RequestCache::simpleRead('curler');
             $charset = $curler->getCharset();
             return $charset !== false;
         }
 
         /**
-         * urlCharsetIsSupported
+         * charsetIsSupported
          * 
          * @access public
          * @static
-         * @param  string $url
+         * @param  Curler $curler
          * @return boolean
          */
-        public static function urlCharsetIsSupported($url)
+        public static function charsetIsSupported(Curler $curler)
         {
-            self::_makeRequestToUrl($url);
-            $curler = RequestCache::simpleRead('curler');
             $charset = $curler->getCharset();
             $charsetIsSupported = StringValidator::inList(
                 $charset,
@@ -145,120 +56,166 @@
             if ($charsetIsSupported === true) {
                 return true;
             }
-            $urlContent = self::_getUrlContent($url);
-            return mb_check_encoding($urlContent, 'UTF-8');
+            $content = $curler->getResponse();
+            return mb_check_encoding($content, 'UTF-8');
         }
 
         /**
-         * urlContentIsNotEmpty
+         * contentContainsHeadTag
          * 
          * @access public
          * @static
-         * @param  string $url
+         * @param  Curler $curler
          * @return boolean
          */
-        public static function urlContentIsNotEmpty($url)
+        public static function contentContainsHeadTag(Curler $curler)
         {
-            $urlContent = self::_getUrlContent($url);
-            return !empty($urlContent);
+            $content = $curler->getResponse();
+            return $content !== false
+                && $content !== null
+                && strstr(strtolower($content), '<head') !== false;
         }
 
         /**
-         * urlContentSizeIsLessThan
-         * 
-         * Try/catch here in case the Curler writeCallback method bails on the
-         * internal Curler filesize requirement. The application-level file
-         * size limit check is done below using `strlen`.
+         * contentIsNotEmpty
          * 
          * @access public
          * @static
-         * @param  string $url
-         * @param  integer $maxBytes
+         * @param  Curler $curler
          * @return boolean
          */
-        public static function urlContentSizeIsLessThan($url, $maxBytes)
+        public static function contentIsNotEmpty(Curler $curler)
         {
-            try {
-                $urlContent = self::_getUrlContent($url);
-                return strlen($urlContent) < $maxBytes;
-            } catch (Exception $exception) {
-                return false;
-            }
+            $content = $curler->getResponse();
+            return $content !== false
+                && $content !== null
+                && empty($content) === false;
         }
 
         /**
-         * urlContentTypeIsHtml
+         * contentTypeIsHTML
          * 
          * @access public
          * @static
-         * @param  string $url
+         * @param  Curler $curler
          * @return boolean
          */
-        public static function urlContentTypeIsHtml($url)
+        public static function contentTypeIsHTML(Curler $curler)
         {
-            $urlInfo = self::_getUrlInfo($url);
-            return isset($urlInfo['content_type'])
-                &&
-                (
-                    strstr(strtolower($urlInfo['content_type']), 'text/html') !== false
-                    // || strstr(strtolower($urlInfo['content_type']), 'text/xml') !== false
-                );
+            $info = $curler->getInfo();
+            $allowable = array(
+                'text/html',
+                'image/jpg',
+                'image/jpeg',
+                'image/gif'
+            );
+            return isset($info['content_type']) === true
+                && in_array($info['content_type'], $allowable) === true;
         }
 
         /**
-         * urlContentTypeIsImage
+         * contentTypeIsImage
          * 
          * @access public
          * @static
-         * @param  string $url
+         * @param  Curler $curler
          * @return boolean
          */
-        public static function urlContentTypeIsImage($url)
+        public static function contentTypeIsImage(Curler $curler)
         {
-            $urlInfo = self::_getUrlInfo($url);
+            $info = $curler->getInfo();
             $allowable = array(
                 'image/png',
                 'image/jpg',
                 'image/jpeg',
                 'image/gif'
             );
-            return isset($urlInfo['content_type'])
-                && in_array($urlInfo['content_type'], $allowable);
+            return isset($info['content_type']) === true
+                && in_array($info['content_type'], $allowable) === true;
         }
 
         /**
-         * urlRepondsWithinMaxSeconds
-         * 
-         * This is a test to ensure that the page responds within an allotted
-         * time.
+         * respondsWithinTimeout
          * 
          * @access public
          * @static
-         * @param  string $url
-         * @param  integer $maxNumberOfSeconds
+         * @param  Curler $curler
          * @return boolean
          */
-        public static function urlRepondsWithinMaxSeconds($url, $maxNumberOfSeconds)
+        public static function respondsWithinTimeout(Curler $curler)
         {
-            $urlInfo = self::_getUrlInfo($url);
-            return isset($urlInfo['total_time'])
-                && (float) $urlInfo['total_time'] < (float) $maxNumberOfSeconds;
+            $error = $curler->getError();
+            if ($error === false) {
+                return true;
+            }
+            return $error['code'] !== 'CURLE_OPERATION_TIMEDOUT';
         }
 
         /**
-         * urlStatusCodeIsValid
+         * validFilesize
          * 
          * @access public
          * @static
-         * @param  string $url
-         * @param  array $allowedStatusCodes (default: array(200))
+         * @param  Curler $curler
          * @return boolean
          */
-        public static function urlStatusCodeIsValid(
-            $url, array $allowedStatusCodes = array(200)
-        ) {
-            $urlInfo = self::_getUrlInfo($url);
-            return isset($urlInfo['http_code'])
-                && in_array($urlInfo['http_code'], $allowedStatusCodes);
+        public static function validFilesize(Curler $curler)
+        {
+            $error = $curler->getError();
+            if ($error === false) {
+                return true;
+            }
+            return $error['code'] !== 'CUSTOM_FILESIZE';
+        }
+
+        /**
+         * validMime
+         * 
+         * @access public
+         * @static
+         * @param  Curler $curler
+         * @return boolean
+         */
+        public static function validMime(Curler $curler)
+        {
+            $error = $curler->getError();
+            if ($error === false) {
+                return true;
+            }
+            return $error['code'] !== 'CUSTOM_MIME';
+        }
+
+        /**
+         * validRedirects
+         * 
+         * @access public
+         * @static
+         * @param  Curler $curler
+         * @return boolean
+         */
+        public static function validRedirects(Curler $curler)
+        {
+            $error = $curler->getError();
+            if ($error === false) {
+                return true;
+            }
+            return $error['code'] !== 'CURLE_TOO_MANY_REDIRECTS';
+        }
+
+        /**
+         * validStatusCode
+         * 
+         * @access public
+         * @static
+         * @param  Curler $curler
+         * @return boolean
+         */
+        public static function validStatusCode(Curler $curler)
+        {
+            $error = $curler->getError();
+            if ($error === false) {
+                return true;
+            }
+            return $error['code'] !== 'CUSTOM_HTTPSTATUSCODE';
         }
     }
