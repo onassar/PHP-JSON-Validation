@@ -146,7 +146,7 @@
          * 
          * @access public
          * @static
-         * @param  string|int $str value to search for existence in
+         * @param  string|integer $str value to search for existence in
          * @param  array $list array of values to use as a basis for an existence
          *         check
          * @return boolean whether or not $str is in the $list array
