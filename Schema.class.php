@@ -60,9 +60,9 @@
         /**
          * _loadDynamicRules
          * 
-         * @access public
-         * @param  Array $rules
-         * @return Array
+         * @access protected
+         * @param  array $rules
+         * @return array
          */
         protected function _loadDynamicRules($rules)
         {
@@ -96,7 +96,7 @@
         /**
          * _loadSchema
          * 
-         * @access public
+         * @access protected
          * @param  string $path
          * @return string
          */
@@ -202,7 +202,7 @@
          * setMethod
          * 
          * @access public
-         * @param  String $method
+         * @param  string $method
          * @return void
          */
         public function setMethod($method)
