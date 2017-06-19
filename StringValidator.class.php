@@ -163,11 +163,15 @@
          * @static
          * @param  string $str
          * @param  boolean $allowPeriods (default: false)
+         * @param  boolean $allowDashes (default: false)
          * @return boolean
          */
-        public static function isAlphaNumeric($str, $allowPeriods = false)
+        public static function isAlphaNumeric($str, $allowPeriods = false, $allowDashes = false)
         {
-            $pattern = '/^[a-zA-Z0-9' . ($allowPeriods ? '\.' : '') . ']+$/';
+            $pattern = '/^[a-zA-Z0-9';
+            $pattern .= $allowPeriods ? '\.' : '';
+            $pattern .= $allowDashes ? '\-' : '';
+            $pattern .= ']+$/';
             return preg_match($pattern, $str);
         }
 
