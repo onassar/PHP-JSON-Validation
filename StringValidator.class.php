@@ -285,7 +285,7 @@
          */
         public static function notEmpty($str)
         {
-            return $str !== '';
+            return trim($str) !== '';
         }
 
         /**
