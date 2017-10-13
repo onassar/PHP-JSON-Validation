@@ -235,6 +235,20 @@
         }
 
         /**
+         * matches
+         * 
+         * @access public
+         * @static
+         * @param  string $str
+         * @param  string $pattern
+         * @return boolean
+         */
+        public static function matches($str, $pattern)
+        {
+            return preg_match($pattern, $str) === 1;
+        }
+
+        /**
          * minLength
          * 
          * Checks whether a minimum (inclusive) length of characters has been
