@@ -53,6 +53,20 @@
         }
 
         /**
+         * maxNumberOfValues
+         * 
+         * @access public
+         * @static
+         * @param  array $arr
+         * @param  integer $max
+         * @return boolean
+         */
+        public static function maxNumberOfValues(array $arr, $max)
+        {
+            return count($arr) <= $max;
+        }
+
+        /**
          * notEmpty
          * 
          * @access public
