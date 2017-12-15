@@ -3,19 +3,20 @@
     /**
      * IntegerValidator
      * 
-     * @author   Oliver Nassar <onassar@gmail.com>
      * @abstract
+     * @link    https://github.com/onassar/PHP-JSON-Validation
+     * @author  Oliver Nassar <onassar@gmail.com>
      */
     abstract class IntegerValidator
     {
         /**
          * greaterThan
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  integer $int
-         * @param  integer $min
-         * @return boolean
+         * @param   integer $int
+         * @param   integer $min
+         * @return  boolean
          */
         public static function greaterThan($int, $min)
         {
@@ -25,11 +26,11 @@
         /**
          * greaterThanOrEqualTo
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  integer $int
-         * @param  integer $min
-         * @return boolean
+         * @param   integer $int
+         * @param   integer $min
+         * @return  boolean
          */
         public static function greaterThanOrEqualTo($int, $min)
         {
@@ -39,11 +40,11 @@
         /**
          * lessThan
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  integer $int
-         * @param  integer $max
-         * @return boolean
+         * @param   integer $int
+         * @param   integer $max
+         * @return  boolean
          */
         public static function lessThan($int, $max)
         {
@@ -53,11 +54,11 @@
         /**
          * lessThanOrEqualTo
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  integer $int
-         * @param  integer $max
-         * @return boolean
+         * @param   integer $int
+         * @param   integer $max
+         * @return  boolean
          */
         public static function lessThanOrEqualTo($int, $max)
         {

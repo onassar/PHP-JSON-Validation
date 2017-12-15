@@ -3,8 +3,9 @@
     /**
      * ArrayValidator
      * 
-     * @author   Oliver Nassar <onassar@gmail.com>
      * @abstract
+     * @link    https://github.com/onassar/PHP-JSON-Validation
+     * @author  Oliver Nassar <onassar@gmail.com>
      */
     abstract class ArrayValidator
     {
@@ -14,12 +15,12 @@
          * Returns whether all the keys passed in can be found in the array
          * passed in.
          * 
-         * @see    http://stackoverflow.com/a/18250308
-         * @access public
+         * @see     http://stackoverflow.com/a/18250308
+         * @access  public
          * @static
-         * @param  array $arr
-         * @param  array $keys
-         * @return boolean
+         * @param   array $arr
+         * @param   array $keys
+         * @return  boolean
          */
         public static function containsKeys(array $arr, array $keys)
         {
@@ -35,17 +36,17 @@
          * Returns whether one of the keys passed in doesn't exist in the array
          * passed in.
          * 
-         * @see    http://stackoverflow.com/a/18250308
-         * @access public
+         * @see     http://stackoverflow.com/a/18250308
+         * @access  public
          * @static
-         * @param  array $arr
-         * @param  array $keys
-         * @return boolean
+         * @param   array $arr
+         * @param   array $keys
+         * @return  boolean
          */
         public static function limitedKeys(array $arr, array $keys)
         {
             foreach (array_keys($arr) as $key) {
-                if (!in_array($key, $keys)) {
+                if (in_array($key, $keys) === false) {
                     return false;
                 }
             }
@@ -55,11 +56,11 @@
         /**
          * maxNumberOfValues
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  array $arr
-         * @param  integer $max
-         * @return boolean
+         * @param   array $arr
+         * @param   integer $max
+         * @return  boolean
          */
         public static function maxNumberOfValues(array $arr, $max)
         {
@@ -69,13 +70,13 @@
         /**
          * notEmpty
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  array $arr
-         * @return boolean
+         * @param   array $arr
+         * @return  boolean
          */
         public static function notEmpty(array $arr)
         {
-            return !empty($arr);
+            return empty($arr) === false;
         }
     }

@@ -34,7 +34,7 @@
      * passed, unless the <blocking> or <funnel> properties are used
      * intelligently.
      *
-     * @author Oliver Nassar <onassar@gmail.com>
+     * @author  Oliver Nassar <onassar@gmail.com>
      */
 
     // dummy data

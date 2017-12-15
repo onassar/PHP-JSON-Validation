@@ -11,18 +11,19 @@
     /**
      * CurlValidator
      * 
-     * @author   Oliver Nassar <onassar@gmail.com>
      * @abstract
+     * @link    https://github.com/onassar/PHP-JSON-Validation
+     * @author  Oliver Nassar <onassar@gmail.com>
      */
     abstract class CurlValidator
     {
         /**
          * charsetIsDefined
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  Curler $curler
-         * @return boolean
+         * @param   Curler $curler
+         * @return  boolean
          */
         public static function charsetIsDefined(Curler $curler)
         {
@@ -33,10 +34,10 @@
         /**
          * charsetIsSupported
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  Curler $curler
-         * @return boolean
+         * @param   Curler $curler
+         * @return  boolean
          */
         public static function charsetIsSupported(Curler $curler)
         {
@@ -63,10 +64,10 @@
         /**
          * contentContainsHeadTag
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  Curler $curler
-         * @return boolean
+         * @param   Curler $curler
+         * @return  boolean
          */
         public static function contentContainsHeadTag(Curler $curler)
         {
@@ -79,10 +80,10 @@
         /**
          * contentIsNotEmpty
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  Curler $curler
-         * @return boolean
+         * @param   Curler $curler
+         * @return  boolean
          */
         public static function contentIsNotEmpty(Curler $curler)
         {
@@ -95,10 +96,10 @@
         /**
          * contentTypeIsHTML
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  Curler $curler
-         * @return boolean
+         * @param   Curler $curler
+         * @return  boolean
          */
         public static function contentTypeIsHTML(Curler $curler)
         {
@@ -116,10 +117,10 @@
         /**
          * contentTypeIsImage
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  Curler $curler
-         * @return boolean
+         * @param   Curler $curler
+         * @return  boolean
          */
         public static function contentTypeIsImage(Curler $curler)
         {
@@ -137,10 +138,10 @@
         /**
          * respondsWithinTimeout
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  Curler $curler
-         * @return boolean
+         * @param   Curler $curler
+         * @return  boolean
          */
         public static function respondsWithinTimeout(Curler $curler)
         {
@@ -154,10 +155,10 @@
         /**
          * validFilesize
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  Curler $curler
-         * @return boolean
+         * @param   Curler $curler
+         * @return  boolean
          */
         public static function validFilesize(Curler $curler)
         {
@@ -171,10 +172,10 @@
         /**
          * validMime
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  Curler $curler
-         * @return boolean
+         * @param   Curler $curler
+         * @return  boolean
          */
         public static function validMime(Curler $curler)
         {
@@ -188,10 +189,10 @@
         /**
          * validRedirects
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  Curler $curler
-         * @return boolean
+         * @param   Curler $curler
+         * @return  boolean
          */
         public static function validRedirects(Curler $curler)
         {
@@ -205,10 +206,10 @@
         /**
          * validStatusCode
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  Curler $curler
-         * @return boolean
+         * @param   Curler $curler
+         * @return  boolean
          */
         public static function validStatusCode(Curler $curler)
         {

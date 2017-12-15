@@ -5,40 +5,41 @@
      * 
      * Manages the validation of a schema against it's defined rules.
      * 
-     * @author  Oliver Nassar <onassar@gmail.com>
      * @example https://github.com/onassar/PHP-JSON-Validation/tree/master/example
+     * @link    https://github.com/onassar/PHP-JSON-Validation
+     * @author  Oliver Nassar <onassar@gmail.com>
      */
     class SchemaValidator
     {
         /**
          * _data
          * 
-         * @var    array
-         * @access protected
+         * @var     array
+         * @access  protected
          */
         protected $_data;
 
         /**
          * _failedRules
          * 
-         * @var    array
-         * @access protected
+         * @var     array
+         * @access  protected
          */
         protected $_failedRules = array();
 
         /**
          * _storedData
          * 
-         * @var    array
-         * @access protected
+         * @var     array
+         * @access  protected
          */
         protected $_storedData = array();
 
         /**
          * _libraries
          * 
-         * @var    array
-         * @access protected
+         * @var     array
+         * @access  protected
          */
         protected $_libraries = array(
             'DataValidator.class.php',
@@ -50,8 +51,8 @@
         /**
          * _exceptions
          * 
-         * @var    array
-         * @access protected
+         * @var     array
+         * @access  protected
          */
         protected $_exceptions = array(
             'RuleValidationException.class.php',
@@ -62,31 +63,31 @@
         /**
          * _schema
          * 
-         * @var    Schema
-         * @access protected
+         * @var     Schema
+         * @access  protected
          */
         protected $_schema;
 
         /**
          * _senstitiveToParentBlocking
          * 
-         * @note   Also defaults to `false` during instantiation
-         * @var    boolean (default: false)
-         * @access protected
+         * @note    Also defaults to `false` during instantiation
+         * @var     boolean (default: false)
+         * @access  protected
          */
         protected $_senstitiveToParentBlocking = false;
 
         /**
          * __construct
          * 
-         * @access public
-         * @param  Schema $schema
-         * @param  array $data (default: array())
-         * @param  boolean $senstitiveToParentBlocking (default: false)
-         *         Determines whether rules should prevent further validation
-         *         if/when a rule has failed to validate *and* it's parent has
-         *         it's `blocking` attribute set to `true`
-         * @return void
+         * @access  public
+         * @param   Schema $schema
+         * @param   array $data (default: array())
+         * @param   boolean $senstitiveToParentBlocking (default: false)
+         *          Determines whether rules should prevent further validation
+         *          if/when a rule has failed to validate *and* it's parent has
+         *          it's `blocking` attribute set to `true`
+         * @return  void
          */
         public function __construct(
             Schema $schema,
@@ -123,9 +124,9 @@
          * 
          * @notes  decoupled to allow logging and/or changing what gets
          *         pushed to the <_failedRules> array
-         * @access protected
-         * @param  array &$rule
-         * @return void
+         * @access  protected
+         * @param   array &$rule
+         * @return  void
          */
         protected function _addFailedRule(array &$rule)
         {
@@ -139,15 +140,15 @@
          * any response (eg. true/false), and is meant to run code between
          * checking validation rules.
          * 
-         * @access protected
-         * @param  array $rule
-         * @return void
+         * @access  protected
+         * @param   array $rule
+         * @return  void
          */
         protected function _callInterstitial(array $rule)
         {
             // parameters passed
             $params = array();
-            if (isset($rule['params'])) {
+            if (isset($rule['params']) === true) {
 
                 // pass along the rule and parent as magic properties
                 $this->_data['__this__'] = $rule;
@@ -177,17 +178,17 @@
          * instance-property is set to true. This can be done during the
          * `SchemaValidation` instantiation.
          * 
-         * @access protected
-         * @param  array &$rule
-         * @return boolean
+         * @access  protected
+         * @param   array &$rule
+         * @return  boolean
          */
         protected function _isBlockingRule(array &$rule)
         {
-            if (isset($rule['blocking'])) {
+            if (isset($rule['blocking']) === true) {
                 return (boolean) $rule['blocking'];
             }
             if ($this->_senstitiveToParentBlocking === true) {
-                if (isset($rule['_parent'])) {
+                if (isset($rule['_parent']) === true) {
                     return $this->_isBlockingRule($rule['_parent']);
                 }
             }
@@ -197,19 +198,19 @@
         /**
          * _checkRule
          * 
-         * @access protected
-         * @param  array $rule
-         * @return boolean
+         * @access  protected
+         * @param   array $rule
+         * @return  boolean
          */
         protected function _checkRule(array $rule)
         {
             // parameters passed
             $params = array();
-            if (isset($rule['params'])) {
+            if (isset($rule['params']) === true) {
 
                 // pass along the rule and parent as magic properties
                 $this->_data['__this__'] = $rule;
-                if (isset($rule['_parent'])) {
+                if (isset($rule['_parent']) === true) {
                     $this->_data['__parent__'] = $rule['_parent'];
                 }
 
@@ -227,10 +228,10 @@
         /**
          * _checkRules
          * 
-         * @access protected
-         * @param  array $rules
-         * @param  array|null $parent
-         * @return void
+         * @access  protected
+         * @param   array $rules
+         * @param   array|null $parent
+         * @return  void
          */
         protected function _checkRules(array &$rules, &$parent = null)
         {
@@ -238,12 +239,15 @@
             foreach ($rules as $count => &$rule) {
 
                 // ignore the rule if it's been disabled
-                if (isset($rule['disabled']) && $rule['disabled'] === true) {
+                if (
+                    isset($rule['disabled']) === true
+                    && $rule['disabled'] === true
+                ) {
                     continue;
                 }
 
                 // store the parent for rule blocking checks
-                if (!is_null($parent)) {
+                if (is_null($parent) === false) {
                     $rule['_parent'] = $parent;
                 }
 
@@ -262,12 +266,15 @@
                  * validator has access to, or anything else that seems
                  * relevant
                  */
-                if (isset($rule['interstitial'])) {
+                if (isset($rule['interstitial']) === true) {
                     $this->_callInterstitial($rule);
-                    if (isset($rule['rules']) && !empty($rule['rules'])) {
+                    if (
+                        isset($rule['rules']) === true
+                        && empty($rule['rules']) === false
+                    ) {
                         if (
-                            !isset($rule['rules'][0]['interstitial'])
-                            && !isset($rule['rules'][0]['validator'])
+                            isset($rule['rules'][0]['interstitial']) === false
+                            && isset($rule['rules'][0]['validator']) === false
                         ) {
                             throw new SchemaFormattingException(
                                 '`rules` property must be array of ' .
@@ -283,10 +290,13 @@
                      * occurs recursively)
                      */
                     if ($this->_checkRule($rule)) {
-                        if (isset($rule['rules']) && !empty($rule['rules'])) {
+                        if (
+                            isset($rule['rules']) === true
+                            && empty($rule['rules']) === false
+                        ) {
                             if (
-                                !isset($rule['rules'][0]['interstitial'])
-                                && !isset($rule['rules'][0]['validator'])
+                                isset($rule['rules'][0]['interstitial']) === false
+                                && isset($rule['rules'][0]['validator']) === false
                             ) {
                                 throw new SchemaFormattingException(
                                     '`rules` property must be array of ' .
@@ -311,7 +321,7 @@
                          * then the rule has failed to validate
                          */
                         if (
-                            !isset($rule['funnel'])
+                            isset($rule['funnel']) === false
                             || $rule['funnel'] === false
                         ) {
                             $this->_addFailedRule($rule);
@@ -353,16 +363,16 @@
          * anywhere along the way, the value couldn't be retrieved by traversing
          * down using the period delimiter.
          * 
-         * @access protected
-         * @param  array $value
-         * @return false|mixed
+         * @access  protected
+         * @param   string $value
+         * @return  false|mixed
          */
         protected function _getTraversedValue($value)
         {
             $reference = $this->_data;
             $keys = explode('.', $value);
             foreach ($keys as $key) {
-                if (!isset($reference[$key])) {
+                if (isset($reference[$key]) === false) {
                     return false;
                 }
                 $reference = $reference[$key];
@@ -373,20 +383,20 @@
         /**
          * _initiateAlternatives
          * 
-         * @access protected
-         * @param  array $rule
-         * @return void
+         * @access  protected
+         * @param   array $rule
+         * @return  void
          */
         protected function _initiateAlternatives(array $rule)
         {
             // rules or interstitials to call when parent failed
             if (
-                isset($rule['alternatives'])
-                && !empty($rule['alternatives'])
+                isset($rule['alternatives']) === true
+                && empty($rule['alternatives']) === false
             ) {
                 if (
-                    !isset($rule['alternatives'][0]['interstitial'])
-                    && !isset($rule['alternatives'][0]['validator'])
+                    isset($rule['alternatives'][0]['interstitial']) === false
+                    && isset($rule['alternatives'][0]['validator']) === false
                 ) {
                     throw new SchemaFormattingException(
                         '`alternatives` property must be array ' .
@@ -423,14 +433,14 @@
          * 2. The replacement code only replaces the specific key, not the
          *    array of keys with their respective values
          * 
-         * @access protected
-         * @param  String|Array $param
-         * @return String|Array
+         * @access  protected
+         * @param   string|array $param
+         * @return  string|array
          */
         protected function _templateParam($param)
         {
             // if the parameter defined in the schema is an array
-            if (is_array($param)) {
+            if (is_array($param) === true) {
 
                 // recursively template the property
                 foreach ($param as &$entry) {
@@ -438,14 +448,14 @@
                 }
             }
             // otherwise if it's a string
-            elseif (is_string($param)) {
+            elseif (is_string($param) === true) {
                 $key = array();
 
                 // Standard variable match
                 if (preg_match('/{([a-zA-Z0-9-\._]+)}/', $param, $key)) {
 
                     // if the parameter exists in the validator's data source
-                    if (isset($this->_data[$key[1]])) {
+                    if (isset($this->_data[$key[1]]) === true) {
 
                         /**
                          * If the param *value* that should be sent in for
@@ -456,7 +466,7 @@
                          * Note that PHP will cast POST'd data as strings, even
                          * if they are entered as numbers/floats, etc.
                          */
-                        if (is_string($this->_data[$key[1]])) {
+                        if (is_string($this->_data[$key[1]]) === true) {
                             $param = str_replace(
                                 $key[0],
                                 $this->_data[$key[1]],
@@ -520,10 +530,10 @@
         /**
          * addData
          * 
-         * @access public
-         * @param  String $key
-         * @param  mixed $data
-         * @return void
+         * @access  public
+         * @param   string $key
+         * @param   mixed $data
+         * @return  void
          */
         public function addData($key, $data)
         {
@@ -533,8 +543,8 @@
         /**
          * getData
          * 
-         * @access public
-         * @return Array
+         * @access  public
+         * @return  array
          */
         public function getData()
         {
@@ -552,16 +562,16 @@
          * rule, the "parent" rule will not be returned. The response from this
          * function is *one* dimensional, respective to rules.
          * 
-         * @access public
-         * @param  boolean $includeParents (default: true)
-         * @return array
+         * @access  public
+         * @param   boolean $includeParents (default: true)
+         * @return  array
          */
         public function getFailedRules($includeParents = true)
         {
             $failedRules = $this->_failedRules;
             if ($includeParents === false) {
                 foreach ($failedRules as &$rule) {
-                    if (isset($rule['_parent'])) {
+                    if (isset($rule['_parent']) === true) {
                         unset($rule['_parent']);
                     }
                 }
@@ -573,8 +583,8 @@
         /**
          * getSchema
          * 
-         * @access public
-         * @return Schema
+         * @access  public
+         * @return  Schema
          */
         public function getSchema()
         {
@@ -584,8 +594,8 @@
         /**
          * getStoredData
          * 
-         * @access public
-         * @return array
+         * @access  public
+         * @return  array
          */
         public function getStoredData()
         {
@@ -595,10 +605,10 @@
         /**
          * store
          * 
-         * @access public
-         * @param  string $key
-         * @param  mixed $value
-         * @return void
+         * @access  public
+         * @param   string $key
+         * @param   mixed $value
+         * @return  void
          */
         public function store($key, $value)
         {
@@ -614,8 +624,8 @@
          * Uses exception throwing to break out of the validation loop when a
          * required rule has failed.
          * 
-         * @access public
-         * @return boolean
+         * @access  public
+         * @return  boolean
          */
         public function valid()
         {

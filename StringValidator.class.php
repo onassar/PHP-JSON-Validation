@@ -5,22 +5,23 @@
      * 
      * Provides various string-based validation checks.
      * 
-     * @author   Oliver Nassar <onassar@gmail.com>
      * @abstract
+     * @link    https://github.com/onassar/PHP-JSON-Validation
+     * @author  Oliver Nassar <onassar@gmail.com>
      */
     abstract class StringValidator
     {
         /**
          * _decode
          * 
-         * @access protected
+         * @access  protected
          * @static
-         * @param  mixed $mixed
-         * @return mixed
+         * @param   mixed $mixed
+         * @return  mixed
          */
         protected static function _decode($mixed)
         {
-            if (is_array($mixed)) {
+            if (is_array($mixed) === true) {
                 foreach ($mixed as $key => $value) {
                     $mixed[$key] = decode($value);
                 }
@@ -34,11 +35,11 @@
          * 
          * Checks whether a substring is contained in the passed in string
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  string $str
-         * @param  string $substr
-         * @return boolean
+         * @param   string $str
+         * @param   string $substr
+         * @return  boolean
          */
         public static function contains($str, $substr)
         {
@@ -48,11 +49,11 @@
         /**
          * doesNotContain
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  string $str
-         * @param  string $substr
-         * @return boolean
+         * @param   string $str
+         * @param   string $substr
+         * @return  boolean
          */
         public static function doesNotContain($str, $substr)
         {
@@ -64,12 +65,12 @@
          * 
          * Checks whether a string is in the proper email format
          * 
-         * @notes  should work with o.nassar+label@sub.domain.info
-         * @access public
+         * @note    should work with o.nassar+label@sub.domain.info
+         * @access  public
          * @static
-         * @param  string $str presumable email address which should be validated
-         *         to ensure it is in fact the valid format
-         * @return boolean whether or not the email is valid
+         * @param   string $str presumable email address which should be
+         *          validated to ensure it is in fact the valid format
+         * @return  boolean whether or not the email is valid
          */
         public static function email($str)
         {
@@ -83,10 +84,10 @@
         /**
          * emailOrUrl
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  string $str
-         * @return boolean
+         * @param   string $str
+         * @return  boolean
          */
         public static function emailOrUrl($str)
         {
@@ -96,10 +97,10 @@
         /**
          * emptyOrEmail
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  string $str
-         * @return boolean
+         * @param   string $str
+         * @return  boolean
          */
         public static function emptyOrEmail($str)
         {
@@ -112,10 +113,10 @@
         /**
          * emptyOrUrl
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  string $str
-         * @return boolean
+         * @param   string $str
+         * @return  boolean
          */
         public static function emptyOrUrl($str)
         {
@@ -128,11 +129,11 @@
         /**
          * equals
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  string $str
-         * @param  string $comparison
-         * @return boolean
+         * @param   string $str
+         * @param   string $comparison
+         * @return  boolean
          */
         public static function equals($str, $comparison)
         {
@@ -144,12 +145,12 @@
          * 
          * Checks whether a passed in value (string|int) exists in a list.
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  string|integer $str value to search for existence in
-         * @param  array $list array of values to use as a basis for an existence
-         *         check
-         * @return boolean whether or not $str is in the $list array
+         * @param   string|integer $str value to search for existence in
+         * @param   array $list array of values to use as a basis for an
+         *          existence check
+         * @return  boolean whether or not $str is in the $list array
          */
         public static function inList($str, array $list)
         {
@@ -159,12 +160,12 @@
         /**
          * isAlphaNumeric
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  string $str
-         * @param  boolean $allowPeriods (default: false)
-         * @param  boolean $allowDashes (default: false)
-         * @return boolean
+         * @param   string $str
+         * @param   boolean $allowPeriods (default: false)
+         * @param   boolean $allowDashes (default: false)
+         * @return  boolean
          */
         public static function isAlphaNumeric($str, $allowPeriods = false, $allowDashes = false)
         {
@@ -178,15 +179,15 @@
         /**
          * isJson
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  string $str
-         * @return boolean
+         * @param   string $str
+         * @return  boolean
          */
         public static function isJson($str)
         {
             return (
-                is_string($str)
+                is_string($str) === true
                 && (
                     is_object(json_decode($str))
                     || is_array(json_decode($str))
@@ -197,11 +198,11 @@
         /**
          * isMobileNumber
          * 
-         * @note   Expects format +15551234
-         * @access public
+         * @note    Expects format +15551234
+         * @access  public
          * @static
-         * @param  string $str
-         * @return boolean
+         * @param   string $str
+         * @return  boolean
          */
         public static function isMobileNumber($str)
         {
@@ -214,20 +215,20 @@
          * Checks whether a maximum (inclusive) length of characters has been
          * met in the string passed in.
          * 
-         * @notes  without the _decode call, characters such as '&' would may be
-         *         counted as 5 characters in length (eg. &amp;); since this
-         *         would confuse user's, string's are decoded here. Therefore,
-         *         keep in mind that a database column should be longer than
-         *         what you are allowing from a form-input stage (eg. incase
-         *         they enter a string with a large number of multi-byte
-         *         characters)
-         * @access public
+         * @note    without the _decode call, characters such as '&' would may
+         *          be counted as 5 characters in length (eg. &amp;); since this
+         *          would confuse user's, string's are decoded here. Therefore,
+         *          keep in mind that a database column should be longer than
+         *          what you are allowing from a form-input stage (eg. incase
+         *          they enter a string with a large number of multi-byte
+         *          characters)
+         * @access  public
          * @static
-         * @param  string $str string to check for at most $max characters
-         * @param  integer $max maximum number of characters required for the
-         *         string
-         * @return boolean whether or not the string is a maximum length of $max
-         *         characters
+         * @param   string $str string to check for at most $max characters
+         * @param   integer $max maximum number of characters required for the
+         *          string
+         * @return  boolean whether or not the string is a maximum length of
+         *          $max characters
          */
         public static function maxLength($str, $max)
         {
@@ -237,11 +238,11 @@
         /**
          * matches
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  string $str
-         * @param  string $pattern
-         * @return boolean
+         * @param   string $str
+         * @param   string $pattern
+         * @return  boolean
          */
         public static function matches($str, $pattern)
         {
@@ -254,20 +255,20 @@
          * Checks whether a minimum (inclusive) length of characters has been
          * met in the string passed in.
          * 
-         * @notes  without the _decode call, characters such as '&' would may be
-         *         counted as 5 characters in length (eg. &amp;); since this
-         *         would confuse user's, string's are decoded here. Therefore,
-         *         keep in mind that a database column should be longer than
-         *         what you are allowing from a form-input stage (eg. incase
-         *         they enter a string with a large number of multi-byte
-         *         characters)
-         * @access public
+         * @note    without the _decode call, characters such as '&' would may
+         *          be counted as 5 characters in length (eg. &amp;); since this
+         *          would confuse user's, string's are decoded here. Therefore,
+         *          keep in mind that a database column should be longer than
+         *          what you are allowing from a form-input stage (eg. incase
+         *          they enter a string with a large number of multi-byte
+         *          characters)
+         * @access  public
          * @static
-         * @param  string $str string to check for at least $min characters
-         * @param  integer $min minimum number of characters required for the
-         *         string
-         * @return boolean whether or not the string is a minimum length of $min
-         *         characters
+         * @param   string $str string to check for at least $min characters
+         * @param   integer $min minimum number of characters required for the
+         *          string
+         * @return  boolean whether or not the string is a minimum length of $min
+         *          characters
          */
         public static function minLength($str, $min)
         {
@@ -277,10 +278,10 @@
         /**
          * notEmail
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  string $str
-         * @return boolean
+         * @param   string $str
+         * @return  boolean
          */
         public static function notEmail($str)
         {
@@ -292,10 +293,10 @@
          * 
          * Checks whether a passed in string is empty
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  string $str string which should be checked for emptiness
-         * @return boolean whether or not the string is empty
+         * @param   string $str string which should be checked for emptiness
+         * @return  boolean whether or not the string is empty
          */
         public static function notEmpty($str)
         {
@@ -305,11 +306,11 @@
         /**
          * url
          * 
-         * @see    <http://snippets.dzone.com/posts/show/3654>
-         * @access public
+         * @see     http://snippets.dzone.com/posts/show/3654
+         * @access  public
          * @static
-         * @param  string $str
-         * @return boolean
+         * @param   string $str
+         * @return  boolean
          */
         public static function url($str)
         {

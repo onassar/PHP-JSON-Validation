@@ -17,10 +17,10 @@
      * could be introduced (based on a schema file's modified timestamp) to
      * speed up the recursive parsing/filtering of client and server rules.
      * 
-     * @author  Oliver Nassar <onassar@gmail.com>
-     * @see     https://github.com/onassar/JS-JSON-Validation
-     * @extends Schema
      * @final
+     * @extends Schema
+     * @link    https://github.com/onassar/PHP-JSON-Validation
+     * @author  Oliver Nassar <onassar@gmail.com>
      */
     final class SmartSchema extends Schema
     {
@@ -29,8 +29,8 @@
          * 
          * The method that ought to be called for rules retrieval.
          * 
-         * @var    string
-         * @access protected
+         * @var     string
+         * @access  protected
          */
         protected $_method = 'getServerRules';
 
@@ -40,10 +40,10 @@
          * Recursively excludes rules which do *not* contain the <inclusion>
          * value in the <range> array/attribute of a schema rule.
          * 
-         * @access private
-         * @param  array $rules
-         * @param  string $inclusion
-         * @return array
+         * @access  private
+         * @param   array $rules
+         * @param   string $inclusion
+         * @return  array
          */
         private function __limit(array $rules, $inclusion)
         {
@@ -55,15 +55,15 @@
                  * <inclusion> parameter
                  */
                 if (
-                    isset($info['range']) &&
-                    !in_array($inclusion, $info['range'])
+                    isset($info['range']) === true &&
+                    in_array($inclusion, $info['range']) === false
                 ) {
 
                     // remove the rule from the set of rules for this filter
                     unset($rules[$x]);
                 }
                 // otherwise, if the sub-rules array/attribute isn't empty
-                elseif (!empty($info['rules'])) {
+                elseif (empty($info['rules']) === false) {
 
                     // recurisvely attempt to limit the rules for this sub-array
                     $rules[$x]['rules'] = $this->__limit(
@@ -82,10 +82,10 @@
          * 
          * Defaults rules that ought to be validated to be server side.
          * 
-         * @access public
-         * @param  string $path
-         * @param  boolean $allowPhpInSchemas (default: false)
-         * @return void
+         * @access  public
+         * @param   string $path
+         * @param   boolean $allowPhpInSchemas (default: false)
+         * @return  void
          */
         public function __construct($path, $allowPhpInSchemas = false)
         {
@@ -98,8 +98,8 @@
          * Retrieves rules from parent class that are assigned to be run on the
          * client-side (based on the <range> attribute).
          * 
-         * @access public
-         * @return array
+         * @access  public
+         * @return  array
          */
         public function getClientRules()
         {
@@ -114,8 +114,8 @@
          * Retrieves rules from parent class that are assigned to be run on the
          * server-side (based on the <range> attribute).
          * 
-         * @access public
-         * @return array
+         * @access  public
+         * @return  array
          */
         public function getServerRules()
         {

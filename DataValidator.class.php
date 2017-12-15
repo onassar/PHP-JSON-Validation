@@ -3,43 +3,44 @@
     /**
      * DataValidator
      * 
-     * @author   Oliver Nassar <onassar@gmail.com>
      * @abstract
+     * @link    https://github.com/onassar/PHP-JSON-Validation
+     * @author  Oliver Nassar <onassar@gmail.com>
      */
     abstract class DataValidator
     {
         /**
          * dataDeleted
          * 
-         * @access public
+         * @access  public
          * @static
-         * @return boolean
+         * @return  boolean
          */
         public static function dataDeleted()
         {
-            return !empty($GLOBALS['_DELETE']);
+            return empty($GLOBALS['_DELETE']) === false;
         }
 
         /**
          * dataIncluded
          * 
-         * @access public
+         * @access  public
          * @static
-         * @param  string $param
-         * @param  array $data
-         * @return boolean
+         * @param   string $param
+         * @param   array $data
+         * @return  boolean
          */
         public static function dataIncluded($param, array $data)
         {
-            return isset($data[$param]);
+            return isset($data[$param]) === true;
         }
 
         /**
          * dataInputted
          * 
-         * @access public
+         * @access  public
          * @static
-         * @return boolean
+         * @return  boolean
          */
         public static function dataInputted()
         {
@@ -50,24 +51,24 @@
         /**
          * dataPatched
          * 
-         * @access public
+         * @access  public
          * @static
-         * @return boolean
+         * @return  boolean
          */
         public static function dataPatched()
         {
-            return !empty($GLOBALS['_PATCH']);
+            return empty($GLOBALS['_PATCH']) === false;
         }
 
         /**
          * dataPosted
          * 
-         * @access public
+         * @access  public
          * @static
-         * @return boolean
+         * @return  boolean
          */
         public static function dataPosted()
         {
-            return !empty($_POST);
+            return empty($_POST) === false;
         }
     }
