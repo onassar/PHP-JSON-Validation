@@ -122,8 +122,8 @@
          * 
          * Adds a rule object to the <_failedRules> array.
          * 
-         * @notes  decoupled to allow logging and/or changing what gets
-         *         pushed to the <_failedRules> array
+         * @note    decoupled to allow logging and/or changing what gets
+         *          pushed to the <_failedRules> array
          * @access  protected
          * @param   array &$rule
          * @return  void
