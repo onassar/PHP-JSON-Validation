@@ -49,8 +49,8 @@
     // instantiation (could be <Schema> or <SmartSchema> instance)
     require_once '../Schema.class.php';
     require_once '../SchemaValidator.class.php';
-    $schema = (new Schema('comment.json'));
-    $validator = (new SchemaValidator($schema, $_POST));
+    $schema = new Schema('comment.json');
+    $validator = new SchemaValidator($schema, $_POST);
 
     // validation
     if ($validator->valid()) {
