@@ -79,4 +79,24 @@
         {
             return empty($arr) === false;
         }
+
+        /**
+         * valuesPass
+         * 
+         * @access  public
+         * @static
+         * @param   array $arr
+         * @param   array $closure
+         * @return  boolean
+         */
+        public static function valuesPass(array $arr, array $closure)
+        {
+            foreach ($arr as $key => $value) {
+                $response = call_user_func_array($closure, array($value));
+                if ($response === false) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
