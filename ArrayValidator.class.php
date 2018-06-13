@@ -86,13 +86,13 @@
          * @access  public
          * @static
          * @param   array $arr
-         * @param   array $closure
+         * @param   callable $callback
          * @return  boolean
          */
-        public static function valuesPass(array $arr, array $closure)
+        public static function valuesPass(array $arr, callable $callback)
         {
             foreach ($arr as $key => $value) {
-                $response = call_user_func_array($closure, array($value));
+                $response = call_user_func_array($callback, array($value));
                 if ($response === false) {
                     return false;
                 }
