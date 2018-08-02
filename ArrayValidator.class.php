@@ -31,6 +31,23 @@
         }
 
         /**
+         * doesNotContainKey
+         * 
+         * @access  public
+         * @static
+         * @param   array $arr
+         * @param   mixed $key
+         * @return  boolean
+         */
+        public static function doesNotContainKey(array $arr, $key)
+        {
+            if (isset($arr[$key]) === false) {
+                return true;
+            }
+            return false;
+        }
+
+        /**
          * limitedKeys
          * 
          * Returns whether one of the keys passed in doesn't exist in the array
