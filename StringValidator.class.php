@@ -31,6 +31,24 @@
         }
 
         /**
+         * beginsWith
+         * 
+         * @access  public
+         * @static
+         * @param   string $str
+         * @param   string $prefix
+         * @return  boolean
+         */
+        public static function beginsWith($str, $prefix)
+        {
+            $pattern = '/^' . ($prefix) . '/';
+            if (preg_match($pattern, $str) === 1) {
+                return true;
+            }
+            return false;
+        }
+
+        /**
          * contains
          * 
          * Checks whether a substring is contained in the passed in string
