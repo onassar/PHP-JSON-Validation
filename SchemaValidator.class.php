@@ -229,7 +229,7 @@
          * _checkRules
          * 
          * @access  protected
-         * @param   array $rules
+         * @param   array &$rules
          * @param   array|null $parent
          * @return  void
          */
