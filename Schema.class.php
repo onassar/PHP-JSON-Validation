@@ -17,7 +17,7 @@
         /**
          * _allowPhpInSchemas
          * 
-         * @var     boolean (default: false)
+         * @var     bool (default: false)
          * @access  protected
          */
         protected $_allowPhpInSchemas = false;
@@ -49,10 +49,10 @@
          * 
          * @access  public
          * @param   string $path
-         * @param   boolean $allowPhpInSchemas (default: false)
+         * @param   bool $allowPhpInSchemas (default: false)
          * @return  void
          */
-        public function __construct($path, $allowPhpInSchemas = false)
+        public function __construct(string $path, bool $allowPhpInSchemas = false)
         {
             $this->_path = $path;
             $this->_allowPhpInSchemas = $allowPhpInSchemas;
@@ -65,7 +65,7 @@
          * @param   array $rules
          * @return  array
          */
-        protected function _loadDynamicRules(array $rules)
+        protected function _loadDynamicRules(array $rules): array
         {
             /**
              * Check for a rules property as a string, treat it as though it's
@@ -101,7 +101,7 @@
          * @param   string $path
          * @return  string
          */
-        protected function _loadSchema($path)
+        protected function _loadSchema(string $path): string
         {
             if ($this->_allowPhpInSchemas === true) {
                 ob_start();
@@ -123,7 +123,7 @@
          * @param   array $rules
          * @return  void
          */
-        protected function _validateSchemaForPropertyLimitations(array $rules)
+        protected function _validateSchemaForPropertyLimitations(array $rules): void
         {
             foreach ($rules as $rule) {
                 if (
@@ -132,9 +132,8 @@
                     && isset($rule['funnel']) === true
                     && $rule['funnel'] = true
                 ) {
-                    throw new Exception(
-                        'Blocking and funnel cannot both be set.'
-                    );
+                    $msg = 'Blocking and funnel cannot both be set.';
+                    throw new Exception($msg);
                 }
                 if (isset($rule['rules']) === true) {
                     $this->_validateSchemaForPropertyLimitations(
@@ -150,7 +149,7 @@
          * @access  public
          * @return  string
          */
-        public function getMethod()
+        public function getMethod(): string
         {
             return $this->_method;
         }
@@ -161,7 +160,7 @@
          * @access  public
          * @return  string
          */
-        public function getPath()
+        public function getPath(): string
         {
             return $this->_path;
         }
@@ -180,7 +179,7 @@
          * @access  public
          * @return  array
          */
-        public function getRules()
+        public function getRules(): array
         {
             // grab and return schema contents
             $raw = $this->_loadSchema($this->_path);
@@ -188,7 +187,8 @@
 
             // json is formatted invalidly; otherwise return the decoded schema
             if ($decoded === null) {
-                throw new Exception('Invalidly formatted json');
+                $msg = 'Invalidly formatted json';
+                throw new Exception($msg);
             }
 
             // modify potential sub-rules; validate rules
@@ -206,7 +206,7 @@
          * @param   string $method
          * @return  void
          */
-        public function setMethod($method)
+        public function setMethod(string $method): void
         {
             $this->_method = $method;
         }

@@ -37,9 +37,9 @@
          * @static
          * @param   string $str
          * @param   string $prefix
-         * @return  boolean
+         * @return  bool
          */
-        public static function beginsWith($str, $prefix)
+        public static function beginsWith(string $str, string $prefix): bool
         {
             $pattern = '/^' . ($prefix) . '/';
             if (preg_match($pattern, $str) === 1) {
@@ -57,9 +57,9 @@
          * @static
          * @param   string $str
          * @param   string $substr
-         * @return  boolean
+         * @return  bool
          */
-        public static function contains($str, $substr)
+        public static function contains(string $str, string $substr): bool
         {
             return strpos($str, $substr) !== false;
         }
@@ -71,9 +71,9 @@
          * @static
          * @param   string $str
          * @param   string $substr
-         * @return  boolean
+         * @return  bool
          */
-        public static function doesNotContain($str, $substr)
+        public static function doesNotContain(string $str, string $substr): bool
         {
             return strpos($str, $substr) === false;
         }
@@ -88,9 +88,9 @@
          * @static
          * @param   string $str presumable email address which should be
          *          validated to ensure it is in fact the valid format
-         * @return  boolean whether or not the email is valid
+         * @return  bool whether or not the email is valid
          */
-        public static function email($str)
+        public static function email(string $str): bool
         {
             return filter_var($str, FILTER_VALIDATE_EMAIL) !== false;
             return preg_match(
@@ -105,9 +105,9 @@
          * @access  public
          * @static
          * @param   string $str
-         * @return  boolean
+         * @return  bool
          */
-        public static function emailOrUrl($str)
+        public static function emailOrUrl(string $str): bool
         {
             return self::email($str) || self::url($str);
         }
@@ -118,9 +118,9 @@
          * @access  public
          * @static
          * @param   string $str
-         * @return  boolean
+         * @return  bool
          */
-        public static function emptyOrEmail($str)
+        public static function emptyOrEmail(string $str): bool
         {
             if (self::notEmpty($str) === false) {
                 return true;
@@ -134,9 +134,9 @@
          * @access  public
          * @static
          * @param   string $str
-         * @return  boolean
+         * @return  bool
          */
-        public static function emptyOrUrl($str)
+        public static function emptyOrUrl(string $str): bool
         {
             if (self::notEmpty($str) === false) {
                 return true;
@@ -151,9 +151,9 @@
          * @static
          * @param   string $str
          * @param   string $comparison
-         * @return  boolean
+         * @return  bool
          */
-        public static function equals($str, $comparison)
+        public static function equals(string $str, string $comparison): bool
         {
             return $str === $comparison;
         }
@@ -165,12 +165,12 @@
          * 
          * @access  public
          * @static
-         * @param   string|integer $str value to search for existence in
+         * @param   string $str value to search for existence in
          * @param   array $list array of values to use as a basis for an
          *          existence check
-         * @return  boolean whether or not $str is in the $list array
+         * @return  bool whether or not $str is in the $list array
          */
-        public static function inList($str, array $list)
+        public static function inList(string $str, array $list): bool
         {
             return in_array($str, $list, true);
         }
@@ -181,11 +181,11 @@
          * @access  public
          * @static
          * @param   string $str
-         * @param   boolean $allowPeriods (default: false)
-         * @param   boolean $allowDashes (default: false)
-         * @return  boolean
+         * @param   bool $allowPeriods (default: false)
+         * @param   bool $allowDashes (default: false)
+         * @return  bool
          */
-        public static function isAlphaNumeric($str, $allowPeriods = false, $allowDashes = false)
+        public static function isAlphaNumeric(string $str, bool $allowPeriods = false, bool $allowDashes = false): bool
         {
             $pattern = '/^[a-zA-Z0-9';
             $pattern .= $allowPeriods ? '\.' : '';
@@ -200,9 +200,9 @@
          * @access  public
          * @static
          * @param   string $str
-         * @return  boolean
+         * @return  bool
          */
-        public static function isJson($str)
+        public static function isJson(string $str): bool
         {
             return (
                 is_string($str) === true
@@ -220,9 +220,9 @@
          * @access  public
          * @static
          * @param   string $str
-         * @return  boolean
+         * @return  bool
          */
-        public static function isMobileNumber($str)
+        public static function isMobileNumber(string $str): bool
         {
             return preg_match('/^\+[0-9]+$/', $str);
         }
@@ -243,12 +243,12 @@
          * @access  public
          * @static
          * @param   string $str string to check for at most $max characters
-         * @param   integer $max maximum number of characters required for the
+         * @param   int $max maximum number of characters required for the
          *          string
-         * @return  boolean whether or not the string is a maximum length of
+         * @return  bool whether or not the string is a maximum length of
          *          $max characters
          */
-        public static function maxLength($str, $max)
+        public static function maxLength(string $str, int $max): bool
         {
             return strlen(self::_decode($str)) <= $max;
         }
@@ -260,9 +260,9 @@
          * @static
          * @param   string $str
          * @param   string $pattern
-         * @return  boolean
+         * @return  bool
          */
-        public static function matches($str, $pattern)
+        public static function matches(string $str, string $pattern): bool
         {
             return preg_match($pattern, $str) === 1;
         }
@@ -283,12 +283,12 @@
          * @access  public
          * @static
          * @param   string $str string to check for at least $min characters
-         * @param   integer $min minimum number of characters required for the
+         * @param   int $min minimum number of characters required for the
          *          string
-         * @return  boolean whether or not the string is a minimum length of $min
+         * @return  bool whether or not the string is a minimum length of $min
          *          characters
          */
-        public static function minLength($str, $min)
+        public static function minLength(string $str, int $min): bool
         {
             return strlen(self::_decode($str)) >= $min;
         }
@@ -299,9 +299,9 @@
          * @access  public
          * @static
          * @param   string $str
-         * @return  boolean
+         * @return  bool
          */
-        public static function notEmail($str)
+        public static function notEmail(string $str): bool
         {
             return self::email($str) === false;
         }
@@ -314,9 +314,9 @@
          * @access  public
          * @static
          * @param   string $str string which should be checked for emptiness
-         * @return  boolean whether or not the string is empty
+         * @return  bool whether or not the string is empty
          */
-        public static function notEmpty($str)
+        public static function notEmpty(string $str): bool
         {
             return trim($str) !== '';
         }
@@ -328,9 +328,9 @@
          * @access  public
          * @static
          * @param   string $str
-         * @return  boolean
+         * @return  bool
          */
-        public static function url($str)
+        public static function url(string $str): bool
         {
             return preg_match(
                 '/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}' .

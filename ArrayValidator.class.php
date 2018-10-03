@@ -20,9 +20,9 @@
          * @static
          * @param   array $arr
          * @param   array $keys
-         * @return  boolean
+         * @return  bool
          */
-        public static function containsKeys(array $arr, array $keys)
+        public static function containsKeys(array $arr, array $keys): bool
         {
             if (count(array_intersect_key(array_flip($keys), $arr)) === count($keys)) {
                 return true;
@@ -37,9 +37,9 @@
          * @static
          * @param   array $arr
          * @param   mixed $key
-         * @return  boolean
+         * @return  bool
          */
-        public static function doesNotContainKey(array $arr, $key)
+        public static function doesNotContainKey(array $arr, $key): bool
         {
             if (isset($arr[$key]) === false) {
                 return true;
@@ -58,9 +58,9 @@
          * @static
          * @param   array $arr
          * @param   array $keys
-         * @return  boolean
+         * @return  bool
          */
-        public static function limitedKeys(array $arr, array $keys)
+        public static function limitedKeys(array $arr, array $keys): bool
         {
             foreach (array_keys($arr) as $key) {
                 if (in_array($key, $keys) === false) {
@@ -76,10 +76,10 @@
          * @access  public
          * @static
          * @param   array $arr
-         * @param   integer $max
-         * @return  boolean
+         * @param   int $max
+         * @return  bool
          */
-        public static function maxNumberOfValues(array $arr, $max)
+        public static function maxNumberOfValues(array $arr, int $max): bool
         {
             return count($arr) <= $max;
         }
@@ -90,9 +90,9 @@
          * @access  public
          * @static
          * @param   array $arr
-         * @return  boolean
+         * @return  bool
          */
-        public static function notEmpty(array $arr)
+        public static function notEmpty(array $arr): bool
         {
             return empty($arr) === false;
         }
@@ -104,9 +104,9 @@
          * @static
          * @param   array $arr
          * @param   callable $callback
-         * @return  boolean
+         * @return  bool
          */
-        public static function valuesPass(array $arr, callable $callback)
+        public static function valuesPass(array $arr, callable $callback): bool
         {
             foreach ($arr as $key => $value) {
                 $response = call_user_func_array($callback, array($value));

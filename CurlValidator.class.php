@@ -23,9 +23,9 @@
          * @access  public
          * @static
          * @param   Curler $curler
-         * @return  boolean
+         * @return  bool
          */
-        public static function charsetIsDefined(Curler $curler)
+        public static function charsetIsDefined(Curler $curler): bool
         {
             $charset = $curler->getCharset();
             return $charset !== false;
@@ -37,9 +37,9 @@
          * @access  public
          * @static
          * @param   Curler $curler
-         * @return  boolean
+         * @return  bool
          */
-        public static function charsetIsSupported(Curler $curler)
+        public static function charsetIsSupported(Curler $curler): bool
         {
             $charset = $curler->getCharset();
             $charsetIsSupported = StringValidator::inList(
@@ -67,9 +67,9 @@
          * @access  public
          * @static
          * @param   Curler $curler
-         * @return  boolean
+         * @return  bool
          */
-        public static function contentContainsHeadTag(Curler $curler)
+        public static function contentContainsHeadTag(Curler $curler): bool
         {
             $content = $curler->getResponse();
             return $content !== false
@@ -83,9 +83,9 @@
          * @access  public
          * @static
          * @param   Curler $curler
-         * @return  boolean
+         * @return  bool
          */
-        public static function contentIsNotEmpty(Curler $curler)
+        public static function contentIsNotEmpty(Curler $curler): bool
         {
             $content = $curler->getResponse();
             return $content !== false
@@ -99,9 +99,9 @@
          * @access  public
          * @static
          * @param   Curler $curler
-         * @return  boolean
+         * @return  bool
          */
-        public static function contentTypeIsHTML(Curler $curler)
+        public static function contentTypeIsHTML(Curler $curler): bool
         {
             $info = $curler->getInfo();
             $allowable = array(
@@ -120,9 +120,9 @@
          * @access  public
          * @static
          * @param   Curler $curler
-         * @return  boolean
+         * @return  bool
          */
-        public static function contentTypeIsImage(Curler $curler)
+        public static function contentTypeIsImage(Curler $curler): bool
         {
             $info = $curler->getInfo();
             $allowable = array(
@@ -141,9 +141,9 @@
          * @access  public
          * @static
          * @param   Curler $curler
-         * @return  boolean
+         * @return  bool
          */
-        public static function respondsWithinTimeout(Curler $curler)
+        public static function respondsWithinTimeout(Curler $curler): bool
         {
             $error = $curler->getError();
             if ($error === false) {
@@ -158,9 +158,9 @@
          * @access  public
          * @static
          * @param   Curler $curler
-         * @return  boolean
+         * @return  bool
          */
-        public static function validFilesize(Curler $curler)
+        public static function validFilesize(Curler $curler): bool
         {
             $error = $curler->getError();
             if ($error === false) {
@@ -175,9 +175,9 @@
          * @access  public
          * @static
          * @param   Curler $curler
-         * @return  boolean
+         * @return  bool
          */
-        public static function validMime(Curler $curler)
+        public static function validMime(Curler $curler): bool
         {
             $error = $curler->getError();
             if ($error === false) {
@@ -192,9 +192,9 @@
          * @access  public
          * @static
          * @param   Curler $curler
-         * @return  boolean
+         * @return  bool
          */
-        public static function validRedirects(Curler $curler)
+        public static function validRedirects(Curler $curler): bool
         {
             $error = $curler->getError();
             if ($error === false) {
@@ -209,9 +209,9 @@
          * @access  public
          * @static
          * @param   Curler $curler
-         * @return  boolean
+         * @return  bool
          */
-        public static function validStatusCode(Curler $curler)
+        public static function validStatusCode(Curler $curler): bool
         {
             $error = $curler->getError();
             if ($error === false) {

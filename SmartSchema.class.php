@@ -45,7 +45,7 @@
          * @param   string $inclusion
          * @return  array
          */
-        private function __limit(array $rules, $inclusion)
+        private function __limit(array $rules, string $inclusion): array
         {
             // loop through supplied rules
             foreach ($rules as $x => $info) {
@@ -84,10 +84,10 @@
          * 
          * @access  public
          * @param   string $path
-         * @param   boolean $allowPhpInSchemas (default: false)
+         * @param   bool $allowPhpInSchemas (default: false)
          * @return  void
          */
-        public function __construct($path, $allowPhpInSchemas = false)
+        public function __construct(string $path, bool $allowPhpInSchemas = false)
         {
             parent::__construct($path, $allowPhpInSchemas);
         }
@@ -101,7 +101,7 @@
          * @access  public
          * @return  array
          */
-        public function getClientRules()
+        public function getClientRules(): array
         {
             // return the recursively-limited schema
             $rules = self::getRules();
@@ -117,7 +117,7 @@
          * @access  public
          * @return  array
          */
-        public function getServerRules()
+        public function getServerRules(): array
         {
             // return the recursively-limited schema
             $rules = self::getRules();

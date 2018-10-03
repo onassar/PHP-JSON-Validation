@@ -72,7 +72,7 @@
          * _senstitiveToParentBlocking
          * 
          * @note    Also defaults to `false` during instantiation
-         * @var     boolean (default: false)
+         * @var     bool (default: false)
          * @access  protected
          */
         protected $_senstitiveToParentBlocking = false;
@@ -83,17 +83,14 @@
          * @access  public
          * @param   Schema $schema
          * @param   array $data (default: array())
-         * @param   boolean $senstitiveToParentBlocking (default: false)
+         * @param   bool $senstitiveToParentBlocking (default: false)
          *          Determines whether rules should prevent further validation
          *          if/when a rule has failed to validate *and* it's parent has
          *          it's `blocking` attribute set to `true`
          * @return  void
          */
-        public function __construct(
-            Schema $schema,
-            array $data = array(),
-            $senstitiveToParentBlocking = false
-        ) {
+        public function __construct(Schema $schema, array $data = array(), bool $senstitiveToParentBlocking = false)
+        {
             // local storage
             $this->_schema = $schema;
             $this->_data = $data;
@@ -128,7 +125,7 @@
          * @param   array &$rule
          * @return  void
          */
-        protected function _addFailedRule(array &$rule)
+        protected function _addFailedRule(array &$rule): void
         {
             array_push($this->_failedRules, $rule);
         }
@@ -144,7 +141,7 @@
          * @param   array $rule
          * @return  void
          */
-        protected function _callInterstitial(array $rule)
+        protected function _callInterstitial(array $rule): void
         {
             // parameters passed
             $params = array();
@@ -180,9 +177,9 @@
          * 
          * @access  protected
          * @param   array &$rule
-         * @return  boolean
+         * @return  bool
          */
-        protected function _isBlockingRule(array &$rule)
+        protected function _isBlockingRule(array &$rule): bool
         {
             if (isset($rule['blocking']) === true) {
                 return (boolean) $rule['blocking'];
@@ -200,9 +197,9 @@
          * 
          * @access  protected
          * @param   array $rule
-         * @return  boolean
+         * @return  bool
          */
-        protected function _checkRule(array $rule)
+        protected function _checkRule(array $rule): bool
         {
             // parameters passed
             $params = array();
@@ -230,10 +227,10 @@
          * 
          * @access  protected
          * @param   array &$rules
-         * @param   array|null $parent
+         * @param   array|null $parent (default: null)
          * @return  void
          */
-        protected function _checkRules(array &$rules, &$parent = null)
+        protected function _checkRules(array &$rules, ?array &$parent = null): void
         {
             // rule iteration
             foreach ($rules as $count => &$rule) {
@@ -367,7 +364,7 @@
          * @param   string $value
          * @return  false|mixed
          */
-        protected function _getTraversedValue($value)
+        protected function _getTraversedValue(string $value)
         {
             $reference = $this->_data;
             $keys = explode('.', $value);
@@ -387,7 +384,7 @@
          * @param   array $rule
          * @return  void
          */
-        protected function _initiateAlternatives(array $rule)
+        protected function _initiateAlternatives(array $rule): void
         {
             // rules or interstitials to call when parent failed
             if (
@@ -535,7 +532,7 @@
          * @param   mixed $data
          * @return  void
          */
-        public function addData($key, $data)
+        public function addData(string $key, $data): void
         {
             $this->_data[$key] = $data;
         }
@@ -546,7 +543,7 @@
          * @access  public
          * @return  array
          */
-        public function getData()
+        public function getData(): array
         {
             return $this->_data;
         }
@@ -563,10 +560,10 @@
          * function is *one* dimensional, respective to rules.
          * 
          * @access  public
-         * @param   boolean $includeParents (default: true)
+         * @param   bool $includeParents (default: true)
          * @return  array
          */
-        public function getFailedRules($includeParents = true)
+        public function getFailedRules(bool $includeParents = true): array
         {
             $failedRules = $this->_failedRules;
             if ($includeParents === false) {
@@ -586,7 +583,7 @@
          * @access  public
          * @return  Schema
          */
-        public function getSchema()
+        public function getSchema(): Schema
         {
             return $this->_schema;
         }
@@ -597,7 +594,7 @@
          * @access  public
          * @return  array
          */
-        public function getStoredData()
+        public function getStoredData(): array
         {
             return $this->_storedData;
         }
@@ -610,7 +607,7 @@
          * @param   mixed $value
          * @return  void
          */
-        public function store($key, $value)
+        public function store(string $key, $value): void
         {
             $this->_storedData[$key] = $value;
         }
@@ -625,9 +622,9 @@
          * required rule has failed.
          * 
          * @access  public
-         * @return  boolean
+         * @return  bool
          */
-        public function valid()
+        public function valid(): bool
         {
             $rules = call_user_func(
                 array($this->_schema, $this->_schema->getMethod())

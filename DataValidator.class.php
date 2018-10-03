@@ -14,9 +14,9 @@
          * 
          * @access  public
          * @static
-         * @return  boolean
+         * @return  bool
          */
-        public static function dataDeleted()
+        public static function dataDeleted(): bool
         {
             return empty($GLOBALS['_DELETE']) === false;
         }
@@ -28,9 +28,9 @@
          * @static
          * @param   string $param
          * @param   array $data
-         * @return  boolean
+         * @return  bool
          */
-        public static function dataIncluded($param, array $data)
+        public static function dataIncluded(string $param, array $data): bool
         {
             return isset($data[$param]) === true;
         }
@@ -40,9 +40,9 @@
          * 
          * @access  public
          * @static
-         * @return  boolean
+         * @return  bool
          */
-        public static function dataInputted()
+        public static function dataInputted(): bool
         {
             $body = file_get_contents('php://input');
             return $body !== '';
@@ -53,9 +53,9 @@
          * 
          * @access  public
          * @static
-         * @return  boolean
+         * @return  bool
          */
-        public static function dataPatched()
+        public static function dataPatched(): bool
         {
             return empty($GLOBALS['_PATCH']) === false;
         }
@@ -65,9 +65,9 @@
          * 
          * @access  public
          * @static
-         * @return  boolean
+         * @return  bool
          */
-        public static function dataPosted()
+        public static function dataPosted(): bool
         {
             return empty($_POST) === false;
         }
