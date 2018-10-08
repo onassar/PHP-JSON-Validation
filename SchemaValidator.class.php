@@ -549,6 +549,17 @@
         }
 
         /**
+         * getDataReference
+         * 
+         * @access  public
+         * @return  array
+         */
+        public function &getDataReference(): array
+        {
+            return $this->_data;
+        }
+
+        /**
          * getFailedRules
          * 
          * Returns an array of rules that failed during the validation process.
