@@ -100,14 +100,14 @@
         }
 
         /**
-         * emailOrUrl
+         * emailOrURL
          * 
          * @access  public
          * @static
          * @param   string $str
          * @return  bool
          */
-        public static function emailOrUrl(string $str): bool
+        public static function emailOrURL(string $str): bool
         {
             return self::email($str) || self::url($str);
         }
@@ -129,14 +129,14 @@
         }
 
         /**
-         * emptyOrUrl
+         * emptyOrURL
          * 
          * @access  public
          * @static
          * @param   string $str
          * @return  bool
          */
-        public static function emptyOrUrl(string $str): bool
+        public static function emptyOrURL(string $str): bool
         {
             if (self::notEmpty($str) === false) {
                 return true;
@@ -195,14 +195,14 @@
         }
 
         /**
-         * isJson
+         * isJSON
          * 
          * @access  public
          * @static
          * @param   string $str
          * @return  bool
          */
-        public static function isJson(string $str): bool
+        public static function isJSON(string $str): bool
         {
             return (
                 is_string($str) === true

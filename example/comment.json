@@ -26,7 +26,7 @@
         }
     },
     {
-        "validator": ["StringValidator", "emptyOrUrl"],
+        "validator": ["StringValidator", "emptyOrURL"],
         "params": ["{website}"],
         "error": {
             "input": "website",
