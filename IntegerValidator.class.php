@@ -20,7 +20,8 @@
          */
         public static function greaterThan(int $int, int $min): bool
         {
-            return (int) $int > (int) $min;
+            $valid = (int) $int > (int) $min;
+            return $valid;
         }
 
         /**
@@ -34,7 +35,8 @@
          */
         public static function greaterThanOrEqualTo(int $int, int $min): bool
         {
-            return (int) $int >= (int) $min;
+            $valid = (int) $int >= (int) $min;
+            return $valid;
         }
 
         /**
@@ -48,7 +50,8 @@
          */
         public static function lessThan(int $int, int $max): bool
         {
-            return (int) $int < (int) $max;
+            $valid = (int) $int < (int) $max;
+            return $valid;
         }
 
         /**
@@ -62,6 +65,7 @@
          */
         public static function lessThanOrEqualTo(int $int, int $max): bool
         {
-            return (int) $int <= (int) $max;
+            $valid = (int) $int <= (int) $max;
+            return $valid;
         }
     }
