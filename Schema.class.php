@@ -15,12 +15,12 @@
     class Schema
     {
         /**
-         * _allowPhpInSchemas
+         * _allowPHPInSchemas
          * 
          * @var     bool (default: false)
          * @access  protected
          */
-        protected $_allowPhpInSchemas = false;
+        protected $_allowPHPInSchemas = false;
 
         /**
          * _path
@@ -49,13 +49,13 @@
          * 
          * @access  public
          * @param   string $path
-         * @param   bool $allowPhpInSchemas (default: false)
+         * @param   bool $allowPHPInSchemas (default: false)
          * @return  void
          */
-        public function __construct(string $path, bool $allowPhpInSchemas = false)
+        public function __construct(string $path, bool $allowPHPInSchemas = false)
         {
             $this->_path = $path;
-            $this->_allowPhpInSchemas = $allowPhpInSchemas;
+            $this->_allowPHPInSchemas = $allowPHPInSchemas;
         }
 
         /**
@@ -103,14 +103,15 @@
          */
         protected function _loadSchema(string $path): string
         {
-            if ($this->_allowPhpInSchemas === true) {
+            if ($this->_allowPHPInSchemas === true) {
                 ob_start();
                 include $path;
                 $_response = ob_get_contents();
                 ob_end_clean();
                 return $_response;
             }
-            return file_get_contents($path);
+            $content = file_get_contents($path);
+            return $content;
         }
 
         /**
