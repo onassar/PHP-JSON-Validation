@@ -14,32 +14,32 @@
         /**
          * _data
          * 
-         * @var     array
          * @access  protected
+         * @var     array
          */
         protected $_data;
 
         /**
          * _failedRules
          * 
-         * @var     array
          * @access  protected
+         * @var     array
          */
         protected $_failedRules = array();
 
         /**
          * _storedData
          * 
-         * @var     array
          * @access  protected
+         * @var     array
          */
         protected $_storedData = array();
 
         /**
          * _libraries
          * 
-         * @var     array
          * @access  protected
+         * @var     array
          */
         protected $_libraries = array(
             'DataValidator.class.php',
@@ -51,8 +51,8 @@
         /**
          * _exceptions
          * 
-         * @var     array
          * @access  protected
+         * @var     array
          */
         protected $_exceptions = array(
             'RuleValidationException.class.php',
@@ -63,8 +63,8 @@
         /**
          * _schema
          * 
-         * @var     Schema
          * @access  protected
+         * @var     Schema
          */
         protected $_schema;
 
@@ -72,8 +72,8 @@
          * _senstitiveToParentBlocking
          * 
          * @note    Also defaults to `false` during instantiation
-         * @var     bool (default: false)
          * @access  protected
+         * @var     bool (default: false)
          */
         protected $_senstitiveToParentBlocking = false;
 

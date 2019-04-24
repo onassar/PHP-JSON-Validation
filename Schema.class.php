@@ -17,8 +17,8 @@
         /**
          * _allowPHPInSchemas
          * 
-         * @var     bool (default: false)
          * @access  protected
+         * @var     bool (default: false)
          */
         protected $_allowPHPInSchemas = false;
 
@@ -27,8 +27,8 @@
          * 
          * Path to the schema json file
          * 
-         * @var     string
          * @access  protected
+         * @var     string
          */
         protected $_path;
 
@@ -39,8 +39,8 @@
          * this property is currently only used/useful by the <SmartSchema>
          * class).
          * 
-         * @var     string
          * @access  protected
+         * @var     string
          */
         protected $_method = 'getRules';
 

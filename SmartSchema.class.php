@@ -29,8 +29,8 @@
          * 
          * The method that ought to be called for rules retrieval.
          * 
-         * @var     string
          * @access  protected
+         * @var     string
          */
         protected $_method = 'getServerRules';
 
