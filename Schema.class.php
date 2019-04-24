@@ -40,7 +40,7 @@
          * class).
          * 
          * @access  protected
-         * @var     string
+         * @var     string (default: 'getRules')
          */
         protected $_method = 'getRules';
 

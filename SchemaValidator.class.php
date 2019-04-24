@@ -23,7 +23,7 @@
          * _failedRules
          * 
          * @access  protected
-         * @var     array
+         * @var     array (default: array())
          */
         protected $_failedRules = array();
 
@@ -31,7 +31,7 @@
          * _storedData
          * 
          * @access  protected
-         * @var     array
+         * @var     array (default: array())
          */
         protected $_storedData = array();
 

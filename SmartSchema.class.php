@@ -30,7 +30,7 @@
          * The method that ought to be called for rules retrieval.
          * 
          * @access  protected
-         * @var     string
+         * @var     string (default: 'getServerRules')
          */
         protected $_method = 'getServerRules';
 
