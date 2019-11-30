@@ -81,7 +81,8 @@
          */
         public static function maxNumberOfValues(array $arr, int $max): bool
         {
-            return count($arr) <= $max;
+            $valid = count($arr) <= $max;
+            return $valid;
         }
 
         /**
@@ -94,7 +95,8 @@
          */
         public static function notEmpty(array $arr): bool
         {
-            return empty($arr) === false;
+            $valid = empty($arr) === false;
+            return $valid;
         }
 
         /**
