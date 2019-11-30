@@ -325,6 +325,7 @@
          * url
          * 
          * @see     http://snippets.dzone.com/posts/show/3654
+         * @see     https://mathiasbynens.be/demo/url-regex
          * @access  public
          * @static
          * @param   string $str
@@ -332,10 +333,8 @@
          */
         public static function url(string $str): bool
         {
-            return preg_match(
-                '/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}' .
-                '(([0-9]{1,5})?\/.*)?$/ix',
-                $str
-            ) > 0;
+            $response = filter_var($str, FILTER_VALIDATE_URL);
+            $valid = $response !== false;
+            return $valid;
         }
     }
