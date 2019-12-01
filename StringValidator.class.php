@@ -27,7 +27,8 @@
                 }
                 return $mixed;
             }
-            return html_entity_decode($mixed, ENT_QUOTES, 'UTF-8');
+            $valid = html_entity_decode($mixed, ENT_QUOTES, 'UTF-8');
+            return $valid;
         }
 
         /**
@@ -61,7 +62,8 @@
          */
         public static function contains(string $str, string $substr): bool
         {
-            return strpos($str, $substr) !== false;
+            $valid = strpos($str, $substr) !== false;
+            return $valid;
         }
 
         /**
@@ -75,7 +77,8 @@
          */
         public static function doesNotContain(string $str, string $substr): bool
         {
-            return strpos($str, $substr) === false;
+            $valid = strpos($str, $substr) === false;
+            return $valid;
         }
 
         /**
@@ -92,11 +95,8 @@
          */
         public static function email(string $str): bool
         {
-            return filter_var($str, FILTER_VALIDATE_EMAIL) !== false;
-            return preg_match(
-                '/^[_a-z0-9-]+([\.|\+][_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/i',
-                $str
-            ) > 0;
+            $valid = filter_var($str, FILTER_VALIDATE_EMAIL) !== false;
+            return $valid;
         }
 
         /**
@@ -109,7 +109,8 @@
          */
         public static function emailOrURL(string $str): bool
         {
-            return self::email($str) || self::url($str);
+            $valid = self::email($str) || self::url($str);
+            return $valid;
         }
 
         /**
@@ -125,7 +126,8 @@
             if (self::notEmpty($str) === false) {
                 return true;
             }
-            return self::email($str);
+            $valid = self::email($str);
+            return $valid;
         }
 
         /**
@@ -141,7 +143,8 @@
             if (self::notEmpty($str) === false) {
                 return true;
             }
-            return self::url($str);
+            $valid = self::url($str);
+            return $valid;
         }
 
         /**
@@ -155,7 +158,8 @@
          */
         public static function equals(string $str, string $comparison): bool
         {
-            return $str === $comparison;
+            $valid = $str === $comparison;
+            return $valid;
         }
 
         /**
@@ -172,7 +176,8 @@
          */
         public static function inList(string $str, array $list): bool
         {
-            return in_array($str, $list, true);
+            $valid = in_array($str, $list, true);
+            return $valid;
         }
 
         /**
@@ -191,7 +196,8 @@
             $pattern .= $allowPeriods ? '\.' : '';
             $pattern .= $allowDashes ? '\-' : '';
             $pattern .= ']+$/';
-            return preg_match($pattern, $str);
+            $valid = preg_match($pattern, $str);
+            return $valid;
         }
 
         /**
@@ -224,7 +230,8 @@
          */
         public static function isMobileNumber(string $str): bool
         {
-            return preg_match('/^\+[0-9]+$/', $str);
+            $valid = preg_match('/^\+[0-9]+$/', $str);
+            return $valid;
         }
 
         /**
@@ -250,7 +257,8 @@
          */
         public static function maxLength(string $str, int $max): bool
         {
-            return strlen(self::_decode($str)) <= $max;
+            $valid = strlen(self::_decode($str)) <= $max;
+            return $valid;
         }
 
         /**
@@ -264,7 +272,8 @@
          */
         public static function matches(string $str, string $pattern): bool
         {
-            return preg_match($pattern, $str) === 1;
+            $valid = preg_match($pattern, $str) === 1;
+            return $valid;
         }
 
         /**
@@ -290,7 +299,8 @@
          */
         public static function minLength(string $str, int $min): bool
         {
-            return strlen(self::_decode($str)) >= $min;
+            $valid = strlen(self::_decode($str)) >= $min;
+            return $valid;
         }
 
         /**
@@ -303,7 +313,8 @@
          */
         public static function notEmail(string $str): bool
         {
-            return self::email($str) === false;
+            $valid = self::email($str) === false;
+            return $valid;
         }
 
         /**
@@ -318,7 +329,8 @@
          */
         public static function notEmpty(string $str): bool
         {
-            return trim($str) !== '';
+            $valid = trim($str) !== '';
+            return $valid;
         }
 
         /**
