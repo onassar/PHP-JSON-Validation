@@ -120,7 +120,7 @@
          * Validates rules recursively against both a `blocking` and `funnel`
          * property being set to `true`.
          * 
-         * @access  public
+         * @access  protected
          * @param   array $rules
          * @return  void
          */
