@@ -18,7 +18,8 @@
          */
         public static function dataDeleted(): bool
         {
-            return empty($GLOBALS['_DELETE']) === false;
+            $valid = empty($GLOBALS['_DELETE']) === false;
+            return $valid;
         }
 
         /**
@@ -32,7 +33,8 @@
          */
         public static function dataIncluded(string $param, array $data): bool
         {
-            return isset($data[$param]) === true;
+            $valid = isset($data[$param]) === true;
+            return $valid;
         }
 
         /**
@@ -57,7 +59,8 @@
          */
         public static function dataPatched(): bool
         {
-            return empty($GLOBALS['_PATCH']) === false;
+            $valid = empty($GLOBALS['_PATCH']) === false;
+            return $valid;
         }
 
         /**
@@ -69,6 +72,7 @@
          */
         public static function dataPosted(): bool
         {
-            return empty($_POST) === false;
+            $valid = empty($_POST) === false;
+            return $valid;
         }
     }
