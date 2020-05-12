@@ -25,7 +25,7 @@
         /**
          * _path
          * 
-         * Path to the schema json file
+         * Path to the schema JSON file
          * 
          * @access  protected
          * @var     string
@@ -186,7 +186,7 @@
             $raw = $this->_loadSchema($this->_path);
             $decoded = json_decode($raw, true);
 
-            // json is formatted invalidly; otherwise return the decoded schema
+            // JSON is formatted invalidly; otherwise return the decoded schema
             if ($decoded === null) {
                 $msg = 'Invalidly formatted json';
                 throw new Exception($msg);
