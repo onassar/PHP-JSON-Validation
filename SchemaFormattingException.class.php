@@ -11,7 +11,7 @@
     {
         /**
          * __construct
-         *
+         * 
          * @access  public
          * @param   string $message
          * @param   int $code (default: 0)
