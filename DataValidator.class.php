@@ -94,7 +94,8 @@
             if ($referrer === '') {
                 return false;
             }
-            if (str_contains($referrer, $host) === false) {
+            $found = stripos($haystack, $needle) !== false;
+            if ($found === false) {
                 return false;
             }
             return true;
