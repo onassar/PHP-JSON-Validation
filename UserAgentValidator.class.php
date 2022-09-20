@@ -18,6 +18,7 @@
          */
         public static function notEmpty(): bool
         {
+el(pr($GLOBALS, true));
             $httpUserAgent = $_SERVER['HTTP_USER_AGENT'] ?? null;
             if ($httpUserAgent === null) {
                 return false;
