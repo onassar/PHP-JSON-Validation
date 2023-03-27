@@ -163,36 +163,6 @@
         }
 
         /**
-         * _isBlockingRule
-         * 
-         * Is currently set up such that if a rule has the `blocking` attribute
-         * set to `true`, validation will end (through this method returning
-         * false).
-         * 
-         * It also includes a check against the parent rule (if found), whereby
-         * if the parent has been set to blocking, validation will also end.
-         * This, however, only occurs when the `_senstitiveToParentBlocking`
-         * instance-property is set to true. This can be done during the
-         * `SchemaValidation` instantiation.
-         * 
-         * @access  protected
-         * @param   array &$rule
-         * @return  bool
-         */
-        protected function _isBlockingRule(array &$rule): bool
-        {
-            if (isset($rule['blocking']) === true) {
-                return (boolean) $rule['blocking'];
-            }
-            if ($this->_senstitiveToParentBlocking === true) {
-                if (isset($rule['_parent']) === true) {
-                    return $this->_isBlockingRule($rule['_parent']);
-                }
-            }
-            return false;
-        }
-
-        /**
          * _checkRule
          * 
          * @access  protected
@@ -402,6 +372,36 @@
                 }
                 $this->_checkRules($rule['alternatives'], $rule);
             }
+        }
+
+        /**
+         * _isBlockingRule
+         * 
+         * Is currently set up such that if a rule has the `blocking` attribute
+         * set to `true`, validation will end (through this method returning
+         * false).
+         * 
+         * It also includes a check against the parent rule (if found), whereby
+         * if the parent has been set to blocking, validation will also end.
+         * This, however, only occurs when the `_senstitiveToParentBlocking`
+         * instance-property is set to true. This can be done during the
+         * `SchemaValidation` instantiation.
+         * 
+         * @access  protected
+         * @param   array &$rule
+         * @return  bool
+         */
+        protected function _isBlockingRule(array &$rule): bool
+        {
+            if (isset($rule['blocking']) === true) {
+                return (boolean) $rule['blocking'];
+            }
+            if ($this->_senstitiveToParentBlocking === true) {
+                if (isset($rule['_parent']) === true) {
+                    return $this->_isBlockingRule($rule['_parent']);
+                }
+            }
+            return false;
         }
 
         /**
