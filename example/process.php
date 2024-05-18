@@ -2,14 +2,14 @@
 
     /**
      * PHP-JSON-Validation example
-     *
+     * 
      * In the spirit of a typical blog post comment (requesting a visitors name,
      * email address, website url, comment, and whether they want to be
      * notified of updates to the post), the following example demonstrates how
      * to create a Schema instance based off a json-file, create a
      * SchemaValidator object based off that Schema object and sample/dummy
      * data, and validate them against one-another.
-     *
+     * 
      * This example validates the following:
      *  - a name is given
      *  - an email is either not provided, or a valid email format
@@ -28,12 +28,12 @@
      * failure. This can be useful for security (eg. to ensure certain
      * high-level rules are succesfully evaluated before processing sub-rules
      * which may attempt to select, modify or remove from a database).
-     *
+     * 
      * Of note: rules are processed in sequence, regardless of whether their
      * processing is depenedent on a previous rule having been successfully
      * passed, unless the <blocking> or <funnel> properties are used
      * intelligently.
-     *
+     * 
      * @author  Oliver Nassar <onassar@gmail.com>
      */
 
