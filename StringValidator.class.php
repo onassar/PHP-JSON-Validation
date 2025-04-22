@@ -349,4 +349,19 @@
             $valid = $response !== false;
             return $valid;
         }
+
+        /**
+         * validUUID
+         * 
+         * @see     https://stackoverflow.com/questions/12808597/php-verify-valid-uuid
+         * @access  public
+         * @static
+         * @param   string $str
+         * @return  bool
+         */
+        public static function validUUID(string $str): bool
+        {
+            $expression = '/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i';
+            return preg_match($expression, $str) === 1;
+        }
     }
