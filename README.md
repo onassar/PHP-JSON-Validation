@@ -142,6 +142,14 @@ url that the user is then redirected to), the above use-case has worked pretty
 solid for me. See below for examples of how localization could be used with
 errors.
 
+### disabled (optional)
+A boolean value for each rule that when set to true, the rule will not be
+processed.
+
+This can be valuable if you quickly want to remove a rule from being required
+but don't want to remove it from the schema (possibly to turn it back on at
+another point).
+
 Flexibility
 ====
 The intent behind the structure of this library is that of extensibility.
