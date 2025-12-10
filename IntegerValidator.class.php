@@ -10,6 +10,27 @@
     abstract class IntegerValidator
     {
         /**
+         * between
+         * 
+         * @access  public
+         * @static
+         * @param   int $int
+         * @param   int $min
+         * @param   int $max
+         * @return  bool
+         */
+        public static function between(int $int, int $min, int $max): bool
+        {
+            if ($int < $min) {
+                return false;
+            }
+            if ($int > $max) {
+                return false;
+            }
+            return true;
+        }
+
+        /**
          * greaterThan
          * 
          * @access  public
