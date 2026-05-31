@@ -394,7 +394,7 @@
         protected function _isBlockingRule(array &$rule): bool
         {
             if (isset($rule['blocking']) === true) {
-                return (boolean) $rule['blocking'];
+                return (bool) $rule['blocking'];
             }
             if ($this->_senstitiveToParentBlocking === true) {
                 if (isset($rule['_parent']) === true) {
